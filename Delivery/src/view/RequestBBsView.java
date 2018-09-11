@@ -11,10 +11,10 @@ import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class request_bbs_view extends JFrame {
+public class RequestBBsView extends JFrame {
 	private JTable table;
 	
-	public request_bbs_view() {
+	public RequestBBsView() {
 		getContentPane().setLayout(null);
 		
 		JPanel panel = new JPanel();
