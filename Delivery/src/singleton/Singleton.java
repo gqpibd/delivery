@@ -8,10 +8,13 @@ public class Singleton {
 
 	private static Singleton single = null;
 	private MemberController MC;
-	private RequestController RC;
-	private ReviewController RVC;
+	private OrderController OC;
+	private ReviewController RC;
 	
 	private Singleton() {
+		MC = new MemberController();
+		OC = new OrderController();
+		RC = new ReviewController();
 	}
 	
 	public static Singleton getInstance() {
