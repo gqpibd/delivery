@@ -18,6 +18,13 @@ public class OrderDto implements Serializable{
 	private String date;
 	
 	
+	public OrderDto(String title, String type, String location, String consumerId, String date) {
+		this.title = title;
+		this.type = type;
+		this.location = location;
+		this.consumerId = consumerId;
+		this.date = date;
+	}	
 	
 	public OrderDto(int reqNum, String title, String type, String location, String consumerId, String delivererId,
 			String date) {
