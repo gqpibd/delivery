@@ -1,7 +1,7 @@
 package singleton;
 
 import controller.MemberController;
-import controller.RequestController;
+import controller.OrderController;
 import controller.ReviewController;
 
 public class Singleton {
