@@ -1,7 +1,7 @@
--- ID, PW, NAME, ADDRESS, AUTH --> ÁÖ¹®È¸¿ø
--- ID, PW, NAME, LOCATIONS, DELIVERCOUNTS, SCORE, AUTH --> ¹è´ÞÈ¸¿ø
--- ID, PW, NAME, AUTH --> °ü¸®ÀÚ
--- AUTH : 0 : °ü¸®ÀÚ,  1 : ÁÖ¹®È¸¿ø, 2 : ¹è´ÞÈ¸¿ø
+-- ID, PW, NAME, ADDRESS, AUTH --> ï¿½Ö¹ï¿½È¸ï¿½ï¿½
+-- ID, PW, NAME, LOCATIONS, DELIVERCOUNTS, SCORE, AUTH --> ï¿½ï¿½ï¿½È¸ï¿½ï¿½
+-- ID, PW, NAME, AUTH --> ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+-- AUTH : 0 : ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½,  1 : ï¿½Ö¹ï¿½È¸ï¿½ï¿½, 2 : ï¿½ï¿½ï¿½È¸ï¿½ï¿½
 
 CREATE TABLE members(
     ID VARCHAR2(20) primary key,
@@ -33,10 +33,10 @@ CREATE TABLE requests(
 	WRITER varchar2(20) not null,
 	DELIVERER varchar2(20),
 	PRICE number(8) not null,
-	LOCATION varchar2(50) not null, -- OO±¸
+	LOCATION varchar2(50) not null, -- OOï¿½ï¿½
 	CONTENTS varchar2(1000) not null,
-	APPLICANTS varchar2(400), -- Áö¿øÀÚ ¸ñ·Ï (ID)
-	STATE varchar2(20), -- ÁøÇà»óÅÂ (¿äÃ»,ÁøÇàÁß,¿Ï·á)
+	APPLICANTS varchar2(400), -- ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ (ID)
+	STATE varchar2(20), -- ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (ï¿½ï¿½Ã»,ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½,ï¿½Ï·ï¿½)
 	SCORE number(2),
 	REVIEW varchar2(1000), 
 	CONSTRAINT FK_WRITER FOREIGN KEY(WRITER) REFERENCES members(ID),
