@@ -1,4 +1,4 @@
-package client.communicator;
+package communicator;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -20,14 +20,14 @@ public class Communicator {
 
    public void makeConnection() {
       try {
-         InetSocketAddress sockAddr = new InetSocketAddress("127.0.0.1", 6000); // í¬íŠ¸ë²ˆí˜¸ëŠ” ì„œë²„ì˜ í¬íŠ¸ë²ˆí˜¸ì™€ ë™ì¼í•˜ê²Œ í•´ì¤€ë‹¤.
+         InetSocketAddress sockAddr = new InetSocketAddress("127.0.0.1", 6000); // ?¬?Š¸ë²ˆí˜¸?Š” ?„œë²„ì˜ ?¬?Š¸ë²ˆí˜¸?? ?™?¼?•˜ê²? ?•´ì¤??‹¤.
          sock = new Socket();
          sock.connect(sockAddr);
-         System.out.println("ì—°ê²°ì„±ê³µ");
+         System.out.println("?—°ê²°ì„±ê³?");
 
       } catch (IOException e) {
-         System.out.println("ì„œë²„ì— ì—°ê²°í•  ìˆ˜ ì—†ìŠµë‹ˆë‹¤. í”„ë¡œê·¸ë¨ì„ ì¢…ë£Œí•©ë‹ˆë‹¤.");
-         JOptionPane.showMessageDialog(null, "ì„œë²„ì— ì—°ê²°í•  ìˆ˜ ì—†ìŠµë‹ˆë‹¤. í”„ë¡œê·¸ë¨ì„ ì¢…ë£Œí•©ë‹ˆë‹¤.");
+         System.out.println("?„œë²„ì— ?—°ê²°í•  ?ˆ˜ ?—†?Šµ?‹ˆ?‹¤. ?”„ë¡œê·¸?¨?„ ì¢…ë£Œ?•©?‹ˆ?‹¤.");
+         JOptionPane.showMessageDialog(null, "?„œë²„ì— ?—°ê²°í•  ?ˆ˜ ?—†?Šµ?‹ˆ?‹¤. ?”„ë¡œê·¸?¨?„ ì¢…ë£Œ?•©?‹ˆ?‹¤.");
          System.exit(0);
       }
    }
@@ -43,8 +43,8 @@ public class Communicator {
          oos.flush();
 
       } catch (IOException e) {
-         System.out.println("ì„œë²„ì™€ì˜ ì—°ê²°ì´ ëŠì–´ì¡ŒìŠµë‹ˆë‹¤.  í”„ë¡œê·¸ë¨ì„ ì¢…ë£Œí•©ë‹ˆë‹¤.");
-         JOptionPane.showMessageDialog(null, "ì„œë²„ì™€ì˜ ì—°ê²°ì´ ëŠì–´ì¡ŒìŠµë‹ˆë‹¤.  í”„ë¡œê·¸ë¨ì„ ì¢…ë£Œí•©ë‹ˆë‹¤.");
+         System.out.println("?„œë²„ì??˜ ?—°ê²°ì´ ?Š?–´ì¡ŒìŠµ?‹ˆ?‹¤.  ?”„ë¡œê·¸?¨?„ ì¢…ë£Œ?•©?‹ˆ?‹¤.");
+         JOptionPane.showMessageDialog(null, "?„œë²„ì??˜ ?—°ê²°ì´ ?Š?–´ì¡ŒìŠµ?‹ˆ?‹¤.  ?”„ë¡œê·¸?¨?„ ì¢…ë£Œ?•©?‹ˆ?‹¤.");
          System.exit(0);
       }
    }
@@ -60,7 +60,7 @@ public class Communicator {
          oos.flush();
          oos.close();
          makeConnection();
-         System.out.println("ì´ë¯¸ì§€ ë³´ëƒ„");
+         System.out.println("?´ë¯¸ì? ë³´ëƒ„");
 
       } catch (IOException e) {
          e.printStackTrace();
@@ -74,8 +74,8 @@ public class Communicator {
          ois = new ObjectInputStream(sock.getInputStream());
          obj = ois.readObject();
       } catch (IOException e) {
-         System.out.println("ì„œë²„ì™€ì˜ ì—°ê²°ì´ ëŠì–´ì¡ŒìŠµë‹ˆë‹¤.  í”„ë¡œê·¸ë¨ì„ ì¢…ë£Œí•©ë‹ˆë‹¤.");
-         JOptionPane.showMessageDialog(null, "ì„œë²„ì™€ì˜ ì—°ê²°ì´ ëŠì–´ì¡ŒìŠµë‹ˆë‹¤.  í”„ë¡œê·¸ë¨ì„ ì¢…ë£Œí•©ë‹ˆë‹¤.");
+         System.out.println("?„œë²„ì??˜ ?—°ê²°ì´ ?Š?–´ì¡ŒìŠµ?‹ˆ?‹¤.  ?”„ë¡œê·¸?¨?„ ì¢…ë£Œ?•©?‹ˆ?‹¤.");
+         JOptionPane.showMessageDialog(null, "?„œë²„ì??˜ ?—°ê²°ì´ ?Š?–´ì¡ŒìŠµ?‹ˆ?‹¤.  ?”„ë¡œê·¸?¨?„ ì¢…ë£Œ?•©?‹ˆ?‹¤.");
          System.exit(0);
       } catch (ClassNotFoundException e) {
          e.printStackTrace();
