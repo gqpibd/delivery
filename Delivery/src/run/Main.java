@@ -1,13 +1,15 @@
 package run;
 
-import view.RequestBBsView;
+import client.communicator.Communicator;
+import view.OrderBBsView;
 
 public class Main {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		new RequestBBsView();
-		// git test-dohyeon
+		//new OrderBBsView();
+		new Communicator().makeConnection();
+
 	}
 
 }
