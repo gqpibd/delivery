@@ -1,4 +1,4 @@
-package client.communicator;
+package communicator;
 
 import java.awt.image.BufferedImage;
 import java.io.File;

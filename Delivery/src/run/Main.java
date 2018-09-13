@@ -1,6 +1,6 @@
 package run;
 
-import client.communicator.Communicator;
+import communicator.Communicator;
 import view.MainView;
 import view.OrderBBsView;
 import view.PostView;

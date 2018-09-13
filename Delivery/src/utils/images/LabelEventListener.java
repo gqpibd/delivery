@@ -1,4 +1,4 @@
-package client.utils.images;
+package utils.images;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
