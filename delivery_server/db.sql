@@ -1,7 +1,14 @@
+<<<<<<< HEAD
 -- ID, PW, NAME, ADDRESS, AUTH --> 구매자
 -- ID, PW, NAME, LOCATIONS, DELIVERCOUNTS, SCORE, AUTH --> 배달자
 -- ID, PW, NAME, AUTH --> 관리자
 -- AUTH : 0 : 관리자,  1 : 구매자, 2 : 관리자
+=======
+-- ID, PW, NAME, ADDRESS, AUTH --> �ֹ�ȸ��
+-- ID, PW, NAME, LOCATIONS, DELIVERCOUNTS, SCORE, AUTH --> ���ȸ��
+-- ID, PW, NAME, AUTH --> ������
+-- AUTH : 0 : ������,  1 : �ֹ�ȸ��, 2 : ���ȸ��
+>>>>>>> refs/remotes/origin/h2gon
 
 CREATE TABLE members(
     ID VARCHAR2(20) primary key,
