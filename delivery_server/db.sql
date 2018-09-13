@@ -62,6 +62,9 @@ CREATE TABLE requests(
 INSERT INTO requests
 VALUES (1,'배달','h2gon','dh_deliver',15000,'서울','도미노 피자 사다 주세요', null, '진행중',null,null);
 
+alter table orders
+modify (title varchar2(40) not null);
+
 select * from requests;
 
 CREATE TABLE LOADNAME_ADD(
