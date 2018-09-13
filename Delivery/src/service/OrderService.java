@@ -1,13 +1,29 @@
 package service;
 
-	public class OrderService {
-		
-	// ㅊㅜㅇㄷㅗㄹㅋㅋㅋ ㅁㅜㅓㅇㅑ
-		// ㅊㅜㅇㄷㅗㄹㅇㅡㄴ ㅇㅏㄴㄴㅏㄴㅔㅇㅛㅋㅋ
-		// ㅂㅗㄹㄱㅓ
-		// ㅇㅏㄲㅏ ㅇㅏㅂㅊㅜㄱㅍㅏㅇㅣㄹ ㅂㅗㄴㅐㅈㅜㄴㄱㅓ ㅇㅓㄷㅣㅇㅣㅆㅇㅓㅇㅛ?
-	// 이거 말고 더 전에보낸거갑자기 잘나오네??ㅋㅋ 전에보낸거없는데 다시보내줘
+import java.util.List;
+
+import communicator.Communicator;
+import dto.OrderBBsDto;
+import dto.OrderDto;
+import singleton.Singleton;
+
+public class OrderService {
+	
+	public static final int SELECT_POST = 4;
+
+	public Object getPostlist() {
+		Singleton s = Singleton.getInstance();
+		s.getComm().SendMessage(Communicator.SELECT, new OrderDto());
+		Object o = s.getComm().receiveObject();
+		return o;
+	}
+	
+	public OrderBBsDto getPost() {
+		Singleton s = Singleton.getInstance();
+		s.getComm().SendMessage(SELECT_POST, new OrderDto());
+		OrderBBsDto o = (OrderBBsDto)s.getComm().receiveObject();
+		System.out.println(o);
+		return o;
 	}
 
-	// good request -> order ??oo 모두다 바꾸여 이미 바꿨어요뷰도 바꿔야되는구나 하아 ...그냥 둬요 걍쓰지뭐 request로 ?? 흠 그럴까.. 뭔가 웹에서 쓰는 리퀘스트같아서 바꾼건데한번에 order로 못바꾸ㅏㄴ ?
-	// 클래스이름은 안될5r된거같은데 근데 깃허브쓰는데 내가 바꾸거나 누나가 바꾼거 적용이 안되나? ???  아니여라 ..???
+}

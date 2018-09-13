@@ -31,6 +31,13 @@ public class Singleton {
 		return MC;
 	}
 	
+	public OrderController getOderCtrl() {
+		return OC;
+	}
+	
+	public ReviewController getReviewCtrl() {
+		return RC;
+	}
 	public Communicator getComm() {
 		return comm;
 	}

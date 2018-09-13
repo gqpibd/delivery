@@ -12,7 +12,6 @@ import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 
 public class Communicator {
-	
 	 public static int INSERT = 0; 
 	 public static int DELETE = 1; 
 	 public static int UPDATE = 2; 
@@ -85,5 +84,4 @@ public class Communicator {
 
 		return obj;
 	}
-
 }

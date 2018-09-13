@@ -44,6 +44,7 @@ public class ImageUtils {
 
 		Image changedImg = originImg.getScaledInstance(imgLabel.getWidth(), imgLabel.getHeight(), Image.SCALE_SMOOTH);
 
+
 		ImageIcon resizedIcon = new ImageIcon(changedImg);
 
 		imgLabel.setIcon(resizedIcon);

@@ -10,8 +10,8 @@ import dto.MemberDto;
 import singleton.Singleton;
 
 public class MemberService {
-	List<MemberDto> mList = new ArrayList<MemberDto>();
-	MemberDto CurrentUser = null;
+	private List<MemberDto> mList = new ArrayList<MemberDto>();
+	private MemberDto CurrentUser = null;
 
 	public boolean login(MemberDto dto) { // 로그인
 		Communicator comm = Singleton.getInstance().getComm();
@@ -22,5 +22,9 @@ public class MemberService {
 			return true;
 		}
 		return false;
+	}
+	
+	public MemberDto getCurrentUser() {
+		return CurrentUser;
 	}
 }

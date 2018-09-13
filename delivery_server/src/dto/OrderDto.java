@@ -17,6 +17,8 @@ public class OrderDto implements Serializable{
 	private String delivererId;
 	private String date;
 	
+	public OrderDto() {}
+	
 	
 	public OrderDto(String title, String type, String location, String consumerId, String date) {
 		this.title = title;
