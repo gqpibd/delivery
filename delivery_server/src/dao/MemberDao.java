@@ -25,8 +25,7 @@ public class MemberDao {
 		case Dml.UPDATE:
 			break;
 		case Dml.SELECT:
-			select_login(dto, sock);
-			
+			select_login(dto, sock);			
 			break;
 		}
 

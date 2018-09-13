@@ -37,9 +37,9 @@ public class ReadThread extends Thread {
 				// dto에 따라 어디서 수행할 지 결정된다.
 				if (obj instanceof MemberDto) { // 로그인, 회원가입
 					mDao.execute(number, (MemberDto) obj, sock);
-				} else if (obj instanceof OrderDao) { 
+				} else if (obj instanceof OrderDto) { 
 					oDao.execute(number, (OrderDto) obj, sock);
-				} else if ((obj instanceof ReviewDao)) { 
+				} else if ((obj instanceof ReviewDto)) { 
 					rDao.execute(number, (ReviewDto) obj, sock);
 				} 
 				sleep(100);

@@ -25,7 +25,7 @@ INSERT INTO members (ID, PW, NAME, AUTH)
 VALUES ('admin','admin','administrator',0);
 
 INSERT INTO members (ID, PW, NAME, ADDRESS, AUTH)
-VALUES ('h2gon','gongon','영곤','서울',1);
+VALUES ('h2__gon','gongon','영곤','서울',2);
 
 INSERT INTO members (ID, PW, NAME, ADDRESS, AUTH)
 VALUES ('dh','dohyeon','도현','성남',1);
@@ -43,7 +43,7 @@ CREATE TABLE blacklist(
 DROP TABLE REQUESTS
 CASCADE CONSTRAINTS
 
-CREATE TABLE requests(
+CREATE TABLE ORDERS(
 	REQNUMBER number(5) primary key,
 	REQTYPE varchar2(20) not null,
 	WRITER varchar2(20) not null,
@@ -58,6 +58,8 @@ CREATE TABLE requests(
 	CONSTRAINT FK_WRITER FOREIGN KEY(WRITER) REFERENCES members(ID),
 	CONSTRAINT FK_DELIVERER FOREIGN KEY(DELIVERER) REFERENCES members(ID)
 );
+
+alter table requests rename orders
 
 INSERT INTO requests
 VALUES (1,'배달','h2gon','dh_deliver',15000,'서울','도미노 피자 사다 주세요', null, '진행중',null,null);

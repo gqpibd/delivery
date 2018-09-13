@@ -4,18 +4,21 @@ import java.util.Arrays;
 
 public class OrderBBsDto extends OrderDto {	
 	
-	public static final int WAITING = 1;
-	public static final int ONGOING = 2;
-	public static final int DONE = 3;
-	public static final int CANCELED = 4;
+	//public static final int WAITING = 1; --> 
+	//public static final int ONGOING = 2;
+	//public static final int DONE = 3;
+	//public static final int CANCELED = 4;
 	
 	private String contents;
 	private int price;
 	private String[] applicants;
-	private int status;
+	private String status;
+	
+	
+	public OrderBBsDto() {}
 		
 	public OrderBBsDto(int reqNum, String title, String type, String location, String consumerId, String delivererId,
-			String date, String contents, int price, String[] applicants, int status) {
+			String date, String contents, int price, String[] applicants, String status) {
 		super(reqNum, title, type, location, consumerId, delivererId, date);
 		this.contents = contents;
 		this.price = price;
@@ -23,7 +26,7 @@ public class OrderBBsDto extends OrderDto {
 		this.status = status;
 	}	
 
-	public OrderBBsDto(OrderDto oDto, String contents, int price, String[] applicants, int status) {
+	public OrderBBsDto(OrderDto oDto, String contents, int price, String[] applicants, String status) {
 		super(oDto);
 		this.contents = contents;
 		this.price = price;
@@ -32,7 +35,7 @@ public class OrderBBsDto extends OrderDto {
 	}
 	
 	public OrderBBsDto(OrderDto oDto, String contents, int price) { // 새 글이 올라온 경우
-		this(oDto,contents,price,null,WAITING);		
+		this(oDto,contents,price,null,"요청");		
 	}
 	
 	public OrderBBsDto(String title, String type, String location, String consumerId, String date, String contents, int price) {
@@ -65,17 +68,17 @@ public class OrderBBsDto extends OrderDto {
 		this.applicants = applicants;
 	}
 
-	public int getStatus() {
+	public String getStatus() {
 		return status;
 	}
 
-	public void setStatus(int status) {
+	public void setStatus(String status) {
 		this.status = status;
 	}
 
 	@Override
 	public String toString() {
-		return "OrderBBsDto [contents=" + contents + ", price=" + price + ", applicants=" + Arrays.toString(applicants)
+		return super.toString() + "OrderBBsDto [contents=" + contents + ", price=" + price + ", applicants=" + Arrays.toString(applicants)
 				+ ", status=" + status + "]";
 	}
 	
