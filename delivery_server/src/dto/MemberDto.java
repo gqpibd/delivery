@@ -1,6 +1,7 @@
 package dto;
 
 import java.io.Serializable;
+import java.net.Socket;
 
 public class MemberDto implements Serializable{
 	/**
@@ -50,6 +51,9 @@ public class MemberDto implements Serializable{
 	}
 	public String getId() {
 		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
 	}
 	public String getName() {
 		return name;
