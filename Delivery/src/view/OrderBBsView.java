@@ -1,28 +1,28 @@
 package view;
 
+import java.awt.GridLayout;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.List;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTabbedPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
-import java.awt.GridLayout;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.ActionEvent;
+import dto.OrderBBsDto;
+import singleton.Singleton;
 
 public class OrderBBsView extends JFrame {
 	
 	private JTable table;
 	String columnNames[] = {"번호", "상태", "제목", "지역", "작성자", "날짜"};
-	Object rowData[][] = {{"1","대기중","도미노피자 배달해주세요","구의동","김영곤","2018-09-13"}};
+	Object rowData[][];
 	DefaultTableModel model;
 	//what is the problem? all
 	
@@ -30,10 +30,11 @@ public class OrderBBsView extends JFrame {
 		super("대신해드려요!!");
 		getContentPane().setLayout(null);
 		
+		setRowData();
 		// 상단 패널 
 		
 		JPanel panel = new JPanel();
-		panel.setBounds(6, 6, 468, 118);
+		panel.setBounds(6, 6, 480, 118);
 		getContentPane().add(panel);
 		panel.setLayout(new GridLayout(0, 3, 0, 0));
 		
@@ -49,7 +50,7 @@ public class OrderBBsView extends JFrame {
 		// 하단 패널 
 		
 		JPanel panel_1 = new JPanel();
-		panel_1.setBounds(6, 125, 468, 487);
+		panel_1.setBounds(6, 125, 480, 487);
 		getContentPane().add(panel_1);
 		panel_1.setLayout(null);
 
@@ -63,7 +64,7 @@ public class OrderBBsView extends JFrame {
 		
 		table.getColumnModel().getColumn(0).setMaxWidth(30);	// 글번호 폭
 		table.getColumnModel().getColumn(1).setMaxWidth(50);	// 상태 폭
-		table.getColumnModel().getColumn(2).setMaxWidth(200);	// 제목 폭
+		table.getColumnModel().getColumn(2).setMaxWidth(190);	// 제목 폭
 		table.getColumnModel().getColumn(3).setMaxWidth(50);	// 지역 폭
 		table.getColumnModel().getColumn(4).setMaxWidth(80);	// 작성자 폭
 		table.getColumnModel().getColumn(5).setMaxWidth(100);	// 날짜 폭
@@ -89,7 +90,7 @@ public class OrderBBsView extends JFrame {
 		JScrollPane scrollPane = new JScrollPane(table);
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		scrollPane.setBounds(6, 6, 456, 434);
+		scrollPane.setBounds(6, 6, 468, 434);
 		panel_1.add(scrollPane);
 		
 		// button
@@ -105,8 +106,25 @@ public class OrderBBsView extends JFrame {
 		
 		
 		
-		setBounds(0, 0, 480, 640);
+		setBounds(0, 0, 500, 640);
 		setVisible(true);
 		
+	}
+	public void setRowData(){
+		Singleton s = Singleton.getInstance();
+		
+		
+		List<OrderBBsDto> list = (List<OrderBBsDto>) s.getOderCtrl().getPostlist();
+		rowData = new Object[list.size()][6];
+		
+		for (int i = 0; i < list.size(); i++) {
+			rowData[i][0] = list.get(i).getReqNum();
+			rowData[i][1] = list.get(i).getStatus();
+			rowData[i][2] = list.get(i).getTitle();
+			rowData[i][3] = list.get(i).getLocation();
+			rowData[i][4] = list.get(i).getConsumerId();
+			rowData[i][5] = list.get(i).getDate();
+		}
+			 
 	}
 }

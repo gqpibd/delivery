@@ -1,15 +1,17 @@
 package run;
 
-import communicator.Communicator;
-import view.MainView;
-import view.OrderBBsView;
+import singleton.Singleton;
 import view.PostView;
 
 public class Main {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+		
 		//new OrderBBsView();
+
+		Singleton.getInstance().getComm().makeConnection();
+		//new LoginView();
+
 		//new Communicator().makeConnection();
 		//new MainView();
 		new PostView();
