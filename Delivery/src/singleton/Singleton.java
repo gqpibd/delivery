@@ -1,5 +1,6 @@
 package singleton;
 
+import communicator.Communicator;
 import controller.MemberController;
 import controller.OrderController;
 import controller.ReviewController;
@@ -10,11 +11,13 @@ public class Singleton {
 	private MemberController MC;
 	private OrderController OC;
 	private ReviewController RC;
+	private Communicator comm;
 	
 	private Singleton() {
 		MC = new MemberController();
 		OC = new OrderController();
 		RC = new ReviewController();
+		comm = new Communicator(); 
 	}
 	
 	public static Singleton getInstance() {
@@ -22,6 +25,14 @@ public class Singleton {
 			single = new Singleton();
 		}
 		return single;
+	}
+
+	public MemberController getMemCtrl() {
+		return MC;
+	}
+	
+	public Communicator getComm() {
+		return comm;
 	}
 	
 }

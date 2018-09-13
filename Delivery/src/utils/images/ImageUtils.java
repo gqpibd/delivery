@@ -13,66 +13,37 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.filechooser.FileSystemView;
 
 public class ImageUtils {
-	public static String jFileChooserUtil() { // ?´ë¯¸ì? ?ŒŒ?¼ ?„ ?ƒì°?
+	public static String jFileChooserUtil() { 
 
 		String folderPath = "";
 
-		JFileChooser chooser = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory()); // ?””? ‰?† ë¦? ?„¤? •
-		chooser.setCurrentDirectory(new File("d:/images")); // ?˜„?¬ ?‚¬?š© ?””? ‰?† ë¦¬ë?? ì§?? •
-		chooser.setAcceptAllFileFilterUsed(true); // Fileter ëª¨ë“  ?ŒŒ?¼ ? ?š©
-		chooser.setDialogTitle("?ŒŒ?¼ ?œ„ì¹? ê²??ƒ‰"); // ì°½ì˜ ? œëª?
-		chooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES); // ?ŒŒ?¼ ?„ ?ƒ ëª¨ë“œ
+		JFileChooser chooser = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory()); // ?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½ï¿½? ?ï¿½ï¿½?ï¿½ï¿½
+		chooser.setCurrentDirectory(new File("d:/images")); // ?ï¿½ï¿½?ï¿½ï¿½ ?ï¿½ï¿½?ï¿½ï¿½ ?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½ë¦¬ï¿½?? ï¿½??ï¿½ï¿½
+		chooser.setAcceptAllFileFilterUsed(true); // Fileter ëª¨ë“  ?ï¿½ï¿½?ï¿½ï¿½ ?ï¿½ï¿½?ï¿½ï¿½
+		chooser.setDialogTitle("?ï¿½ï¿½?ï¿½ï¿½ ?ï¿½ï¿½ï¿½? ï¿½??ï¿½ï¿½"); // ì°½ì˜ ?ï¿½ï¿½ï¿½?
+		chooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES); // ?ï¿½ï¿½?ï¿½ï¿½ ?ï¿½ï¿½?ï¿½ï¿½ ëª¨ë“œ
 
-		FileNameExtensionFilter filter = new FileNameExtensionFilter("jpg", "jpg"); // filter ?™•?¥? ì¶”ê?
-		chooser.setFileFilter(filter); // ?ŒŒ?¼ ?•„?„°ë¥? ì¶”ê?
+		FileNameExtensionFilter filter = new FileNameExtensionFilter("jpg", "jpg"); // filter ?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½ ì¶”ï¿½?
+		chooser.setFileFilter(filter); // ?ï¿½ï¿½?ï¿½ï¿½ ?ï¿½ï¿½?ï¿½ï¿½ï¿½? ì¶”ï¿½?
 
-		int returnVal = chooser.showOpenDialog(null); // ?—´ê¸°ìš© ì°? ?˜¤?”ˆ
+		int returnVal = chooser.showOpenDialog(null); // ?ï¿½ï¿½ê¸°ìš© ï¿½? ?ï¿½ï¿½?ï¿½ï¿½
 
-		if (returnVal == JFileChooser.APPROVE_OPTION) { // ?—´ê¸°ë?? ?´ë¦?
+		if (returnVal == JFileChooser.APPROVE_OPTION) { // ?ï¿½ï¿½ê¸°ï¿½?? ?ï¿½ï¿½ï¿½?
 			folderPath = chooser.getSelectedFile().toString();
-		} else if (returnVal == JFileChooser.CANCEL_OPTION) { // ì·¨ì†Œë¥? ?´ë¦?
+		} else if (returnVal == JFileChooser.CANCEL_OPTION) { // ì·¨ì†Œï¿½? ?ï¿½ï¿½ï¿½?
 			folderPath = "";
 		}
 
 		return folderPath;
 	}
 
-	// public void setResizedImage(JLabel imgLabel, String path) { // ?´ë¯¸ì?ë¥? ?„£?–´ì¤?
-	//
-	// // getClass().getClassLoader().getResource(
-	// try {
-	// BufferedImage m_numberImage =
-	// ImageIO.read(getClass().getClassLoader().getResource(path));
-	//
-	// ImageIcon icon = new ImageIcon(m_numberImage);
-	//
-	// // ImageIcon?—?„œ Imageë¥? ì¶”ì¶œ
-	// Image originImg = icon.getImage();
-	//
-	// // ì¶”ì¶œ?œ Image?˜ ?¬ê¸°ë?? ì¡°ì ˆ?•˜?—¬ ?ƒˆë¡œìš´ Imageê°ì²´ ?ƒ?„±
-	// Image changedImg = originImg.getScaledInstance(imgLabel.getWidth(),
-	// imgLabel.getHeight(),
-	// Image.SCALE_SMOOTH);
-	//
-	// // ?ƒˆë¡œìš´ Imageë¡? ImageIconê°ì²´ë¥? ?ƒ?„±
-	// ImageIcon resizedIcon = new ImageIcon(changedImg);
-	//
-	// imgLabel.setIcon(resizedIcon);
-	// } catch (IOException e) {
-	// // TODO Auto-generated catch block
-	// e.printStackTrace();
-	// }
-	//
-	// }
-	public static void setResizedImage(JLabel imgLabel, ImageIcon icon) { // ?´ë¯¸ì?ë¥? ?„£?–´ì¤?
 
-		// ImageIcon?—?„œ Imageë¥? ì¶”ì¶œ
+	public static void setResizedImage(JLabel imgLabel, ImageIcon icon) { // ?ï¿½ï¿½ë¯¸ï¿½?ï¿½? ?ï¿½ï¿½?ï¿½ï¿½ï¿½?
+
 		Image originImg = icon.getImage();
 
-		// ì¶”ì¶œ?œ Image?˜ ?¬ê¸°ë?? ì¡°ì ˆ?•˜?—¬ ?ƒˆë¡œìš´ Imageê°ì²´ ?ƒ?„±
 		Image changedImg = originImg.getScaledInstance(imgLabel.getWidth(), imgLabel.getHeight(), Image.SCALE_SMOOTH);
 
-		// ?ƒˆë¡œìš´ Imageë¡? ImageIconê°ì²´ë¥? ?ƒ?„±
 		ImageIcon resizedIcon = new ImageIcon(changedImg);
 
 		imgLabel.setIcon(resizedIcon);

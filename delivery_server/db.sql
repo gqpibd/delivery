@@ -1,7 +1,7 @@
--- ID, PW, NAME, ADDRESS, AUTH --> ÁÖ¹®È¸¿ø
--- ID, PW, NAME, LOCATIONS, DELIVERCOUNTS, SCORE, AUTH --> ¹è´ŞÈ¸¿ø
--- ID, PW, NAME, AUTH --> °ü¸®ÀÚ
--- AUTH : 0 : °ü¸®ÀÚ,  1 : ÁÖ¹®È¸¿ø, 2 : ¹è´ŞÈ¸¿ø
+-- ID, PW, NAME, ADDRESS, AUTH --> êµ¬ë§¤ì
+-- ID, PW, NAME, LOCATIONS, DELIVERCOUNTS, SCORE, AUTH --> ë°°ë‹¬ì
+-- ID, PW, NAME, AUTH --> ê´€ë¦¬ì
+-- AUTH : 0 : ê´€ë¦¬ì,  1 : êµ¬ë§¤ì, 2 : ê´€ë¦¬ì
 
 CREATE TABLE members(
     ID VARCHAR2(20) primary key,
@@ -16,6 +16,15 @@ CREATE TABLE members(
 
 INSERT INTO members (ID, PW, NAME, AUTH)
 VALUES ('admin','admin','administrator',0);
+
+INSERT INTO members (ID, PW, NAME, ADDRESS, AUTH)
+VALUES ('h2gon','gongon','ì˜ê³¤','ì„œìš¸',1);
+
+INSERT INTO members (ID, PW, NAME, ADDRESS, AUTH)
+VALUES ('dh','dohyeon','ë„í˜„','ì„±ë‚¨',1);
+
+INSERT INTO members (ID, PW, NAME, ADDRESS, AUTH)
+VALUES ('dh_deliver','dohyeon','ë„í˜„','ì„±ë‚¨',2);
 
 CREATE TABLE blacklist(
 	USERID VARCHAR2(20) not null,
@@ -33,17 +42,20 @@ CREATE TABLE requests(
 	WRITER varchar2(20) not null,
 	DELIVERER varchar2(20),
 	PRICE number(8) not null,
-	LOCATION varchar2(50) not null, -- OO±¸
+	LOCATION varchar2(50) not null, -- OOï¿½ï¿½
 	CONTENTS varchar2(1000) not null,
-	APPLICANTS varchar2(400), -- Áö¿øÀÚ ¸ñ·Ï (ID)
-	STATE varchar2(20), -- ÁøÇà»óÅÂ (¿äÃ»,ÁøÇàÁß,¿Ï·á)
+	APPLICANTS varchar2(400), -- ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ (ID)
+	STATE varchar2(20), -- ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (ï¿½ï¿½Ã»,ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½,ï¿½Ï·ï¿½)
 	SCORE number(2),
 	REVIEW varchar2(1000), 
 	CONSTRAINT FK_WRITER FOREIGN KEY(WRITER) REFERENCES members(ID),
 	CONSTRAINT FK_DELIVERER FOREIGN KEY(DELIVERER) REFERENCES members(ID)
 );
 
+INSERT INTO requests
+VALUES (1,'ë°°ë‹¬','h2gon','dh_deliver',15000,'ì„œìš¸','ë„ë¯¸ë…¸ í”¼ì ì‚¬ë‹¤ ì£¼ì„¸ìš”', null, 'ì§„í–‰ì¤‘',null,null);
 
+select * from requests;
 
 CREATE TABLE LOADNAME_ADD(
 	LOAD VARCHAR2(30), 
