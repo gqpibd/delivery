@@ -9,6 +9,7 @@ import java.net.Socket;
 import dao.MemberDao;
 import dao.OrderDao;
 import dao.ReviewDao;
+import dao.SelectionsDao;
 import dto.MemberDto;
 import dto.OrderDto;
 import dto.ReviewDto;
@@ -18,6 +19,7 @@ public class ReadThread extends Thread {
 	MemberDao mDao = new MemberDao();
 	OrderDao oDao = new OrderDao();
 	ReviewDao rDao = new ReviewDao();
+	SelectionsDao sDao = new SelectionsDao();
 
 	public ReadThread(Socket sock) {
 		this.sock = sock;
@@ -41,7 +43,10 @@ public class ReadThread extends Thread {
 					oDao.execute(number, (OrderDto) obj, sock);
 				} else if ((obj instanceof ReviewDto)) { 
 					rDao.execute(number, (ReviewDto) obj, sock);
-				} 
+				} else { // 정의된 dto가 아닌 경우 (String인 경우)
+					sDao.execute(number, obj, sock);
+					
+				}
 				sleep(100);
 			}
 		} catch (EOFException e) {

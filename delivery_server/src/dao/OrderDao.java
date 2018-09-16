@@ -16,7 +16,6 @@ import dto.OrderBBsDto;
 import dto.OrderDto;
 
 public class OrderDao {
-	public static final int SELECT_POST = 4;
 	
 	public void execute(int number, OrderDto dto, Socket sock) {
 		switch (number) {
@@ -29,7 +28,7 @@ public class OrderDao {
 		case Dml.SELECT:
 			select_posts(sock);
 			break;
-		case SELECT_POST:
+		case Dml.SELECT_POST:
 			select_post(sock);
 			break;
 			

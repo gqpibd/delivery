@@ -27,8 +27,41 @@ public class MemberDao {
 		case Dml.SELECT:
 			select_login(dto, sock);			
 			break;
+		case Dml.SELECT_IDCHEKCK:
+			select_existingId(dto,sock);
+			break;
 		}
 
+	}
+
+	private void select_existingId(MemberDto dto, Socket sock) {
+		String id = dto.getId();
+		String sql = "SELECT * " + " FROM MEMBERS " + " WHERE ID = ?";
+
+		Connection conn = null;
+		PreparedStatement psmt = null;		
+		ResultSet rs = null;
+		
+		boolean existingId = false;
+		try {
+			conn = DBConnection.getConnection();
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, id);
+			rs = psmt.executeQuery();
+
+			if (rs.next()) {
+				existingId = true;
+				System.out.println("존재하는 아이디 입니다.");
+			} else {
+				System.out.println("존재하지 않는 아이디 입니다.");
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBClose.close(psmt, conn, rs);
+		}
+		SocketWriter.Write(sock, existingId);		
 	}
 
 	private void insert(MemberDto dto) {
