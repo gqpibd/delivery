@@ -1,14 +1,8 @@
-<<<<<<< HEAD
 -- ID, PW, NAME, PHONE, ADDRESS, AUTH --> 구매자
 -- ID, PW, NAME, PHONE, LOCATIONS, DELIVERCOUNTS, SCORE, AUTH --> 배달자
 -- ID, PW, NAME, AUTH --> 관리자
 -- AUTH : 0 : 관리자,  1 : 구매자, 2 : 관리자
-=======
--- ID, PW, NAME, ADDRESS, AUTH --> �ֹ�ȸ��
--- ID, PW, NAME, LOCATIONS, DELIVERCOUNTS, SCORE, AUTH --> ���ȸ��
--- ID, PW, NAME, AUTH --> ������
--- AUTH : 0 : ������,  1 : �ֹ�ȸ��, 2 : ���ȸ��
->>>>>>> refs/remotes/origin/h2gon
+
 
 CREATE TABLE members(
     ID VARCHAR2(20) primary key,
@@ -18,14 +12,17 @@ CREATE TABLE members(
     LOCATIONS varchar2(200),
     DELIVERCOUNTS number(5),
     SCORE number(5,1),
+    PHONE varchar2(20),
     AUTH number(2) not null,
-    PHONE varchar2(20)
 );
+
+ALTER TABLE members
+ADD (PHONE varchar2(20));
 
 INSERT INTO members (ID, PW, NAME, AUTH)
 VALUES ('admin','admin','administrator',0);
 
-INSERT INTO members (ID, PW, NAME, ADDRESS, AUTH)
+INSERT INTO members (ID, PW, NAME, ADDRESS, PHONE, AUTH)
 VALUES ('h2__gon','gongon','영곤','서울',2);
 
 INSERT INTO members (ID, PW, NAME, ADDRESS, AUTH)

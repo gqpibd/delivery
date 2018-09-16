@@ -17,20 +17,20 @@ public class ImageUtils {
 
 		String folderPath = "";
 
-		JFileChooser chooser = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory()); // ?��?��?���? ?��?��
-		chooser.setCurrentDirectory(new File("d:/images")); // ?��?�� ?��?�� ?��?��?��리�?? �??��
-		chooser.setAcceptAllFileFilterUsed(true); // Fileter 모든 ?��?�� ?��?��
-		chooser.setDialogTitle("?��?�� ?���? �??��"); // 창의 ?���?
-		chooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES); // ?��?�� ?��?�� 모드
+		JFileChooser chooser = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
+		chooser.setCurrentDirectory(new File("d:/images")); 
+		chooser.setAcceptAllFileFilterUsed(true);
+		chooser.setDialogTitle("이미지 파일 선택");
+		chooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
 
-		FileNameExtensionFilter filter = new FileNameExtensionFilter("jpg", "jpg"); // filter ?��?��?�� 추�?
-		chooser.setFileFilter(filter); // ?��?�� ?��?���? 추�?
+		FileNameExtensionFilter filter = new FileNameExtensionFilter("jpg", "jpg");
+		chooser.setFileFilter(filter); 
 
-		int returnVal = chooser.showOpenDialog(null); // ?��기용 �? ?��?��
+		int returnVal = chooser.showOpenDialog(null); 
 
-		if (returnVal == JFileChooser.APPROVE_OPTION) { // ?��기�?? ?���?
+		if (returnVal == JFileChooser.APPROVE_OPTION) { 
 			folderPath = chooser.getSelectedFile().toString();
-		} else if (returnVal == JFileChooser.CANCEL_OPTION) { // 취소�? ?���?
+		} else if (returnVal == JFileChooser.CANCEL_OPTION) {
 			folderPath = "";
 		}
 
@@ -38,7 +38,7 @@ public class ImageUtils {
 	}
 
 
-	public static void setResizedImage(JLabel imgLabel, ImageIcon icon) { // ?��미�?�? ?��?���?
+	public static void setResizedImage(JLabel imgLabel, ImageIcon icon) {
 
 		Image originImg = icon.getImage();
 

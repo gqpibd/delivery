@@ -28,7 +28,7 @@ public class LoginView extends JFrame implements ActionListener {
 		super("로그인");
 
 		// setContentPane(new JLabel(new ImageIcon(PATH + "loginView.jpg")));
-		setUndecorated(true);
+		//setUndecorated(true);
 		getContentPane().setLayout(null);
 		setResizable(false);
 
