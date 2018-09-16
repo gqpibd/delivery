@@ -1,6 +1,7 @@
 package run;
 
 import singleton.Singleton;
+import view.InitView;
 import view.PostView;
 
 public class Main {
@@ -10,11 +11,10 @@ public class Main {
 		//new OrderBBsView();
 
 		Singleton.getInstance().getComm().makeConnection();
-		//new LoginView();
-
+		Singleton.getInstance().getMemCtrl().showInitView();
 		//new Communicator().makeConnection();
 		//new MainView();
-		new PostView();
+		//new PostView();
 	}
 
 }

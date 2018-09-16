@@ -1,6 +1,6 @@
 <<<<<<< HEAD
--- ID, PW, NAME, ADDRESS, AUTH --> 구매자
--- ID, PW, NAME, LOCATIONS, DELIVERCOUNTS, SCORE, AUTH --> 배달자
+-- ID, PW, NAME, PHONE, ADDRESS, AUTH --> 구매자
+-- ID, PW, NAME, PHONE, LOCATIONS, DELIVERCOUNTS, SCORE, AUTH --> 배달자
 -- ID, PW, NAME, AUTH --> 관리자
 -- AUTH : 0 : 관리자,  1 : 구매자, 2 : 관리자
 =======
@@ -18,7 +18,8 @@ CREATE TABLE members(
     LOCATIONS varchar2(200),
     DELIVERCOUNTS number(5),
     SCORE number(5,1),
-    AUTH number(2) not null    
+    AUTH number(2) not null,
+    PHONE varchar2(20)
 );
 
 INSERT INTO members (ID, PW, NAME, AUTH)

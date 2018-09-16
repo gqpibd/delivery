@@ -22,6 +22,12 @@ public class LabelEventListener extends MouseAdapter{
 		this.label = label;
 	}
 	
+	public LabelEventListener(ActionListener listener, JLabel label){
+		this.listener = listener;
+		this.imgPath = "";
+		this.label = label;
+	}
+	
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		super.mouseClicked(e);
@@ -31,40 +37,40 @@ public class LabelEventListener extends MouseAdapter{
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		super.mouseReleased(e);
-		label.setIcon(new ImageIcon(imgPath));
+		//label.setIcon(new ImageIcon(imgPath));
 	}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
 		super.mousePressed(e);
-		//((JLabel) e.getSource()).setBorder(null);
+		((JLabel) e.getSource()).setBorder(null);
 		
-		int index = imgPath.lastIndexOf('.');
+		/*int index = imgPath.lastIndexOf('.');
 		String clickImg = imgPath.substring(0, index) + "_clicked" + imgPath.substring(index);
 		File f = new File(clickImg);
 		if(f.exists()) {
 			label.setIcon(new ImageIcon(clickImg));
-		}
+		}*/
 	}
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
-		//((JLabel) e.getSource()).setBorder(new EtchedBorder());
+		((JLabel) e.getSource()).setBorder(new EtchedBorder());
 		super.mouseEntered(e);
 		
-		int index = imgPath.lastIndexOf('.');
+		/*int index = imgPath.lastIndexOf('.');
 		String clickImg = imgPath.substring(0, index) + "_over" + imgPath.substring(index);
 		File f = new File(clickImg);
 		if(f.exists()) {
 			label.setIcon(new ImageIcon(clickImg));
-		}
+		}*/
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e) {
-		//((JLabel) e.getSource()).setBorder(null);
+		((JLabel) e.getSource()).setBorder(null);
 		super.mouseExited(e);
-		label.setIcon(new ImageIcon(imgPath));
+		//label.setIcon(new ImageIcon(imgPath));
 	}
 
 }

@@ -28,7 +28,7 @@ public class LoginView extends JFrame implements ActionListener {
 		super("로그인");
 
 		// setContentPane(new JLabel(new ImageIcon(PATH + "loginView.jpg")));
-		setResizable(false);
+		setUndecorated(true);
 		getContentPane().setLayout(null);
 		setResizable(false);
 
@@ -100,15 +100,10 @@ public class LoginView extends JFrame implements ActionListener {
 			} else if (!id.equals("") && !pw.equals("")) {
 				dto.setId(id);
 				dto.setPw(pw);
-				boolean login = s.getMemCtrl().login(dto);
-				if (login == true) {
-					JOptionPane.showMessageDialog(null, "로그인 성공!!");
-				} else if (login == false) {
-					JOptionPane.showMessageDialog(null, "아이디 또는 비밀번호가 틀리셨습니다.");
-				}
+				s.getMemCtrl().login(dto);				
 			}
 		} else if (obj == Jbut_Exit) {
-			// 취소
+			s.getMemCtrl().backToInitView(this);
 		}
 	}
 

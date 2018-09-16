@@ -12,10 +12,13 @@ import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 
 public class Communicator {
-	 public static int INSERT = 0; 
-	 public static int DELETE = 1; 
-	 public static int UPDATE = 2; 
-	 public static int SELECT = 3;
+	 public static final int INSERT = 0; 
+	 public static final int DELETE = 1; 
+	 public static final int UPDATE = 2; 
+	 public static final int SELECT = 3;
+	 public static final int SELECT_POST = 4;
+	 public static final int SELECT_ADDRESS = 5;
+		public static final int SELECT_IDCHEKCK = 6;
 	 
 	private Socket sock;
 
