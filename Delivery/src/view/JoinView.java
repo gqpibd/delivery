@@ -18,6 +18,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 
+import dto.ConsumerDto;
 import dto.DelivererDto;
 import dto.MemberDto;
 import singleton.Singleton;
@@ -269,7 +270,7 @@ public class JoinView extends JFrame implements ActionListener {
 		String address = address_field.getText().trim();
 		String address2 = address_detail_field.getText().trim();
 		String phone = phone_field.getText().trim();
-		String location = location_field.getText();
+		String location[] = {location_field.getText()};
 
 		if (obj == check_btn) { // 아이디 중복 확인
 			if (id.equals("")) { // 아이디를 입력하지 않은 경우
@@ -302,13 +303,14 @@ public class JoinView extends JFrame implements ActionListener {
 			} else if (location.equals("") && memberType == MemberDto.DELIVERER) {
 				JOptionPane.showMessageDialog(null, "배달 지역을 입력해 주세요");
 			} else {
+				MemberDto dto = null;
 				if(memberType == MemberDto.DELIVERER) {
-					//MemberDto dto = new DelivererDto(id, pw2, name, phone, location);
-				}
-				// MemberDto dto = new MemberDto(id, pw, name, 0, MemberDto., address + " " +
-				// address2, phone);
-				// single.getMemCtrl().insert(dto);
-				// single.backToMain(this);
+					dto = new DelivererDto(id, pw, name, phone, location);
+				}else {
+					dto = new ConsumerDto(id, pw, name, phone, address + " " + address2);
+				}				
+				single.getMemCtrl().insert(dto);
+				//single.backToMain(this);
 				JOptionPane.showMessageDialog(null, "회원가입이 완료되었습니다.");
 			}
 		} else if (obj == back_btn) { // 뒤로가기

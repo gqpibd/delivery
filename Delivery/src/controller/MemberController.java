@@ -57,4 +57,8 @@ public class MemberController {
 
 		return	mService.existingId(id);
 	}
+
+	public void insert(MemberDto dto) {
+		mService.insert(dto);		
+	}
 }
