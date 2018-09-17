@@ -10,6 +10,8 @@ import communicator.SocketWriter;
 import constants.Dml;
 import db.DBClose;
 import db.DBConnection;
+import dto.ConsumerDto;
+import dto.DelivererDto;
 import dto.MemberDto;
 
 public class MemberDao {
@@ -63,9 +65,57 @@ public class MemberDao {
 		}
 		SocketWriter.Write(sock, existingId);		
 	}
+	
+	/*CREATE TABLE members(
+		    ID VARCHAR2(20) primary key,
+		    PW VARCHAR2(20) not null,
+		    NAME varchar2(20) not null,
+		    ADDRESS varchar2(150),
+		    LOCATIONS varchar2(200),
+		    DELIVERCOUNTS number(5),
+		    SCORE number(5,1),
+		    PHONE varchar2(20),
+		    AUTH number(2) not null,
+		);*/
 
 	private void insert(MemberDto dto) {
-		// TODO Auto-generated method stub
+		String sql = null;
+		
+
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+
+		try {
+			conn = DBConnection.getConnection();
+			if(dto instanceof ConsumerDto) {
+				ConsumerDto newMember = (ConsumerDto) dto;
+				sql = " INSERT INTO MEMBERS (id, pw, name, phone, address, auth) VALUES (?,?,?,?,?,1) ";
+				psmt = conn.prepareStatement(sql);
+				psmt.setString(1, newMember.getId());
+				psmt.setString(2, newMember.getPw());
+				psmt.setString(3, newMember.getName());
+				psmt.setString(4, newMember.getPhone());
+				psmt.setString(5, newMember.getAddress());	
+			}else {
+				DelivererDto newMember = (DelivererDto) dto;
+				sql = " INSERT INTO MEMBERS (id, pw, name, phone, locations, auth) VALUES (?,?,?,?,?,2) ";
+				psmt = conn.prepareStatement(sql);
+				psmt = conn.prepareStatement(sql);
+				psmt.setString(1, newMember.getId());
+				psmt.setString(2, newMember.getPw());
+				psmt.setString(3, newMember.getName());
+				psmt.setString(4, newMember.getPhone());
+				psmt.setString(5, newMember.getLocations()[0]);	
+			}
+			
+			rs = psmt.executeQuery();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBClose.close(psmt, conn, rs);
+		}
 
 	}
 	
