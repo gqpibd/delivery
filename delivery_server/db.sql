@@ -41,9 +41,13 @@ CREATE TABLE blacklist(
 DROP TABLE REQUESTS
 CASCADE CONSTRAINTS
 
+ALTER TABLE ORDERS
+DROP 
+COLUMN REQTYPE; 
+
+
 CREATE TABLE ORDERS(
 	REQNUMBER number(5) primary key,
-	REQTYPE varchar2(20) not null,
 	WRITER varchar2(20) not null,
 	DELIVERER varchar2(20),
 	PRICE number(8) not null,
@@ -53,19 +57,22 @@ CREATE TABLE ORDERS(
 	STATE varchar2(20), -- ������� (��û,������,�Ϸ�)
 	SCORE number(2),
 	REVIEW varchar2(1000), 
+	DATE 
 	CONSTRAINT FK_WRITER FOREIGN KEY(WRITER) REFERENCES members(ID),
 	CONSTRAINT FK_DELIVERER FOREIGN KEY(DELIVERER) REFERENCES members(ID)
 );
 
 alter table requests rename orders
 
-INSERT INTO requests
+insert into orders values(2,'aa',null,20000,'광진구','',null,요청중,null,null,?,sysdate )
+
+INSERT INTO orders
 VALUES (1,'배달','h2gon','dh_deliver',15000,'서울','도미노 피자 사다 주세요', null, '진행중',null,null);
 
 alter table orders
 modify (title varchar2(40) not null);
 
-select * from requests;
+select * from ORDERS;
 
 CREATE TABLE LOADNAME_ADD(
 	LOAD VARCHAR2(30), 
@@ -73,3 +80,15 @@ CREATE TABLE LOADNAME_ADD(
 	SIGUNGU VARCHAR2(30), 
 	EUBMEONDONG VARCHAR2(30)
 );
+
+SELECT bbsNum.NEXTVAL 
+FROM DUAL;
+
+DROP SEQUENCE bbsSeq
+
+SELECT bbsSeq.CURRVAL 
+FROM DUAL;
+
+CREATE SEQUENCE bbsSeq
+INCREMENT BY 1
+START WITH 1;

@@ -18,6 +18,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 
+import dto.DelivererDto;
 import dto.MemberDto;
 import singleton.Singleton;
 import utils.images.ImageUtils;
@@ -268,6 +269,7 @@ public class JoinView extends JFrame implements ActionListener {
 		String address = address_field.getText().trim();
 		String address2 = address_detail_field.getText().trim();
 		String phone = phone_field.getText().trim();
+		String location = location_field.getText();
 
 		if (obj == check_btn) { // 아이디 중복 확인
 			if (id.equals("")) { // 아이디를 입력하지 않은 경우
@@ -289,7 +291,7 @@ public class JoinView extends JFrame implements ActionListener {
 				JOptionPane.showMessageDialog(null, "중복확인을 눌러주세요.");
 			} else if (name.equals("")) {
 				JOptionPane.showMessageDialog(null, "이름을 입력해주세요");
-			} else if (address.equals("") || address2.equals("")) {
+			} else if ((address.equals("") || address2.equals("")) && memberType == MemberDto.CONSUMER) {
 				JOptionPane.showMessageDialog(null, "주소를 입력해주세요");
 			} else if (phone.equals("")) {
 				JOptionPane.showMessageDialog(null, "핸드폰 번호를 입력해주세요");
@@ -297,7 +299,12 @@ public class JoinView extends JFrame implements ActionListener {
 				JOptionPane.showMessageDialog(null, "비밀번호가 일치하지 않습니다. 다시 확인해 주세요");
 			} else if (!Pattern.matches("^01(?:0|1|[6-9])-(?:\\d{3}|\\d{4})-\\d{4}$", phone)) {
 				JOptionPane.showMessageDialog(null, "전화번호 형식이 맞지 않습니다.\n 01X-XXXX-XXXX 형태로 입력해 주세요");
+			} else if (location.equals("") && memberType == MemberDto.DELIVERER) {
+				JOptionPane.showMessageDialog(null, "배달 지역을 입력해 주세요");
 			} else {
+				if(memberType == MemberDto.DELIVERER) {
+					//MemberDto dto = new DelivererDto(id, pw2, name, phone, location);
+				}
 				// MemberDto dto = new MemberDto(id, pw, name, 0, MemberDto., address + " " +
 				// address2, phone);
 				// single.getMemCtrl().insert(dto);

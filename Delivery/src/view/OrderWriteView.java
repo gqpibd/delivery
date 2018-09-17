@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 
 public class OrderWriteView extends JFrame {
 	private JTextField title_texF;
@@ -24,6 +25,7 @@ public class OrderWriteView extends JFrame {
 	
 
 	public OrderWriteView() {
+		setTitle("게시글 작성");
 		getContentPane().setLayout(null);
 		
 		title_texF = new JTextField();
@@ -32,10 +34,12 @@ public class OrderWriteView extends JFrame {
 		title_texF.setColumns(10);
 		
 		title_label = new JLabel("제목 :");
+		title_label.setHorizontalAlignment(SwingConstants.RIGHT);
 		title_label.setBounds(50, 37, 36, 16);
 		getContentPane().add(title_label);
 		
 		addr_label = new JLabel("주소 :");
+		addr_label.setHorizontalAlignment(SwingConstants.RIGHT);
 		addr_label.setBounds(50, 76, 36, 16);
 		getContentPane().add(addr_label);
 		
@@ -44,7 +48,8 @@ public class OrderWriteView extends JFrame {
 		getContentPane().add(addr_combobox);
 		
 		cata_label = new JLabel("카테고리 :");
-		cata_label.setBounds(34, 122, 52, 16);
+		cata_label.setHorizontalAlignment(SwingConstants.RIGHT);
+		cata_label.setBounds(15, 122, 71, 16);
 		getContentPane().add(cata_label);
 		
 		comboBox = new JComboBox();	// 카테고리 콤보박
@@ -56,6 +61,7 @@ public class OrderWriteView extends JFrame {
 		getContentPane().add(content_label);
 		
 		content_textA = new JTextArea();
+		content_textA.setLineWrap(true);
 		content_textA.setBounds(45, 190, 301, 156);
 		getContentPane().add(content_textA);
 		
@@ -64,7 +70,7 @@ public class OrderWriteView extends JFrame {
 		getContentPane().add(money_label);
 		
 		money_textF = new JTextField();
-		money_textF.setBounds(45, 373, 91, 26);
+		money_textF.setBounds(50, 374, 91, 26);
 		getContentPane().add(money_textF);
 		money_textF.setColumns(10);
 		

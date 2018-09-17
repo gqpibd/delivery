@@ -2,6 +2,7 @@ package run;
 
 import singleton.Singleton;
 import view.InitView;
+import view.OrderWriteView;
 import view.PostView;
 
 public class Main {
@@ -12,6 +13,7 @@ public class Main {
 
 		Singleton.getInstance().getComm().makeConnection();
 		Singleton.getInstance().getMemCtrl().showInitView();
+		//new OrderWriteView();
 		//new Communicator().makeConnection();
 		//new MainView();
 		//new PostView();
