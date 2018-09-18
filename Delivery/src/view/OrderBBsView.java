@@ -1,6 +1,5 @@
 package view;
 
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -8,7 +7,6 @@ import java.awt.event.MouseEvent;
 import java.util.List;
 
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -19,6 +17,9 @@ import javax.swing.table.DefaultTableModel;
 
 import controller.OrderController;
 import dto.OrderBBsDto;
+import net.coderazzi.filters.gui.AutoChoices;
+import net.coderazzi.filters.gui.TableFilterHeader;
+import net.coderazzi.filters.gui.TableFilterHeader.Position;
 import singleton.Singleton;
 
 public class OrderBBsView extends JPanel implements ActionListener {
@@ -34,7 +35,6 @@ public class OrderBBsView extends JPanel implements ActionListener {
 	public OrderBBsView() {
 		// 하단 패널
 		setRowData();
-
 		setBounds(6, 125, 480, 487);
 		setLayout(null);
 
@@ -73,6 +73,8 @@ public class OrderBBsView extends JPanel implements ActionListener {
 			}
 		});
 
+		TableFilterHeader filterHeader = new TableFilterHeader(table,AutoChoices.ENABLED);
+		filterHeader.setPosition(Position.TOP);
 		JScrollPane scrollPane = new JScrollPane(table);
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
