@@ -17,6 +17,7 @@ public class Main {
 		//new Communicator().makeConnection();
 		//new MainView();
 		//new PostView();
+		//new OrderWriteView();
 	}
 
 }

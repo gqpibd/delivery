@@ -20,6 +20,7 @@ public class OrderDao {
 	public void execute(int number, OrderDto dto, Socket sock) {
 		switch (number) {
 		case Dml.INSERT:
+			insert_post(dto);
 			break;
 		case Dml.DELETE:
 			break;
@@ -35,10 +36,36 @@ public class OrderDao {
 		}
 
 	}
+	private void insert_post(OrderDto dto) {
+		OrderBBsDto post = (OrderBBsDto) dto;
+		String sql = " insert into orders values( bbsSeq.nextval,?,null,?,?,?,null,'요청중',null,null,?,sysdate )";
+
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+
+		try {
+			conn = DBConnection.getConnection();
+			psmt = conn.prepareStatement(sql);
+			
+			psmt.setString(1, post.getConsumerId());
+			psmt.setInt(2, post.getPrice());
+			psmt.setString(3, post.getLocation());
+			psmt.setString(4, post.getContents());
+			psmt.setString(5, post.getTitle());			
+			
+			psmt.execute();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBClose.close(psmt, conn, rs);
+		}
+		
+	}
 	/*
 	CREATE TABLE ORDERS(
 			REQNUMBER number(5) primary key,
-			REQTYPE varchar2(20) not null,
 			WRITER varchar2(20) not null,
 			DELIVERER varchar2(20),
 			PRICE number(8) not null,
@@ -48,6 +75,8 @@ public class OrderDao {
 			STATE varchar2(20), -- ������� (��û,������,�Ϸ�)
 			SCORE number(2),
 			REVIEW varchar2(1000), 
+			TITLE varchar2(40),
+			ORDER_DATE DATE,
 			CONSTRAINT FK_WRITER FOREIGN KEY(WRITER) REFERENCES members(ID),
 			CONSTRAINT FK_DELIVERER FOREIGN KEY(DELIVERER) REFERENCES members(ID)
 		);

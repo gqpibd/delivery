@@ -4,6 +4,7 @@ import communicator.Communicator;
 import controller.MemberController;
 import controller.OrderController;
 import controller.ReviewController;
+import view.MainView;
 
 public class Singleton {
 
@@ -12,6 +13,7 @@ public class Singleton {
 	private OrderController OC;
 	private ReviewController RC;
 	private Communicator comm;
+	private MainView mv;
 	
 	private Singleton() {
 		MC = new MemberController();
@@ -40,6 +42,15 @@ public class Singleton {
 	}
 	public Communicator getComm() {
 		return comm;
+	}
+	public void showMainView() {
+		if(mv == null) {
+			mv = new MainView();
+		}
+		mv.setVisible(true);
+	}
+	public void hideMainView() {
+		mv.setVisible(false);
 	}
 	
 }

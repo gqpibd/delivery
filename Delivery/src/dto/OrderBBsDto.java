@@ -1,9 +1,14 @@
 package dto;
 
+import java.io.Serializable;
 import java.util.Arrays;
 
-public class OrderBBsDto extends OrderDto {	
+public class OrderBBsDto extends OrderDto implements Serializable{	
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7372224262521338769L;
 	//public static final int WAITING = 1; --> 
 	//public static final int ONGOING = 2;
 	//public static final int DONE = 3;
@@ -24,8 +29,8 @@ public class OrderBBsDto extends OrderDto {
 		this.price = price;
 		this.applicants = applicants;
 		this.status = status;
-	}	
-
+	}
+	
 	public OrderBBsDto(OrderDto oDto, String contents, int price, String[] applicants, String status) {
 		super(oDto);
 		this.contents = contents;
@@ -40,6 +45,12 @@ public class OrderBBsDto extends OrderDto {
 	
 	public OrderBBsDto(String title, String type, String location, String consumerId, String date, String contents, int price) {
 		super(title, type, location, consumerId, date);
+		this.contents = contents;
+		this.price = price;
+	}
+	
+	public OrderBBsDto(String title, String type, String location, String consumerId, String contents, int price) {
+		super(title, type, location, consumerId);
 		this.contents = contents;
 		this.price = price;
 	}

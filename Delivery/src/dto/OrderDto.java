@@ -20,7 +20,15 @@ public class OrderDto implements Serializable{
 	public OrderDto() {
 	}
 	
-	public OrderDto(String title, String type, String location, String consumerId, String date) {
+	public OrderDto(String title, String type, String location, String consumerId ){
+		this.title = title;
+		this.type = type;
+		this.location = location;
+		this.consumerId = consumerId;
+		
+	}	
+	
+	public OrderDto(String title, String type, String location, String consumerId, String date){
 		this.title = title;
 		this.type = type;
 		this.location = location;
@@ -100,3 +108,4 @@ public class OrderDto implements Serializable{
 	
 	
 }
+
