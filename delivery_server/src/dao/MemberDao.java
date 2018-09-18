@@ -123,7 +123,7 @@ public class MemberDao {
 		MemberDto loginUser = null;
 		String id = dto.getId();
 		String pw = dto.getPw();
-		String sql = "SELECT NAME " + " FROM MEMBERS " + " WHERE ID = '" + id
+		String sql = "SELECT name, phone, auth " + " FROM MEMBERS " + " WHERE ID = '" + id
 				+ "' AND PW = '" + pw + "' ";
 
 		Connection conn = null;
@@ -139,6 +139,9 @@ public class MemberDao {
 				loginUser = new MemberDto();
 				loginUser.setId(id);
 				loginUser.setPw(pw);
+				loginUser.setName(rs.getString(1));
+				loginUser.setPhone(rs.getString(2));
+				loginUser.setAuth(rs.getInt(3));
 				
 				System.out.println(loginUser.getId() + "님이 로그인 했습니다");
 			} else {

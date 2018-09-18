@@ -25,17 +25,48 @@ public class OrderDao {
 		case Dml.DELETE:
 			break;
 		case Dml.UPDATE:
+			update_post((OrderBBsDto)dto);
 			break;
 		case Dml.SELECT:
 			select_posts(sock);
 			break;
 		case Dml.SELECT_POST:
-			select_post(sock);
+			select_post(sock, (OrderBBsDto)dto);
 			break;
-			
+		case Dml.SELECT_POSTCONENT:
+			select_postcontent(sock, (OrderBBsDto)dto);
+			break;
 		}
 
 	}
+	private void update_post(OrderBBsDto dto) {
+		OrderBBsDto post = (OrderBBsDto) dto;
+		String sql = " update orders set title = ?, location = ?, price = ?, contents = ? where reqnumber = ? ";
+
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		System.out.println("update : " + dto);
+		try {
+			conn = DBConnection.getConnection();
+			psmt = conn.prepareStatement(sql);
+			
+			psmt.setString(1, post.getTitle());
+			psmt.setString(2, post.getLocation());
+			psmt.setInt(3, post.getPrice());
+			psmt.setString(4, post.getContents());
+			psmt.setInt(5, post.getReqNum());			
+			
+			psmt.execute();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBClose.close(psmt, conn, rs);
+		}
+		
+	}
+	
 	private void insert_post(OrderDto dto) {
 		OrderBBsDto post = (OrderBBsDto) dto;
 		String sql = " insert into orders values( bbsSeq.nextval,?,null,?,?,?,null,'요청중',null,null,?,sysdate )";
@@ -84,7 +115,7 @@ public class OrderDao {
 	
 	public void select_posts(Socket sock) {
 		List<OrderBBsDto> posts = new ArrayList<>();
-		String sql = " SELECT REQNUMBER, STATE, TITLE, LOCATION, WRITER, Order_date " + " FROM ORDERS ";
+		String sql = " SELECT REQNUMBER, STATE, TITLE, LOCATION, WRITER, Order_date " + " FROM ORDERS ORDER BY REQNUMBER DESC ";
 
 		Connection conn = null;
 		PreparedStatement psmt = null;
@@ -116,9 +147,9 @@ public class OrderDao {
 		SocketWriter.Write(sock, posts);
 	}
 	
-	public void select_post(Socket sock) {
-		OrderBBsDto post = new OrderBBsDto();
-		String sql = " SELECT STATE, TITLE, LOCATION, WRITER, Order_date, price, applicants, contents " + " FROM ORDERS ";
+	public void select_post(Socket sock, OrderBBsDto post) {
+		
+		String sql = " SELECT STATE, TITLE, LOCATION, WRITER, Order_date, price, applicants, contents, REQNUMBER " + " FROM ORDERS WHERE REQNUMBER = ?";
 
 		Connection conn = null;
 		PreparedStatement psmt = null;
@@ -127,10 +158,10 @@ public class OrderDao {
 		try {
 			conn = DBConnection.getConnection();
 			psmt = conn.prepareStatement(sql);
+			psmt.setInt(1, post.getReqNum());
 			rs = psmt.executeQuery();
 
-			while (rs.next()) {
-
+			if (rs.next()) {
 				post.setStatus(rs.getString(1));
 				post.setTitle(rs.getString(2));
 				post.setLocation(rs.getString(3));
@@ -142,6 +173,7 @@ public class OrderDao {
 					post.setApplicants(applicants.split(","));
 				}
 				post.setContents(rs.getString(8));
+				post.setReqNum(rs.getInt(9));
 				System.out.println(post.toString());
 			}
 
@@ -151,5 +183,49 @@ public class OrderDao {
 			DBClose.close(psmt, conn, rs);
 		}
 		SocketWriter.Write(sock, post);
+	}
+	
+
+	
+	public void select_postcontent(Socket sock, OrderBBsDto dto) {
+		
+		String sql = " SELECT STATE, TITLE, LOCATION, WRITER, Order_date, price, applicants, contents, reqnumber " + " FROM ORDERS WHERE CONTENTS LIKE '%" + 
+				 dto.getContents() + "%'";
+
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		
+		List<OrderBBsDto> list = new ArrayList<>();
+
+		try {
+			conn = DBConnection.getConnection();
+			psmt = conn.prepareStatement(sql);			
+			rs = psmt.executeQuery();			
+
+			while (rs.next()) {
+				OrderBBsDto post = new OrderBBsDto();
+				post.setStatus(rs.getString(1));
+				post.setTitle(rs.getString(2));
+				post.setLocation(rs.getString(3));
+				post.setConsumerId(rs.getString(4));
+				post.setDate(rs.getString(5));
+				post.setPrice(rs.getInt(6));
+				String applicants = rs.getString(7);
+				if(applicants !=null) {
+					post.setApplicants(applicants.split(","));
+				}
+				post.setContents(rs.getString(8));
+				post.setReqNum(rs.getInt(9));
+				System.out.println(post.toString());
+				list.add(post);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBClose.close(psmt, conn, rs);
+		}
+		SocketWriter.Write(sock, list);
 	}
 }

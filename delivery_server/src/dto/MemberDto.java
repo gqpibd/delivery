@@ -13,6 +13,14 @@ public class MemberDto implements Serializable{
 	public static final int CONSUMER = 1;
 	public static final int DELIVERER = 2;
 	
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setAuth(int auth) {
+		this.auth = auth;
+	}
+
 	private String id;
 	private String pw;
 	private String name;
