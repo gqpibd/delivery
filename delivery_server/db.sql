@@ -1,7 +1,8 @@
--- ID, PW, NAME, ADDRESS, AUTH --> ÁÖ¹®È¸¿ø
--- ID, PW, NAME, LOCATIONS, DELIVERCOUNTS, SCORE, AUTH --> ¹è´ŞÈ¸¿ø
--- ID, PW, NAME, AUTH --> °ü¸®ÀÚ
--- AUTH : 0 : °ü¸®ÀÚ,  1 : ÁÖ¹®È¸¿ø, 2 : ¹è´ŞÈ¸¿ø
+-- ID, PW, NAME, PHONE, ADDRESS, AUTH --> êµ¬ë§¤ì
+-- ID, PW, NAME, PHONE, LOCATIONS, DELIVERCOUNTS, SCORE, AUTH --> ë°°ë‹¬ì
+-- ID, PW, NAME, AUTH --> ê´€ë¦¬ì
+-- AUTH : 0 : ê´€ë¦¬ì,  1 : êµ¬ë§¤ì, 2 : ê´€ë¦¬ì
+
 
 CREATE TABLE members(
     ID VARCHAR2(20) primary key,
@@ -11,11 +12,24 @@ CREATE TABLE members(
     LOCATIONS varchar2(200),
     DELIVERCOUNTS number(5),
     SCORE number(5,1),
-    AUTH number(2) not null    
+    PHONE varchar2(20),
+    AUTH number(2) not null,
 );
+
+ALTER TABLE members
+ADD (PHONE varchar2(20));
 
 INSERT INTO members (ID, PW, NAME, AUTH)
 VALUES ('admin','admin','administrator',0);
+
+INSERT INTO members (ID, PW, NAME, ADDRESS, PHONE, AUTH)
+VALUES ('h2__gon','gongon','ì˜ê³¤','ì„œìš¸',2);
+
+INSERT INTO members (ID, PW, NAME, ADDRESS, AUTH)
+VALUES ('dh','dohyeon','ë„í˜„','ì„±ë‚¨',1);
+
+INSERT INTO members (ID, PW, NAME, ADDRESS, AUTH)
+VALUES ('dh_deliver','dohyeon','ë„í˜„','ì„±ë‚¨',2);
 
 CREATE TABLE blacklist(
 	USERID VARCHAR2(20) not null,
@@ -27,23 +41,38 @@ CREATE TABLE blacklist(
 DROP TABLE REQUESTS
 CASCADE CONSTRAINTS
 
-CREATE TABLE requests(
+ALTER TABLE ORDERS
+DROP 
+COLUMN REQTYPE; 
+
+
+CREATE TABLE ORDERS(
 	REQNUMBER number(5) primary key,
-	REQTYPE varchar2(20) not null,
 	WRITER varchar2(20) not null,
 	DELIVERER varchar2(20),
 	PRICE number(8) not null,
-	LOCATION varchar2(50) not null, -- OO±¸
+	LOCATION varchar2(50) not null, -- OOï¿½ï¿½
 	CONTENTS varchar2(1000) not null,
-	APPLICANTS varchar2(400), -- Áö¿øÀÚ ¸ñ·Ï (ID)
-	STATE varchar2(20), -- ÁøÇà»óÅÂ (¿äÃ»,ÁøÇàÁß,¿Ï·á)
+	APPLICANTS varchar2(400), -- ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ (ID)
+	STATE varchar2(20), -- ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (ï¿½ï¿½Ã»,ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½,ï¿½Ï·ï¿½)
 	SCORE number(2),
 	REVIEW varchar2(1000), 
+	DATE 
 	CONSTRAINT FK_WRITER FOREIGN KEY(WRITER) REFERENCES members(ID),
 	CONSTRAINT FK_DELIVERER FOREIGN KEY(DELIVERER) REFERENCES members(ID)
 );
 
+alter table requests rename orders
 
+insert into orders values(2,'aa',null,20000,'ê´‘ì§„êµ¬','',null,ìš”ì²­ì¤‘,null,null,?,sysdate )
+
+INSERT INTO orders
+VALUES (1,'ë°°ë‹¬','h2gon','dh_deliver',15000,'ì„œìš¸','ë„ë¯¸ë…¸ í”¼ì ì‚¬ë‹¤ ì£¼ì„¸ìš”', null, 'ì§„í–‰ì¤‘',null,null);
+
+alter table orders
+modify (title varchar2(40) not null);
+
+select * from ORDERS;
 
 CREATE TABLE LOADNAME_ADD(
 	LOAD VARCHAR2(30), 
@@ -51,3 +80,15 @@ CREATE TABLE LOADNAME_ADD(
 	SIGUNGU VARCHAR2(30), 
 	EUBMEONDONG VARCHAR2(30)
 );
+
+SELECT bbsNum.NEXTVAL 
+FROM DUAL;
+
+DROP SEQUENCE bbsSeq
+
+SELECT bbsSeq.CURRVAL 
+FROM DUAL;
+
+CREATE SEQUENCE bbsSeq
+INCREMENT BY 1
+START WITH 1;
