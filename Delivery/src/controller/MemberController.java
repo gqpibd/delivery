@@ -4,7 +4,9 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import dto.MemberDto;
+import dto.OrderBBsDto;
 import service.MemberService;
+import singleton.Singleton;
 import view.InitView;
 import view.JoinView;
 import view.LoginView;
@@ -17,6 +19,7 @@ public class MemberController {
 	JoinView joinView;
 	InitView initView;
 	
+	
 	public MemberController() {
 		initView = new InitView();
 		initView.setVisible(false);
@@ -27,7 +30,7 @@ public class MemberController {
 
 		if (loginSuccess) {
 			JOptionPane.showMessageDialog(null, mService.getCurrentUser().getId() + "님 환영합니다");
-			new MainView();
+			Singleton.getInstance().showMainView();
 			loginView.dispose();
 		}else {
 			JOptionPane.showMessageDialog(null,"아이디 또는 패스워드가 틀렸습니다");			
@@ -60,5 +63,8 @@ public class MemberController {
 
 	public void insert(MemberDto dto) {
 		mService.insert(dto);		
+	}
+	public MemberDto getCurrentUser() {
+		return mService.getCurrentUser();
 	}
 }

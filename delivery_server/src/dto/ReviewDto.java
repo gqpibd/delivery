@@ -1,6 +1,12 @@
 package dto;
 
-public class ReviewDto extends OrderDto {
+import java.io.Serializable;
+
+public class ReviewDto extends OrderDto implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4992087031238518511L;
 	
 	private int score;
 	private String review;
@@ -8,6 +14,12 @@ public class ReviewDto extends OrderDto {
 	public ReviewDto(String title, String type, String location, String consumerId, String date, int score,
 			String review) {
 		super(title, type, location, consumerId, date);
+		this.score = score;
+		this.review = review;
+	}
+	
+	public ReviewDto(String title, String type, String location, String consumerId, int score, String review) {
+		super(title, type, location, consumerId);
 		this.score = score;
 		this.review = review;
 	}
