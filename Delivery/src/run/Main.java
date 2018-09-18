@@ -2,6 +2,7 @@ package run;
 
 import singleton.Singleton;
 import view.InitView;
+import view.OrderWriteView;
 import view.PostView;
 
 public class Main {
@@ -15,6 +16,7 @@ public class Main {
 		//new Communicator().makeConnection();
 		//new MainView();
 		//new PostView();
+		//new OrderWriteView();
 	}
 
 }

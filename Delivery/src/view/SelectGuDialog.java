@@ -136,6 +136,8 @@ public class SelectGuDialog extends JDialog implements ActionListener {
 	public String getGuName() {
 		return selectedAddField.getText();
 	}
+	// 콤보박스에서울에 있는 구전체가 나오게 하면 되죠? 그렇죠
+	// 여기있는거 복사해서씁시
 
 	@Override
 	public void actionPerformed(ActionEvent e) {

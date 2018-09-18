@@ -22,4 +22,11 @@ public class OrderService {
 		return o;
 	}
 
+	public void addPost(OrderBBsDto od) {
+		
+		Singleton s = Singleton.getInstance();
+		s.getComm().SendMessage(Communicator.INSERT, od);
+		
+	}
+
 }
