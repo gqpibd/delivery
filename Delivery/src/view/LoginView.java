@@ -26,7 +26,8 @@ public class LoginView extends JFrame implements ActionListener {
 
 	public LoginView() {
 		super("로그인");
-
+		setSize(372, 239);
+		setLocationRelativeTo(null);
 		// setContentPane(new JLabel(new ImageIcon(PATH + "loginView.jpg")));
 		//setUndecorated(true);
 		getContentPane().setLayout(null);
@@ -77,11 +78,9 @@ public class LoginView extends JFrame implements ActionListener {
 		getContentPane().add(Jbut_Exit);
 
 		setBackground(Color.WHITE);
-		setSize(372, 239);
+
 		setVisible(true);
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-
-		setLocationRelativeTo(null);
 	}
 
 	@Override

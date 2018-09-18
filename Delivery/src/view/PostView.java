@@ -4,6 +4,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
 
+import dto.MemberDto;
 import dto.OrderBBsDto;
 import dto.OrderDto;
 import singleton.Singleton;
@@ -12,9 +13,12 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.SwingConstants;
 
-public class PostView extends JFrame {
+public class PostView extends JFrame implements ActionListener {
 
 	JLabel title_label;
 	JLabel address_label;
@@ -24,9 +28,16 @@ public class PostView extends JFrame {
 	JLabel price_label;
 	JLabel applicants_label;
 	
-	JTextArea textArea;
+	JTextArea textArea;	
+	JButton back_btn;
+	JButton userchk_btn;
+	JButton update_btn;
+	JButton del_btn;
+	
+	OrderBBsDto dto = null;
 
-	public PostView() {
+	public PostView(OrderBBsDto dto) {
+		this.dto = dto;
 		getContentPane().setLayout(null);
 		
 		title_label = new JLabel("제목");
@@ -64,34 +75,39 @@ public class PostView extends JFrame {
 		textArea.setBounds(34, 140, 414, 267);
 		getContentPane().add(textArea);
 		
-		setPost();
+		setPost(dto);
 		
 		JPanel panel = new JPanel();
 		panel.setBounds(6, 420, 468, 52);
 		getContentPane().add(panel);
 		panel.setLayout(new GridLayout(1, 0, 0, 0));
 
-		JButton back_btn = new JButton("뒤로");
+		back_btn = new JButton("뒤로");
 		panel.add(back_btn);
+		back_btn.addActionListener(this);
 
-		JButton userchk_btn = new JButton("신청자 확인");
+		userchk_btn = new JButton("신청자 확인");
 		panel.add(userchk_btn);
-
-		JButton update_btn = new JButton("수정");
-		panel.add(update_btn);
-
-		JButton del_btn = new JButton("삭제");
-		panel.add(del_btn);
+		userchk_btn.addActionListener(this);
 		
+		update_btn = new JButton("수정");
+		panel.add(update_btn);
+		update_btn.addActionListener(this);
+		
+		if(!Singleton.getInstance().getMemCtrl().getCurrentUser().getId().equals(dto.getConsumerId())) {
+			update_btn.setVisible(false);
+			userchk_btn.setVisible(false);
+		}
+		
+		del_btn = new JButton("삭제");
+		panel.add(del_btn);
+		del_btn.addActionListener(this);
 
 		setBounds(0, 0, 480, 500);
 		setVisible(true);
 	}
 	
-	public void setPost() {
-		
-		Singleton s = Singleton.getInstance();
-		OrderBBsDto post = s.getOderCtrl().getPost();
+	public void setPost(OrderBBsDto post) {		
 		
 		title_label.setText(post.getTitle());
 		address_label.setText("지역: " + post.getLocation());
@@ -105,6 +121,18 @@ public class PostView extends JFrame {
 		}
 		applicants_label.setText("신청자: " + applicants + " 명");
 		textArea.setText(post.getContents());
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if(e.getSource() == back_btn) {
+			dispose();
+		}
+		else if(e.getSource() == update_btn) {
+			Singleton.getInstance().getOrderCtrl().updatePostView(dto);
+			dispose();
+		}
+		
 	}
 }
 

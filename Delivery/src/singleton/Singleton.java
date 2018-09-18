@@ -33,7 +33,7 @@ public class Singleton {
 		return MC;
 	}
 	
-	public OrderController getOderCtrl() {
+	public OrderController getOrderCtrl() {
 		return OC;
 	}
 	
@@ -44,9 +44,10 @@ public class Singleton {
 		return comm;
 	}
 	public void showMainView() {
-		if(mv == null) {
-			mv = new MainView();
+		if(mv!=null) {
+			mv.dispose();
 		}
+		mv = new MainView();		
 		mv.setVisible(true);
 	}
 	public void hideMainView() {

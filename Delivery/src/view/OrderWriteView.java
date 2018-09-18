@@ -8,6 +8,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -36,6 +37,23 @@ public class OrderWriteView extends JFrame implements ActionListener{
 	JButton back_btn;
 	
 	JLabel writer_label;
+	OrderBBsDto dto;
+	boolean isUpdate=false;
+	
+	public OrderWriteView(OrderBBsDto dto) {
+		this();
+		this.dto = dto;
+		setfield();
+		isUpdate=true;
+	}
+
+	private void setfield() {
+		title_texF.setText(dto.getTitle());
+		writer_label.setText(dto.getConsumerId());
+		addr_combobox.setSelectedItem(dto.getLocation());
+		money_textF.setText(dto.getPrice() + "");
+		content_textA.setText(dto.getContents());
+	}
 
 	public OrderWriteView() {
 		setTitle("게시글 작성");
@@ -124,11 +142,40 @@ public class OrderWriteView extends JFrame implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		
 		if(e.getSource() == chk_btn) {
-			OrderBBsDto od = new OrderBBsDto(title_texF.getText(),"",(String)addr_combobox.getSelectedItem(), writer_label.getText(),content_textA.getText(),Integer.parseInt(money_textF.getText()));
-			Singleton.getInstance().getOderCtrl().addPost(od);
+			String title =title_texF.getText().trim();
+			String content = content_textA.getText().trim();
+			int money  = 0;
+			if(content.equals("") || title.equals("")) {
+				JOptionPane.showMessageDialog(null, "입력을 제대로 해주세요!!");
+				return;
+			}
+			try{
+				money = Integer.parseInt(money_textF.getText());
+			}catch (NumberFormatException e1) {
+				JOptionPane.showMessageDialog(null, "정확한 금액을 입력해주세요!! ");
+				return;
+			}
 			
+			OrderBBsDto od = new OrderBBsDto(title,"",(String)addr_combobox.getSelectedItem(), writer_label.getText(),content, money);
 			
+			if(isUpdate) {
+				dto.setTitle(title);
+				dto.setContents(content);
+				dto.setPrice(money);
+				dto.setLocation((String)addr_combobox.getSelectedItem());
+				
+				Singleton.getInstance().getOrderCtrl().updatePost(dto);
+				
+			}else {
+				Singleton.getInstance().getOrderCtrl().addPost(od);
+			}				
+			Singleton.getInstance().getOrderCtrl().backToMain(this);
+			
+		}else if(e.getSource() == back_btn) {
+			Singleton.getInstance().showMainView();
+			dispose();
 		}
 		
 	}

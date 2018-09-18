@@ -23,7 +23,8 @@ public class InitView extends JFrame implements ActionListener{
 		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		JPanel contentPane;
 		
-		setBounds(100, 100, 387, 202);
+		setSize( 387, 202);
+		setLocationRelativeTo(null);
 		contentPane = new JPanel();
 		
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -53,7 +54,7 @@ public class InitView extends JFrame implements ActionListener{
 		
 		setVisible(true);
 		
-		setLocationRelativeTo(null);
+		
 	}
 
 	@Override
