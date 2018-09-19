@@ -23,6 +23,7 @@ public class OrderDao {
 			insert_post(dto);
 			break;
 		case Dml.DELETE:
+			delete_post(dto);
 			break;
 		case Dml.UPDATE:
 			update_post((OrderBBsDto)dto);
@@ -39,9 +40,32 @@ public class OrderDao {
 		}
 
 	}
+	private void delete_post(OrderDto dto) {
+		OrderBBsDto post = (OrderBBsDto) dto;
+		String sql = " update orders set isdel = 1 where reqnumber = ? ";
+
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		System.out.println("update : " + dto);
+		try {
+			conn = DBConnection.getConnection();
+			psmt = conn.prepareStatement(sql);
+			
+			psmt.setInt(1, post.getReqNum());					
+			
+			psmt.execute();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBClose.close(psmt, conn, rs);
+		}
+		
+	}
 	private void update_post(OrderBBsDto dto) {
 		OrderBBsDto post = (OrderBBsDto) dto;
-		String sql = " update orders set title = ?, location = ?, price = ?, contents = ? where reqnumber = ? ";
+		String sql = " update orders set title = ?, location = ?, price = ?, contents = ?, applicants = ? where reqnumber = ? ";
 
 		Connection conn = null;
 		PreparedStatement psmt = null;
@@ -55,7 +79,12 @@ public class OrderDao {
 			psmt.setString(2, post.getLocation());
 			psmt.setInt(3, post.getPrice());
 			psmt.setString(4, post.getContents());
-			psmt.setInt(5, post.getReqNum());			
+			if(post.getApplicants() != null) {
+				psmt.setString(5, post.getApplicants());
+			}else {
+				psmt.setString(5, "");
+			}
+			psmt.setInt(6, post.getReqNum());			
 			
 			psmt.execute();
 
@@ -115,7 +144,7 @@ public class OrderDao {
 	
 	public void select_posts(Socket sock) {
 		List<OrderBBsDto> posts = new ArrayList<>();
-		String sql = " SELECT REQNUMBER, STATE, TITLE, LOCATION, WRITER, Order_date " + " FROM ORDERS ORDER BY REQNUMBER DESC ";
+		String sql = " SELECT REQNUMBER, STATE, TITLE, LOCATION, WRITER, Order_date " + " FROM ORDERS WHERE NVL(ISDEL,0) = 0 ORDER BY REQNUMBER DESC ";
 
 		Connection conn = null;
 		PreparedStatement psmt = null;
@@ -170,7 +199,7 @@ public class OrderDao {
 				post.setPrice(rs.getInt(6));
 				String applicants = rs.getString(7);
 				if(applicants !=null) {
-					post.setApplicants(applicants.split(","));
+					post.setApplicants(applicants);
 				}
 				post.setContents(rs.getString(8));
 				post.setReqNum(rs.getInt(9));
@@ -213,7 +242,7 @@ public class OrderDao {
 				post.setPrice(rs.getInt(6));
 				String applicants = rs.getString(7);
 				if(applicants !=null) {
-					post.setApplicants(applicants.split(","));
+					post.setApplicants(applicants);
 				}
 				post.setContents(rs.getString(8));
 				post.setReqNum(rs.getInt(9));

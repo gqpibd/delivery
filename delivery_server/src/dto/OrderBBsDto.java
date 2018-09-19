@@ -3,12 +3,12 @@ package dto;
 import java.io.Serializable;
 import java.util.Arrays;
 
-public class OrderBBsDto extends OrderDto implements Serializable{		
+public class OrderBBsDto extends OrderDto implements Serializable{	
+	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 7372224262521338769L;
-	
 	//public static final int WAITING = 1; --> 
 	//public static final int ONGOING = 2;
 	//public static final int DONE = 3;
@@ -16,14 +16,14 @@ public class OrderBBsDto extends OrderDto implements Serializable{
 	
 	private String contents;
 	private int price;
-	private String[] applicants;
+	private String applicants;
 	private String status;
 	
 	
-	public OrderBBsDto() {}
+	public OrderBBsDto() {	}
 		
 	public OrderBBsDto(int reqNum, String title, String type, String location, String consumerId, String delivererId,
-			String date, String contents, int price, String[] applicants, String status) {
+			String date, String contents, int price, String applicants, String status) {
 		super(reqNum, title, type, location, consumerId, delivererId, date);
 		this.contents = contents;
 		this.price = price;
@@ -31,7 +31,7 @@ public class OrderBBsDto extends OrderDto implements Serializable{
 		this.status = status;
 	}
 	
-	public OrderBBsDto(OrderDto oDto, String contents, int price, String[] applicants, String status) {
+	public OrderBBsDto(OrderDto oDto, String contents, int price, String applicants, String status) {
 		super(oDto);
 		this.contents = contents;
 		this.price = price;
@@ -71,11 +71,11 @@ public class OrderBBsDto extends OrderDto implements Serializable{
 		this.price = price;
 	}
 
-	public String[] getApplicants() {
+	public String getApplicants() {
 		return applicants;
 	}
 
-	public void setApplicants(String[] applicants) {
+	public void setApplicants(String applicants) {
 		this.applicants = applicants;
 	}
 
@@ -86,10 +86,12 @@ public class OrderBBsDto extends OrderDto implements Serializable{
 	public void setStatus(String status) {
 		this.status = status;
 	}
+	
+	
 
 	@Override
 	public String toString() {
-		return super.toString() + "OrderBBsDto [contents=" + contents + ", price=" + price + ", applicants=" + Arrays.toString(applicants)
+		return super.toString() + "OrderBBsDto [contents=" + contents + ", price=" + price + ", applicants=" + applicants
 				+ ", status=" + status + "]";
 	}
 	

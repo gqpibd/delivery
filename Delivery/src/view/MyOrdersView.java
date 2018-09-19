@@ -3,7 +3,10 @@ package view;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+<<<<<<< HEAD
 import javax.swing.JFrame;
+=======
+>>>>>>> refs/remotes/origin/h2gon
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 

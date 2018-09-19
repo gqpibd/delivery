@@ -43,4 +43,9 @@ public class MemberService {
 
 		comm.SendMessage(Communicator.INSERT, dto);
 	}
+
+	public void logout() {
+		CurrentUser = null;
+		
+	}
 }

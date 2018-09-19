@@ -70,4 +70,10 @@ public class MemberController {
 		return mService.getCurrentUser();
 	}
 
+	public void logout() {
+		mService.logout();
+		showInitView();
+		
+	}
+
 }
