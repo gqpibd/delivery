@@ -312,6 +312,8 @@ public class JoinView extends JFrame implements ActionListener {
 				single.getMemCtrl().insert(dto);
 				//single.backToMain(this);
 				JOptionPane.showMessageDialog(null, "회원가입이 완료되었습니다.");
+				single.showMainView();
+				dispose();
 			}
 		} else if (obj == back_btn) { // 뒤로가기
 			Singleton.getInstance().getMemCtrl().backToInitView(this);

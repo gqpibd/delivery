@@ -19,6 +19,8 @@ CREATE TABLE members(
 ALTER TABLE members
 ADD (PHONE varchar2(20));
 
+
+
 INSERT INTO members (ID, PW, NAME, AUTH)
 VALUES ('admin','admin','administrator',0);
 
@@ -57,10 +59,15 @@ CREATE TABLE ORDERS(
 	STATE varchar2(20), -- ������� (��û,������,�Ϸ�)
 	SCORE number(2),
 	REVIEW varchar2(1000), 
-	DATE 
+	ORDER_DATE date,
+	ISDEL NUMBER(1) -- 1이면 삭제, 0이면 있음
 	CONSTRAINT FK_WRITER FOREIGN KEY(WRITER) REFERENCES members(ID),
 	CONSTRAINT FK_DELIVERER FOREIGN KEY(DELIVERER) REFERENCES members(ID)
 );
+
+ALTER TABLE ORDERS
+ADD (ISDEL NUMBER(1));
+
 
 alter table requests rename orders
 

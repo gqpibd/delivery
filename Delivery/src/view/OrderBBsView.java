@@ -18,9 +18,11 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 import controller.OrderController;
+import dto.DelivererDto;
 import dto.MemberDto;
 import dto.OrderBBsDto;
 import net.coderazzi.filters.gui.AutoChoices;
+import net.coderazzi.filters.gui.IFilterEditor;
 import net.coderazzi.filters.gui.TableFilterHeader;
 import net.coderazzi.filters.gui.TableFilterHeader.Position;
 import singleton.Singleton;
@@ -58,12 +60,20 @@ public class OrderBBsView extends JPanel implements ActionListener {
 		table = new JTable(model);
 
 		setTable();
-		TableFilterHeader filterHeader = new TableFilterHeader(table,AutoChoices.ENABLED);
+		TableFilterHeader filterHeader = new TableFilterHeader(table, AutoChoices.ENABLED);
 		filterHeader.setPosition(Position.TOP);
+
+		for (int i = 0; i < columnNames.length; i++) {
+			filterHeader.getFilterEditor(i).setEditable(false);
+		}
+		if (s.getMemCtrl().getCurrentUser().getAuth() == MemberDto.DELIVERER) {
+			DelivererDto dto = (DelivererDto) s.getMemCtrl().getCurrentUser();
+			filterHeader.getFilterEditor(3).setContent(dto.getLocations()[0]);
+		}
 		table.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if(e.getClickCount()==2) {
+				if (e.getClickCount() == 2) {
 					super.mouseClicked(e);
 					int rowNum = table.getSelectedRow();
 					int postNum = (int) table.getValueAt(rowNum, 0);
@@ -83,24 +93,24 @@ public class OrderBBsView extends JPanel implements ActionListener {
 		exit_btn = new JButton("종료");
 		exit_btn.setBounds(345, 444, 117, 37);
 		add(exit_btn);
-		
+
 		logout_btn = new JButton("로그아웃");
 		logout_btn.setBounds(217, 444, 128, 37);
 		add(logout_btn);
-		
+
 		write_btn = new JButton("글쓰기");
 		write_btn.setBounds(7, 444, 128, 33);
 		add(write_btn);
-		
-		if(Singleton.getInstance().getMemCtrl().getCurrentUser().getAuth() != MemberDto.CONSUMER) {
+
+		if (Singleton.getInstance().getMemCtrl().getCurrentUser().getAuth() != MemberDto.CONSUMER) {
 			System.out.println(Singleton.getInstance().getMemCtrl().getCurrentUser().getAuth());
 			write_btn.setVisible(false);
 		}
-		
+
 		write_btn.addActionListener(this);
 		exit_btn.addActionListener(this);
 		logout_btn.addActionListener(this);
-		
+
 		choice_comboBox = new JComboBox<>();
 		choice_comboBox.setBounds(123, 403, 117, 37);
 		add(choice_comboBox);
@@ -108,22 +118,21 @@ public class OrderBBsView extends JPanel implements ActionListener {
 		choice_comboBox.addItem("내용");
 		choice_comboBox.addItem("제목");
 		choice_comboBox.addActionListener(this);
-		
+
 		search_btn = new JButton("검색");
 		search_btn.setBounds(357, 403, 117, 37);
 		add(search_btn);
 		search_btn.addActionListener(this);
-		
-		
+
 		search_textF = new JTextField();
 		search_textF.setBounds(241, 404, 117, 33);
 		add(search_textF);
 		search_textF.setColumns(10);
-		
+
 	}
 
 	public void setRowData(List<OrderBBsDto> list) {
-		
+
 		rowData = new Object[list.size()][6];
 
 		for (int i = 0; i < list.size(); i++) {
@@ -132,10 +141,10 @@ public class OrderBBsView extends JPanel implements ActionListener {
 			rowData[i][2] = list.get(i).getTitle();
 			rowData[i][3] = list.get(i).getLocation();
 			rowData[i][4] = list.get(i).getConsumerId();
-			rowData[i][5] = list.get(i).getDate().split(" ")[0];		
+			rowData[i][5] = list.get(i).getDate().split(" ")[0];
 		}
 	}
-	
+
 	public void setTable() {
 		table.getColumnModel().getColumn(0).setMaxWidth(30); // 글번호 폭
 		table.getColumnModel().getColumn(1).setMaxWidth(50); // 상태 폭
@@ -156,23 +165,21 @@ public class OrderBBsView extends JPanel implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if(e.getSource() == write_btn) {
+		if (e.getSource() == write_btn) {
 			OrderController oc = Singleton.getInstance().getOrderCtrl();
 			oc.orderWriteView();
-						
-		}		
-		if(e.getSource() == search_btn) {
+
+		}
+		if (e.getSource() == search_btn) {
 			String inputF = search_textF.getText();
-			List<OrderBBsDto> list = Singleton.getInstance().getOrderCtrl().selectList((String)choice_comboBox.getSelectedItem(), inputF);
-			
+			List<OrderBBsDto> list = Singleton.getInstance().getOrderCtrl()
+					.selectList((String) choice_comboBox.getSelectedItem(), inputF);
+
 			setRowData(list);
 			model.setDataVector(rowData, columnNames);
 			setTable();
-			
+
 		}
 	}
-	
-	
-	
-	
+
 }
