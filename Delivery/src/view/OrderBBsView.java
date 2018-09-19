@@ -60,6 +60,11 @@ public class OrderBBsView extends JPanel implements ActionListener {
 		setTable();
 		TableFilterHeader filterHeader = new TableFilterHeader(table,AutoChoices.ENABLED);
 		filterHeader.setPosition(Position.TOP);
+		
+		for (int i = 0; i < columnNames.length; i++) {
+			filterHeader.getFilterEditor(i).setEditable(false);
+		}
+		
 		table.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -83,10 +88,12 @@ public class OrderBBsView extends JPanel implements ActionListener {
 		exit_btn = new JButton("종료");
 		exit_btn.setBounds(345, 444, 117, 37);
 		add(exit_btn);
+		exit_btn.addActionListener(this);
 		
 		logout_btn = new JButton("로그아웃");
 		logout_btn.setBounds(217, 444, 128, 37);
 		add(logout_btn);
+		logout_btn.addActionListener(this);
 		
 		write_btn = new JButton("글쓰기");
 		write_btn.setBounds(7, 444, 128, 33);
@@ -125,9 +132,9 @@ public class OrderBBsView extends JPanel implements ActionListener {
 	public void setRowData(List<OrderBBsDto> list) {
 		
 		rowData = new Object[list.size()][6];
-
+		int count=list.size();
 		for (int i = 0; i < list.size(); i++) {
-			rowData[i][0] = list.get(i).getReqNum();
+			rowData[i][0] = count--;
 			rowData[i][1] = list.get(i).getStatus();
 			rowData[i][2] = list.get(i).getTitle();
 			rowData[i][3] = list.get(i).getLocation();
@@ -161,7 +168,7 @@ public class OrderBBsView extends JPanel implements ActionListener {
 			oc.orderWriteView();
 						
 		}		
-		if(e.getSource() == search_btn) {
+		else if(e.getSource() == search_btn) {
 			String inputF = search_textF.getText();
 			List<OrderBBsDto> list = Singleton.getInstance().getOrderCtrl().selectList((String)choice_comboBox.getSelectedItem(), inputF);
 			
@@ -170,6 +177,14 @@ public class OrderBBsView extends JPanel implements ActionListener {
 			setTable();
 			
 		}
+		else if(e.getSource() == logout_btn) {
+			Singleton.getInstance().getMemCtrl().logout();
+			Singleton.getInstance().hideMainView();
+		}
+		else if(e.getSource() == exit_btn) {
+			System.exit(0);
+		}
+		
 	}
 	
 	
