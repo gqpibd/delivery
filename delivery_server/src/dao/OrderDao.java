@@ -37,9 +37,48 @@ public class OrderDao {
 		case Dml.SELECT_POSTCONENT:
 			select_postcontent(sock, (OrderBBsDto)dto);
 			break;
+		case Dml.SELECT_MYORDER:
+			select_MyOder(sock, dto);
 		}
 
 	}
+	
+	private void select_MyOder(Socket sock, OrderDto dto) {
+		String id = dto.getConsumerId();
+		String sql = " SELECT REQNUMBER, STATE, TITLE, WRITER, Order_date " + " FROM ORDERS WHERE writer = ? and NVL(isdel,0) != 1 ";
+		List<OrderBBsDto> list = new ArrayList<>();
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+
+		try {
+			conn = DBConnection.getConnection();
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, id);
+			rs = psmt.executeQuery();
+
+			while (rs.next()) {
+				
+				OrderBBsDto post = new OrderBBsDto();
+				post.setReqNum(rs.getInt(1));
+				post.setStatus(rs.getString(2));
+				post.setTitle(rs.getString(3));
+				post.setConsumerId(rs.getString(4));
+				post.setDate(rs.getString(5));
+				
+				list.add(post);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBClose.close(psmt, conn, rs);
+		}
+		SocketWriter.Write(sock, list);
+		
+	}
+
 	private void delete_post(OrderDto dto) {
 		OrderBBsDto post = (OrderBBsDto) dto;
 		String sql = " update orders set isdel = 1 where reqnumber = ? ";
@@ -98,7 +137,7 @@ public class OrderDao {
 	
 	private void insert_post(OrderDto dto) {
 		OrderBBsDto post = (OrderBBsDto) dto;
-		String sql = " insert into orders values( bbsSeq.nextval,?,null,?,?,?,null,'요청중',null,null,?,sysdate )";
+		String sql = " insert into orders values( bbsSeq.nextval,?,null,?,?,?,null,'요청중',null,null,?,sysdate,0 )";
 
 		Connection conn = null;
 		PreparedStatement psmt = null;

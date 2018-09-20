@@ -11,5 +11,5 @@ public class Dml {
 	public static final int SELECT_IDCHEKCK = 6;
 	public static final int SELECT_GU = 7;
 	public static final int SELECT_POSTCONENT = 8;
-	
+	public static final int SELECT_MYORDER = 9;
 }

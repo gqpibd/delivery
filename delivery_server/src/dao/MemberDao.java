@@ -25,6 +25,7 @@ public class MemberDao {
 		case Dml.DELETE:
 			break;
 		case Dml.UPDATE:
+			update(dto);
 			break;
 		case Dml.SELECT:
 			select_login(dto, sock);			
@@ -35,6 +36,43 @@ public class MemberDao {
 		}
 
 	}
+
+	private void update(MemberDto dto) {
+		ConsumerDto con = null;
+		
+		String sql = "";
+		
+		if(dto.getAuth() == MemberDto.CONSUMER) {
+			con=(ConsumerDto)dto;
+			
+			sql = " update members set address = ?, pw = ? where id = ? ";
+		}
+		
+			Connection conn = null;
+			PreparedStatement psmt = null;
+			ResultSet rs = null;
+			
+			System.out.println("update : " + dto);
+			try {
+				conn = DBConnection.getConnection();
+				psmt = conn.prepareStatement(sql);
+				
+				psmt.setString(1, con.getAddress());
+				psmt.setString(2, con.getPw());
+				psmt.setString(3, con.getId());
+				
+				psmt.execute();
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				DBClose.close(psmt, conn, rs);
+			}
+			
+		}
+		
+		
+	
 
 	private void select_existingId(MemberDto dto, Socket sock) {
 		String id = dto.getId();
@@ -120,40 +158,44 @@ public class MemberDao {
 	}
 	
 	public void select_login(MemberDto dto, Socket sock) {
-		MemberDto loginUser = null;
-		String id = dto.getId();
-		String pw = dto.getPw();
-		String sql = "SELECT name, phone, auth " + " FROM MEMBERS " + " WHERE ID = '" + id
-				+ "' AND PW = '" + pw + "' ";
+	      MemberDto loginUser = null;
+	      String id = dto.getId();
+	      String pw = dto.getPw();
+	      String sql = "SELECT name, phone, ADDRESS, LOCATIONS, auth " + " FROM MEMBERS " + " WHERE ID = '" + id
+	            + "' AND PW = '" + pw + "' ";
 
-		Connection conn = null;
-		PreparedStatement psmt = null;
-		ResultSet rs = null;
+	      Connection conn = null;
+	      PreparedStatement psmt = null;
+	      ResultSet rs = null;
 
-		try {
-			conn = DBConnection.getConnection();
-			psmt = conn.prepareStatement(sql);
-			rs = psmt.executeQuery();
+	      try {
+	         conn = DBConnection.getConnection();
+	         psmt = conn.prepareStatement(sql);
+	         rs = psmt.executeQuery();
 
-			if (rs.next()) {
-				loginUser = new MemberDto();
-				loginUser.setId(id);
-				loginUser.setPw(pw);
-				loginUser.setName(rs.getString(1));
-				loginUser.setPhone(rs.getString(2));
-				loginUser.setAuth(rs.getInt(3));
-				
-				System.out.println(loginUser.getId() + "님이 로그인 했습니다");
-			} else {
-				System.out.println("아이디 또는 패스워드가 틀렸습니다");
-			}
+	         if (rs.next()) {
+	            int auth = rs.getInt(5);
+	            if (auth == MemberDto.CONSUMER) {
+	               loginUser = new ConsumerDto(dto, rs.getString("address"));
+	            } else if (auth == MemberDto.DELIVERER) {
+	               loginUser = new DelivererDto(dto, rs.getString("locations").split(","));
+	            }
+	            loginUser.setId(id);
+	            loginUser.setPw(pw);
+	            loginUser.setName(rs.getString(1));
+	            loginUser.setPhone(rs.getString(2));
+	            loginUser.setAuth(auth);
+	            System.out.println(loginUser.getId() + "님이 로그인 했습니다");
+	         } else {
+	            System.out.println("아이디 또는 패스워드가 틀렸습니다");
+	         }
 
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			DBClose.close(psmt, conn, rs);
-		}
-		SocketWriter.Write(sock, loginUser);
-	}
+	      } catch (SQLException e) {
+	         e.printStackTrace();
+	      } finally {
+	         DBClose.close(psmt, conn, rs);
+	      }
+	      SocketWriter.Write(sock, loginUser);
+	   }
 
 }
