@@ -10,6 +10,7 @@ import singleton.Singleton;
 import view.OrderBBsView;
 import view.OrderWriteView;
 import view.PostView;
+import view.selectDeliver;
 
 public class OrderController {
 
@@ -53,6 +54,11 @@ public class OrderController {
 	}
 	public void updatePost(OrderBBsDto dto) {
 		OS.updatePost(dto);
+	}
+
+	public String getSelDeliverView(String applicants) {
+		selectDeliver sel = new selectDeliver(applicants);
+		return sel.selDeliver();
 	}
 	
 	

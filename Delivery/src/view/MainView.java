@@ -36,7 +36,8 @@ public class MainView extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				bottom_panel.removeAll();
 				bottom_panel.add(new OrderBBsView());
-				
+				bottom_panel.setBounds(6, 125, 480, 487);
+				repaint();
 			}
 		});
 		
@@ -51,7 +52,8 @@ public class MainView extends JFrame {
 //				getContentPane().add(bottom_panel);
 				bottom_panel.removeAll();
 				bottom_panel.add(new MyOrdersView());
-				
+				bottom_panel.setBounds(6, 125, 480, 487);
+				repaint();
 			}
 		});
 		
@@ -66,7 +68,8 @@ public class MainView extends JFrame {
 //				getContentPane().add(bottom_panel);
 				bottom_panel.removeAll();
 				bottom_panel.add(new MypageView());
-				
+				bottom_panel.setBounds(6, 125, 480, 487);
+				repaint();
 			}
 		});
 		

@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 public class MyOrdersView extends JPanel implements ActionListener{
 
@@ -13,10 +14,12 @@ public class MyOrdersView extends JPanel implements ActionListener{
 		// 하단 패널
 		
 		setLayout(null);
+		setBounds(6, 125, 480, 487);
 		
-		JLabel lblNewLabel = new JLabel("내 주문 내역");
-		lblNewLabel.setBounds(12, 10, 57, 15);
-		add(lblNewLabel);
+		JLabel title_label = new JLabel("New label");
+		title_label.setHorizontalAlignment(SwingConstants.CENTER);
+		title_label.setBounds(0, 25, 480, 58);
+		add(title_label);
 
 		
 
