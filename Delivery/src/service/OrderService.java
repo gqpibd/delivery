@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import communicator.Communicator;
+import dto.MemberDto;
 import dto.OrderBBsDto;
 import dto.OrderDto;
 import singleton.Singleton;
@@ -72,8 +73,16 @@ public class OrderService {
 	}
 
 	public void updatePost(OrderBBsDto dto) {
-		Singleton.getInstance().getComm().SendMessage(Communicator.UPDATE, dto);
+		Singleton.getInstance().getComm().SendMessage(Communicator.UPDATE, dto);		
+	}
+	
+	public List<OrderBBsDto> getOderList() {
+		OrderBBsDto dto = new OrderBBsDto();
+		dto.setConsumerId(Singleton.getInstance().getMemCtrl().getCurrentUser().getId());
+		Singleton.getInstance().getComm().SendMessage(Communicator.SELECT_MYODER, dto);
+		List<OrderBBsDto> list = (List<OrderBBsDto>)Singleton.getInstance().getComm().receiveObject();
 		
+		return list;
 	}
 
 }

@@ -61,5 +61,9 @@ public class OrderController {
 		return sel.selDeliver();
 	}
 	
+	public List<OrderBBsDto> getOderList(){ 		
+		return OS.getOderList();
+	}
+	
 	
 }

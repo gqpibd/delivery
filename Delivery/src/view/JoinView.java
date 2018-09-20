@@ -316,7 +316,7 @@ public class JoinView extends JFrame implements ActionListener {
 		} else if (obj == back_btn) { // 뒤로가기
 			Singleton.getInstance().getMemCtrl().backToInitView(this);
 		} else if (obj == search_btn) { // 주소 검색
-			SelectAddressDialog add = new SelectAddressDialog(this);
+			SelectAddressDialog add = new SelectAddressDialog();
 			address_field.setText(add.getAddress());
 			address_detail_field.setText(add.getDetailAddress());
 		} else if (obj == search_gu_btn) {

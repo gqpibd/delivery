@@ -44,7 +44,7 @@ public class OrderBBsView extends JPanel implements ActionListener {
 		List<OrderBBsDto> list = s.getOrderCtrl().getPostlist();
 		setRowData(list);
 
-		setBounds(6, 125, 480, 487);
+		setSize(480, 487);
 		setLayout(null);
 
 		// 테이블의 폭을 설정하기 위한 Model good but

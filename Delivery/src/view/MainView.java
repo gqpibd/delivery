@@ -11,13 +11,14 @@ import javax.swing.JPanel;
 public class MainView extends JFrame {
 	
 	JPanel bottom_panel=null;
-	//what is the problem? all
 	
 	public MainView() {
 		super("대신해드려요!!");
 		getContentPane().setLayout(null);
 		// 게시판 
-		bottom_panel = new OrderBBsView();
+		bottom_panel = new JPanel();
+		bottom_panel.add(new OrderBBsView());
+		bottom_panel.setLayout(new GridLayout());
 		bottom_panel.setBounds(6, 125, 480, 487);
 		getContentPane().add(bottom_panel);
 		
