@@ -172,6 +172,16 @@ public class PostView extends JFrame implements ActionListener {
 				del_btn.setVisible(false);
 			}
 		}
+		if(e.getSource() == userchk_btn) {
+			String sel = Singleton.getInstance().getOrderCtrl().getSelDeliverView(dto.getApplicants());
+			JOptionPane.showMessageDialog(null, sel);
+			if(sel == null || sel.equals("")) {
+				return;
+			}else {
+				applicants_label.setText(sel + "님 "+ "수락대기중");
+			}
+		}
+		
 
 	}
 }

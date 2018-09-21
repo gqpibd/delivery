@@ -18,8 +18,13 @@ public class MainView extends JFrame {
 
 		// 게시판 
 		bottom_panel = new JPanel();
+<<<<<<< HEAD
 		bottom_panel.setLayout(new GridLayout());
 		bottom_panel.add(new OrderBBsView());
+=======
+		bottom_panel.add(new OrderBBsView());
+		bottom_panel.setLayout(new GridLayout());
+>>>>>>> refs/remotes/origin/h2gon
 		bottom_panel.setBounds(6, 125, 480, 487);
 		getContentPane().add(bottom_panel);
 		
@@ -37,8 +42,13 @@ public class MainView extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				bottom_panel.remove(0);
 				bottom_panel.add(new OrderBBsView());
+<<<<<<< HEAD
 				repaint();
 				
+=======
+				bottom_panel.setBounds(6, 125, 480, 487);
+				repaint();
+>>>>>>> refs/remotes/origin/h2gon
 			}
 		});
 	
@@ -50,6 +60,10 @@ public class MainView extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				bottom_panel.removeAll();
 				bottom_panel.add(new MyOrdersView());
+<<<<<<< HEAD
+=======
+				bottom_panel.setBounds(6, 125, 480, 487);
+>>>>>>> refs/remotes/origin/h2gon
 				repaint();
 			}
 		});
@@ -62,6 +76,10 @@ public class MainView extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				bottom_panel.removeAll();
 				bottom_panel.add(new MypageView());
+<<<<<<< HEAD
+=======
+				bottom_panel.setBounds(6, 125, 480, 487);
+>>>>>>> refs/remotes/origin/h2gon
 				repaint();
 			}
 		});

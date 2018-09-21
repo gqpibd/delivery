@@ -31,9 +31,9 @@ public class SelectAddressDialog extends JDialog implements ActionListener {
 	private JTextField selectedAddField;
 	private JTextField detailAddField;
 	// private static final String PATH = "images/accountView/";
-
-	public SelectAddressDialog(JFrame parent) {
-		super(parent, true);
+	
+	public SelectAddressDialog() {
+		setModal(true);
 		JPanel contentPane;
 		setSize(392, 413);
 		contentPane = new JPanel();

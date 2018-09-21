@@ -10,6 +10,7 @@ import singleton.Singleton;
 import view.OrderBBsView;
 import view.OrderWriteView;
 import view.PostView;
+import view.selectDeliver;
 
 public class OrderController {
 
@@ -55,9 +56,21 @@ public class OrderController {
 		OS.updatePost(dto);
 	}
 
+<<<<<<< HEAD
 	public List<OrderBBsDto> getDeliverList(String id) {		
 		return OS.getDeliverList(id);
 	}
 
+=======
+	public String getSelDeliverView(String applicants) {
+		selectDeliver sel = new selectDeliver(applicants);
+		return sel.selDeliver();
+	}
+	
+	public List<OrderBBsDto> getOderList(){ 		
+		return OS.getOderList();
+	}
+	
+>>>>>>> refs/remotes/origin/h2gon
 	
 }
