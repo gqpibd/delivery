@@ -55,12 +55,13 @@ CREATE TABLE ORDERS(
 	PRICE number(8) not null,
 	LOCATION varchar2(50) not null, -- OO��
 	CONTENTS varchar2(1000) not null,
-	APPLICANTS varchar2(400), -- ������ ��� (ID)
-	STATE varchar2(20), -- ������� (��û,������,�Ϸ�)
+	APPLICANTS varchar2(400), 
+	STATE varchar2(20), 
 	SCORE number(2),
 	REVIEW varchar2(1000), 
 	ORDER_DATE date,
-	ISDEL NUMBER(1) -- 1이면 삭제, 0이면 있음
+	ISDEL NUMBER(1), -- 1이면 삭제, 0이면 있음
+	ADDRESS VARCHAR2(150),	
 	CONSTRAINT FK_WRITER FOREIGN KEY(WRITER) REFERENCES members(ID),
 	CONSTRAINT FK_DELIVERER FOREIGN KEY(DELIVERER) REFERENCES members(ID)
 );
@@ -68,6 +69,10 @@ CREATE TABLE ORDERS(
 ALTER TABLE ORDERS
 ADD (ISDEL NUMBER(1));
 
+ALTER TABLE ORDERS
+ADD (ADDRESS VARCHAR2(150));
+
+select * from orders;
 
 alter table requests rename orders
 

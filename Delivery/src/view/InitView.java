@@ -23,7 +23,7 @@ public class InitView extends JFrame implements ActionListener{
 		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		JPanel contentPane;
 		
-		setSize( 387, 202);
+		setSize(387, 202);
 		setLocationRelativeTo(null);
 		contentPane = new JPanel();
 		

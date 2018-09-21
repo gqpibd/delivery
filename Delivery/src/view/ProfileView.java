@@ -28,6 +28,7 @@ public class ProfileView extends JDialog {
 	private Object rowData[][];
 	private DefaultTableModel model;
 	public ProfileView(MemberDto dto) {
+		setTitle("배달원 정보");
 		setModal(true);
 		MemberController mCtrl = Singleton.getInstance().getMemCtrl();
 		JPanel contentPane = new JPanel();
@@ -35,6 +36,7 @@ public class ProfileView extends JDialog {
 		//contentPane.setSize(300,300);
 		contentPane.setLayout(null);
 		setSize(487,500);
+		setLocationRelativeTo(null);
 		
 		DelivererDto deliverer = mCtrl.getDeliverInfo(dto);
 		
@@ -69,37 +71,41 @@ public class ProfileView extends JDialog {
 		JLabel imgLabel = new JLabel("이미지");
 		imgLabel.setBackground(Color.WHITE);
 		imgLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		imgLabel.setBounds(22, 21, 173, 168);
+		imgLabel.setBounds(22, 21, 170, 170);
 		contentPane.add(imgLabel);
-		
-		JLabel idLabel = new JLabel("아이디 : " + deliverer.getId());
-		idLabel.setBounds(217, 21, 221, 29);
-		contentPane.add(idLabel);
-		
-		JLabel locationLabel = new JLabel("배달지역 : " +deliverer.getLocations()[0]);
-		locationLabel.setBounds(217, 57, 221, 29);
-		contentPane.add(locationLabel);
-		
-		JLabel countLabel = new JLabel("배달건수 : " + deliverer.getDeliveryCounts());
-		countLabel.setBounds(217, 103, 221, 29);
-		contentPane.add(countLabel);
-		
-		JLabel scoreLabel = new JLabel("만족도 : " + deliverer.getScore());
-		scoreLabel.setBounds(217, 139, 221, 29);
-		contentPane.add(scoreLabel);
 		
 		JLabel deliverListLabel = new JLabel("배달목록");
 		deliverListLabel.setBounds(22, 196, 99, 29);
 		contentPane.add(deliverListLabel);
 		
 		JScrollPane scrollPane = new JScrollPane(table);
-		scrollPane.setBounds(22, 246, 435, 178);
+		scrollPane.setBounds(22, 226, 435, 178);
 		contentPane.add(scrollPane);
 		
 		JButton okBtn = new JButton("확인");
-		okBtn.setBounds(304, 433, 153, 37);
+		okBtn.setBounds(328, 414, 129, 37);
 		contentPane.add(okBtn);
-		setLocationRelativeTo(null);
+		
+		JPanel panel = new JPanel();
+		panel.setBounds(206, 21, 251, 195);
+		contentPane.add(panel);
+		panel.setLayout(null);
+		
+		JLabel label = new JLabel("아이디 : <dynamic>");
+		label.setBounds(12, 15, 221, 29);
+		panel.add(label);
+		
+		JLabel label_1 = new JLabel("배달지역 : <dynamic>");
+		label_1.setBounds(12, 59, 221, 29);
+		panel.add(label_1);
+		
+		JLabel label_2 = new JLabel("배달건수 : 0");
+		label_2.setBounds(12, 103, 221, 29);
+		panel.add(label_2);
+		
+		JLabel label_3 = new JLabel("만족도 : 0.0");
+		label_3.setBounds(12, 147, 221, 29);
+		panel.add(label_3);
 		setVisible(true);
 	}
 

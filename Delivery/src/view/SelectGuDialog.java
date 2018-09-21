@@ -31,8 +31,8 @@ public class SelectGuDialog extends JDialog implements ActionListener {
 	private JTextField selectedAddField;
 	// private static final String PATH = "images/accountView/";
 
-	public SelectGuDialog(JFrame parent) {
-		super(parent, true);
+	public SelectGuDialog() {
+		setModal(true);
 		JPanel contentPane;
 		setSize(321, 381);
 		contentPane = new JPanel();

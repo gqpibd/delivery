@@ -3,8 +3,11 @@ package view;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionListener;
 import java.util.regex.Pattern;
 
 import javax.swing.ImageIcon;
@@ -14,6 +17,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
+import javax.swing.JRootPane;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
@@ -59,7 +63,8 @@ public class JoinView extends JFrame implements ActionListener {
 
 	public JoinView() {
 		JPanel contentPane;
-		contentPane = new JPanel();
+		contentPane = new JPanel();		
+
 		int width = 381;
 		setSize(396, 486);
 		setContentPane(contentPane);
@@ -207,7 +212,7 @@ public class JoinView extends JFrame implements ActionListener {
 
 		search_gu_btn = new JLabel("검색");
 		search_gu_btn.setHorizontalAlignment(SwingConstants.CENTER);
-		search_gu_btn.addMouseListener(new LabelEventListener(this,search_gu_btn));
+		search_gu_btn.addMouseListener(new LabelEventListener(this, search_gu_btn));
 		search_gu_btn.setBounds(301, 5, 68, 25);
 		deliverer_panel.add(search_gu_btn);
 
@@ -234,7 +239,7 @@ public class JoinView extends JFrame implements ActionListener {
 		deliverer_panel.setVisible(false);
 
 		search_img_btn = new JLabel("이미지 검색");
-		search_img_btn.addMouseListener(new LabelEventListener(this,search_img_btn));
+		search_img_btn.addMouseListener(new LabelEventListener(this, search_img_btn));
 		search_img_btn.setHorizontalAlignment(SwingConstants.CENTER);
 		search_img_btn.setBounds(240, 83, 129, 25);
 		deliverer_panel.add(search_img_btn);
@@ -270,7 +275,7 @@ public class JoinView extends JFrame implements ActionListener {
 		String address = address_field.getText().trim();
 		String address2 = address_detail_field.getText().trim();
 		String phone = phone_field.getText().trim();
-		String location[] = {location_field.getText()};
+		String location[] = { location_field.getText() };
 
 		if (obj == check_btn) { // 아이디 중복 확인
 			if (id.equals("")) { // 아이디를 입력하지 않은 경우
@@ -304,13 +309,13 @@ public class JoinView extends JFrame implements ActionListener {
 				JOptionPane.showMessageDialog(null, "배달 지역을 입력해 주세요");
 			} else {
 				MemberDto dto = null;
-				if(memberType == MemberDto.DELIVERER) {
+				if (memberType == MemberDto.DELIVERER) {
 					dto = new DelivererDto(id, pw, name, phone, location);
-				}else {
+				} else {
 					dto = new ConsumerDto(id, pw, name, phone, address + " " + address2);
-				}				
+				}
 				single.getMemCtrl().insert(dto);
-				//single.backToMain(this);
+				// single.backToMain(this);
 				JOptionPane.showMessageDialog(null, "회원가입이 완료되었습니다.");
 				single.showMainView();
 				dispose();
@@ -322,7 +327,7 @@ public class JoinView extends JFrame implements ActionListener {
 			address_field.setText(add.getAddress());
 			address_detail_field.setText(add.getDetailAddress());
 		} else if (obj == search_gu_btn) {
-			SelectGuDialog add = new SelectGuDialog(this);
+			SelectGuDialog add = new SelectGuDialog();
 			location_field.setText(add.getGuName());
 		} else if (e.getSource() == search_img_btn) { // 이미지 검색 수행
 			String path = ImageUtils.jFileChooserUtil();

@@ -2,7 +2,7 @@ package dto;
 
 import java.io.Serializable;
 
-public class OrderDto implements Serializable {
+public class OrderDto  implements Serializable {
 
 	/**
 	 * 
@@ -11,7 +11,6 @@ public class OrderDto implements Serializable {
 
 	private int reqNum;
 	private String title;
-	private String type;
 	private String location;
 	private String consumerId;
 	private String delivererId;
@@ -19,8 +18,12 @@ public class OrderDto implements Serializable {
 	private String contents;
 	private int price;
 	private String applicants;
-	private String status;	private int score;
+	private String status;	
+	private int score;
 	private String review;
+	private String address;
+
+	
 
 	public OrderDto() {
 	}
@@ -39,14 +42,6 @@ public class OrderDto implements Serializable {
 
 	public void setTitle(String title) {
 		this.title = title;
-	}
-
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
 	}
 
 	public String getLocation() {
@@ -128,14 +123,20 @@ public class OrderDto implements Serializable {
 	public void setReview(String review) {
 		this.review = review;
 	}
+	
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
 
 	@Override
 	public String toString() {
-		return "OrderDto_ [reqNum=" + reqNum + ", title=" + title + ", type=" + type + ", location=" + location
-				+ ", consumerId=" + consumerId + ", delivererId=" + delivererId + ", date=" + date + ", contents="
-				+ contents + ", price=" + price + ", applicants=" + applicants + ", status=" + status + ", score="
-				+ score + ", review=" + review + "]";
+		return "OrderDto [reqNum=" + reqNum + ", title=" + title + ", location=" + location + ", consumerId="
+				+ consumerId + ", delivererId=" + delivererId + ", date=" + date + ", contents=" + contents + ", price="
+				+ price + ", applicants=" + applicants + ", status=" + status + ", score=" + score + ", review="
+				+ review + ", address=" + address + "]";
 	}
-
-
 }

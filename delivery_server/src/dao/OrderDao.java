@@ -127,7 +127,7 @@ public class OrderDao {
 	}
 	private void update_post(OrderDto dto) {
 		OrderDto post = (OrderDto) dto;
-		String sql = " update orders set title = ?, location = ?, price = ?, contents = ?, applicants = ? where reqnumber = ? ";
+		String sql = " update orders set title = ?, location = ?, price = ?, contents = ?, applicants = ?, address = ? where reqnumber = ? ";
 
 		Connection conn = null;
 		PreparedStatement psmt = null;
@@ -146,35 +146,8 @@ public class OrderDao {
 			}else {
 				psmt.setString(5, "");
 			}
-			psmt.setInt(6, post.getReqNum());			
-			
-			psmt.execute();
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			DBClose.close(psmt, conn, rs);
-		}
-		
-	}
-	
-	private void insert_post(OrderDto dto) {
-		OrderDto post = (OrderDto) dto;
-		String sql = " insert into orders values( bbsSeq.nextval,?,null,?,?,?,null,'요청중',null,null,?,sysdate,0 )";
-
-		Connection conn = null;
-		PreparedStatement psmt = null;
-		ResultSet rs = null;
-
-		try {
-			conn = DBConnection.getConnection();
-			psmt = conn.prepareStatement(sql);
-			
-			psmt.setString(1, post.getConsumerId());
-			psmt.setInt(2, post.getPrice());
-			psmt.setString(3, post.getLocation());
-			psmt.setString(4, post.getContents());
-			psmt.setString(5, post.getTitle());			
+			psmt.setString(6, post.getAddress());			
+			psmt.setInt(7, post.getReqNum());			
 			
 			psmt.execute();
 
@@ -191,10 +164,10 @@ public class OrderDao {
 			WRITER varchar2(20) not null,
 			DELIVERER varchar2(20),
 			PRICE number(8) not null,
-			LOCATION varchar2(50) not null, -- OO��
+			LOCATION varchar2(50) not null, 
 			CONTENTS varchar2(1000) not null,
-			APPLICANTS varchar2(400), -- ������ ��� (ID)
-			STATE varchar2(20), -- ������� (��û,������,�Ϸ�)
+			APPLICANTS varchar2(400),
+			STATE varchar2(20),
 			SCORE number(2),
 			REVIEW varchar2(1000), 
 			TITLE varchar2(40),
@@ -203,6 +176,35 @@ public class OrderDao {
 			CONSTRAINT FK_DELIVERER FOREIGN KEY(DELIVERER) REFERENCES members(ID)
 		);
 	*/
+	private void insert_post(OrderDto dto) {
+		OrderDto post = (OrderDto) dto;
+		String sql = " insert into orders values( (SELECT NVL(MAX(REQNUMBER), 0) + 1 FROM orders) ,?,null,?,?,?,null,'요청중',null,null,?,sysdate,0,? )";
+
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+
+		try {
+			conn = DBConnection.getConnection();
+			psmt = conn.prepareStatement(sql);
+			
+			psmt.setString(1, post.getConsumerId());
+			psmt.setInt(2, post.getPrice());
+			psmt.setString(3, post.getLocation());
+			psmt.setString(4, post.getContents());
+			psmt.setString(5, post.getTitle());			
+			psmt.setString(6, post.getAddress());			
+			
+			psmt.execute();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBClose.close(psmt, conn, rs);
+		}
+		
+	}
+	
 	
 	public void select_posts(Socket sock) {
 		List<OrderDto> posts = new ArrayList<>();
@@ -239,7 +241,7 @@ public class OrderDao {
 	
 	public void select_post(Socket sock, OrderDto post) {
 		
-		String sql = " SELECT STATE, TITLE, LOCATION, WRITER, Order_date, price, applicants, contents, REQNUMBER " + " FROM ORDERS WHERE REQNUMBER = ?";
+		String sql = " SELECT STATE, TITLE, LOCATION, WRITER, Order_date, price, applicants, contents, address " + " FROM ORDERS WHERE REQNUMBER = ?";
 
 		Connection conn = null;
 		PreparedStatement psmt = null;
@@ -263,7 +265,8 @@ public class OrderDao {
 					post.setApplicants(applicants);
 				}
 				post.setContents(rs.getString(8));
-				post.setReqNum(rs.getInt(9));
+				//post.setReqNum(post.getReqNum());
+				post.setAddress(rs.getString(9));
 				System.out.println(post.toString());
 			}
 

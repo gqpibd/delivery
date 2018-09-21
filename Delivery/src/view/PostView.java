@@ -34,6 +34,7 @@ public class PostView extends JFrame implements ActionListener {
 	JButton del_btn;
 
 	OrderDto dto = null;
+	private JLabel label;
 
 	public PostView(OrderDto dto) {
 		this.dto = dto;
@@ -53,11 +54,12 @@ public class PostView extends JFrame implements ActionListener {
 		getContentPane().add(user_label);
 
 		status_label = new JLabel("상태 :");
-		status_label.setBounds(339, 82, 135, 16);
+		status_label.setBounds(313, 82, 135, 16);
 		getContentPane().add(status_label);
 
 		date_label = new JLabel("작성 :");
-		date_label.setBounds(226, 50, 194, 16);
+		date_label.setHorizontalAlignment(SwingConstants.RIGHT);
+		date_label.setBounds(226, 50, 222, 16);
 		getContentPane().add(date_label);
 
 		price_label = new JLabel("금액 :");
@@ -65,13 +67,13 @@ public class PostView extends JFrame implements ActionListener {
 		getContentPane().add(price_label);
 
 		applicants_label = new JLabel("신청자 :");
-		applicants_label.setBounds(339, 112, 109, 16);
+		applicants_label.setBounds(313, 112, 109, 16);
 		getContentPane().add(applicants_label);
 
 		textArea = new JTextArea();
 		textArea.setLineWrap(true);
 		textArea.setEditable(false);
-		textArea.setBounds(34, 140, 414, 267);
+		textArea.setBounds(34, 175, 414, 232);
 		getContentPane().add(textArea);
 
 		setPost(dto);
@@ -96,16 +98,32 @@ public class PostView extends JFrame implements ActionListener {
 		del_btn = new JButton("삭제");
 		del_btn.setName("del");
 		panel.add(del_btn);
-		del_btn.addActionListener(this);
-
+		
 		MemberDto currentUser = Singleton.getInstance().getMemCtrl().getCurrentUser();
-
+		
+		String address = "";
+		if(dto.getStatus().equals("진행중") && currentUser.getId().equals(dto.getDelivererId())) {
+			address = dto.getAddress();
+		}else {
+			address = dto.getAddress();
+			int loc;
+			if (address.contains(")")) {
+				loc = address.indexOf(")");
+				address = address.substring(0, loc + 1);
+			}
+		}
+	
+		label = new JLabel("주소 : " + address);
+		label.setBounds(30, 142, 418, 16);
+		getContentPane().add(label);
+		del_btn.addActionListener(this);
+		
 		if (!currentUser.getId().equals(dto.getConsumerId())) {
 			update_btn.setVisible(false);
 			userchk_btn.setVisible(false);
 			del_btn.setVisible(false);
 		}
-		if (currentUser.getAuth() == MemberDto.DELIVERER) {
+		if (currentUser.getAuth() == MemberDto.DELIVERER && dto.getStatus().equals("요청중")) {
 			del_btn.setVisible(true);
 			del_btn.setName("apply");
 			del_btn.setText("신청");			
@@ -122,7 +140,7 @@ public class PostView extends JFrame implements ActionListener {
 			}
 		}
 
-		setBounds(0, 0, 480, 500);
+		setBounds(0, 0, 495, 517);
 		setVisible(true);
 	}
 
@@ -170,7 +188,6 @@ public class PostView extends JFrame implements ActionListener {
 		}
 		if(e.getSource() == userchk_btn) {
 			String sel = Singleton.getInstance().getOrderCtrl().getSelDeliverView(dto.getApplicants());
-			JOptionPane.showMessageDialog(null, sel);
 			if(sel == null || sel.equals("")) {
 				return;
 			}else {

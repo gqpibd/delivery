@@ -1,7 +1,10 @@
 package view;
 
+import java.awt.Font;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.regex.Pattern;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -16,63 +19,115 @@ import dto.ConsumerDto;
 import singleton.Singleton;
 
 public class MypageView extends JPanel implements ActionListener{
-	private JTextField id_textField;
-	private JTextField name_textField;
+	
+	private JButton change_btn;
+	
+	private JTextField idField;
+	private JTextField name_field;
+	private JPasswordField pwField;
+	private JPasswordField pwFiled1;
+	private JTextField phone_field;
 	private JTextField addr_textField;
-	private JTextField addr_ch_textField;
-	private JPasswordField PWD_textField;
-	private JPasswordField PWD_CH_textField;
-	
-	JButton change_btn;
-	JButton exit_btn;
-	private JButton Search_btn;
+	private JTextField addr_detail_textField;
+	private JButton search_btn;
+	private ConsumerDto dto = (ConsumerDto) Singleton.getInstance().getMemCtrl().getCurrentUser();
+	private JButton cancel_btn;
 
-	ConsumerDto dto = (ConsumerDto)Singleton.getInstance().getMemCtrl().getCurrentUser();
-	
 	public MypageView() {
-		setSize(480, 487);
+		setSize(MainView.BOTTOM_WIDTH, MainView.BOTTOM_HEIGHT);
 		setLayout(null);
 		
-		JLabel title_label = new JLabel("My Page");
+		JLabel title_label = new JLabel("회원정보관리");
+		title_label.setFont(new Font("나눔고딕 Light", Font.BOLD, 19));
 		title_label.setHorizontalAlignment(SwingConstants.CENTER);
-		title_label.setBounds(0, 6, 480, 82);
+		title_label.setBounds(0, 6, 480, 68);
 		add(title_label);
 		
-		JLabel id_label = new JLabel("아이디 : ");
-		id_label.setBounds(41, 100, 106, 29);
-		add(id_label);
+		change_btn = new JButton("정보수정");
+		change_btn.setBounds(82, 421, 117, 43);
+		add(change_btn);
+		change_btn.setName("change");
+		change_btn.addActionListener(this);
 		
-		id_textField = new JTextField(dto.getId());
-		id_textField.setEditable(false);
-		id_textField.setBounds(170, 100, 213, 29);
-		add(id_textField);
-		id_textField.setColumns(10);
+		JPanel panel = new JPanel();
+		panel.setBounds(10, 76, 456, 329);
+		add(panel);
+		panel.setLayout(null);
 		
-		JLabel name_label = new JLabel("이름 : ");
-		name_label.setBounds(41, 139, 106, 25);
-		add(name_label);
+		idField = new JTextField(dto.getId());
+		idField.setEditable(false);
+		idField.setColumns(10);
+		idField.setBounds(141, 14, 213, 29);
+		panel.add(idField);
 		
-		name_textField = new JTextField(dto.getName());
-		name_textField.setEditable(false);
-		name_textField.setColumns(10);
-		name_textField.setBounds(170, 137, 213, 29);
-		add(name_textField);
+		JLabel label = new JLabel("아이디 :");
+		label.setHorizontalAlignment(SwingConstants.RIGHT);
+		label.setBounds(new Rectangle(0, 0, 200, 0));
+		label.setBounds(12, 14, 106, 29);
+		panel.add(label);
 		
-		JLabel addr_label = new JLabel("주소 : ");
-		addr_label.setBounds(41, 183, 106, 46);
-		add(addr_label);
+		JLabel label_1 = new JLabel("이름 :");
+		label_1.setHorizontalAlignment(SwingConstants.RIGHT);
+		label_1.setBounds(new Rectangle(0, 0, 200, 0));
+		label_1.setBounds(12, 59, 106, 25);
+		panel.add(label_1);
+		
+		name_field = new JTextField(dto.getName());
+		name_field.setEditable(false);
+		name_field.setColumns(10);
+		name_field.setBounds(141, 57, 213, 29);
+		panel.add(name_field);
+		
+		pwField = new JPasswordField(dto.getPw());
+		pwField.setColumns(10);
+		pwField.setBounds(141, 100, 213, 29);
+		panel.add(pwField);
+		
+		pwFiled1 = new JPasswordField(dto.getPw());
+		pwFiled1.setColumns(10);
+		pwFiled1.setBounds(141, 143, 213, 26);
+		panel.add(pwFiled1);
+		
+		JLabel label_2 = new JLabel("비밀번호 :");
+		label_2.setHorizontalAlignment(SwingConstants.RIGHT);
+		label_2.setBounds(new Rectangle(0, 0, 200, 0));
+		label_2.setBounds(19, 93, 99, 43);
+		panel.add(label_2);
+		
+		JLabel label_3 = new JLabel("비밀번호 확인 :");
+		label_3.setHorizontalAlignment(SwingConstants.RIGHT);
+		label_3.setBounds(new Rectangle(0, 0, 200, 0));
+		label_3.setBounds(16, 144, 102, 25);
+		panel.add(label_3);
+		
+		JLabel phone_label = new JLabel("전화번호 :");
+		phone_label.setHorizontalAlignment(SwingConstants.RIGHT);
+		phone_label.setBounds(new Rectangle(0, 0, 200, 0));
+		phone_label.setBounds(16, 185, 102, 25);
+		panel.add(phone_label);
+		
+		phone_field = new JTextField(dto.getPhone());
+		phone_field.setColumns(10);
+		phone_field.setBounds(141, 183, 213, 29);
+		panel.add(phone_field);
+		
+		JLabel label_5 = new JLabel("주소 :");
+		label_5.setHorizontalAlignment(SwingConstants.RIGHT);
+		label_5.setBounds(new Rectangle(0, 0, 200, 0));
+		label_5.setBounds(12, 226, 106, 29);
+		panel.add(label_5);
 		
 		addr_textField = new JTextField();
-		addr_textField.setColumns(10);
 		addr_textField.setEditable(false);
-		addr_textField.setBounds(170, 183, 213, 29);
-		add(addr_textField);
+		addr_textField.setColumns(10);
+		addr_textField.setBounds(141, 226, 213, 29);
+		panel.add(addr_textField);
 		
-		addr_ch_textField = new JTextField();
-		addr_ch_textField.setColumns(10);
-		addr_ch_textField.setEditable(false);
-		addr_ch_textField.setBounds(170, 215, 213, 29);
-		add(addr_ch_textField);
+		addr_detail_textField = new JTextField();
+		addr_detail_textField.setColumns(10);
+		addr_detail_textField.setBounds(141, 269, 213, 29);
+		panel.add(addr_detail_textField);
+		
 		String address = dto.getAddress();
 		int loc=0;
 		if (address.contains(")")) {
@@ -86,92 +141,33 @@ public class MypageView extends JPanel implements ActionListener{
 		}
 
 		if (loc + 2 < address.length()) {
-			addr_ch_textField.setText(address.substring(loc + 2));
+			addr_detail_textField.setText(address.substring(loc + 2));
 		}
 		
-		JLabel PW1_label = new JLabel("비밀번호 : ");
-		PW1_label.setBounds(45, 261, 99, 43);
-		add(PW1_label);
+		search_btn = new JButton("검색");
+		search_btn.setBounds(376, 226, 68, 29);
+		search_btn.addActionListener(this);
+		panel.add(search_btn);
 		
-		PWD_textField = new JPasswordField(dto.getPw());
-		PWD_textField.setColumns(10);
-		PWD_textField.setEditable(false);
-		PWD_textField.setBounds(170, 268, 213, 29);
-		add(PWD_textField);
+		cancel_btn = new JButton("취소");
+		cancel_btn.setName("change");
+		cancel_btn.setBounds(281, 421, 117, 43);
+		cancel_btn.addActionListener(this);
+		add(cancel_btn);
 		
-		JLabel PW2_label = new JLabel("비밀번호 확인: ");
-		PW2_label.setBounds(45, 310, 82, 25);
-		add(PW2_label);
-		
-		PWD_CH_textField = new JPasswordField(dto.getPw());
-		PWD_CH_textField.setColumns(10);
-		PWD_CH_textField.setEditable(false);
-		PWD_CH_textField.setBounds(170, 309, 213, 26);
-		add(PWD_CH_textField);
-		
-		change_btn = new JButton("정보수정");
-		change_btn.setBounds(146, 382, 117, 29);
-		add(change_btn);
-		change_btn.setName("change");
-		change_btn.addActionListener(this);
-		
-		exit_btn = new JButton("종료");
-		exit_btn.setBounds(279, 382, 117, 29);
-		add(exit_btn);
-		exit_btn.addActionListener(this);
-		
-		Search_btn = new JButton("검색");
-		Search_btn.setBounds(395, 203, 68, 41);
-		Search_btn.setEnabled(false);
-		add(Search_btn);
-		Search_btn.addActionListener(this);
-		
+		setComponent(false);
 		
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if(e.getSource() == exit_btn) {
-			System.exit(0);
-		}
-		
-		if(e.getSource() == change_btn) {
-			if(change_btn.getName().equals("change")) {				
-				change_btn.setName("complete");
-				change_btn.setText("완료");	
-				addr_ch_textField.setEditable(true);
-				PWD_textField.setEditable(true);
-				PWD_CH_textField.setEditable(true);
-				Search_btn.setEnabled(true);
-				
-			}else {
-				change_btn.setName("change");
-				change_btn.setText("정보수정");
-				
-				String pw1 = new String(PWD_textField.getPassword());
-				String pw2 = new String(PWD_CH_textField.getPassword());
-				
-				if(!pw1.equals(pw2)) {
-					JOptionPane.showMessageDialog(null, "패스워드가 일치하지 않습니다");
-					return;
-				}
-				
-				addr_ch_textField.setEditable(false);
-				PWD_textField.setEditable(false);
-				PWD_CH_textField.setEditable(false);
-				Search_btn.setEnabled(false);
-				
-				dto.setAddress(addr_textField.getText() + " " + addr_ch_textField.getText());
-				dto.setPw(new String (PWD_textField.getPassword()));
-				
-				Singleton.getInstance().getComm().SendMessage(Communicator.UPDATE, dto);
-				JOptionPane.showMessageDialog(null, "수정완료");
-			}
-		}
-		if(e.getSource() == Search_btn) {
-			SelectAddressDialog SAD = new SelectAddressDialog();
-			addr_textField.setText(SAD.getAddress());
-			addr_ch_textField.setText(SAD.getDetailAddress());
-		}
+	}
+	public void setComponent(boolean bool) {
+		addr_detail_textField.setEditable(bool);
+		pwField.setEditable(bool);
+		pwFiled1.setEditable(bool);
+		search_btn.setVisible(bool);
+		phone_field.setEditable(bool);
+		cancel_btn.setVisible(bool);	
 	}
 }

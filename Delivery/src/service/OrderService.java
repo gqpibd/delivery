@@ -33,9 +33,9 @@ public class OrderService {
 		OrderDto dto = new OrderDto();
 		dto.setContents(content);
 		s.getComm().SendMessage(Communicator.SELECT_POSTCONENT, dto);
-		List<OrderDto> list = (List<OrderDto>) s.getComm().receiveObject();
-		System.out.println(list);
-		return list;
+		List<OrderDto> resultList = (List<OrderDto>) s.getComm().receiveObject();
+		System.out.println(resultList);
+		return resultList;
 	}
 
 	public void addPost(OrderDto od) {
@@ -45,11 +45,11 @@ public class OrderService {
 
 	}
 
-	public List<OrderDto> selectList(String option, String input) {
-		
+	public List<OrderDto> selectList(String option, String input) {		
 		List<OrderDto> sel_list = new ArrayList<>();
-		
-		if(option.equals("작성자")) {
+		if(input.equals("")) {
+			sel_list = list;
+		}else if(option.equals("작성자")) {
 			for (int i = 0; i < list.size(); i++) {
 				if(list.get(i).getConsumerId().contains(input)) {
 					sel_list.add(list.get(i));
@@ -62,8 +62,7 @@ public class OrderService {
 		else if(option.equals("제목")) {
 			for (int i = 0; i < list.size(); i++) {
 				if(list.get(i).getTitle().contains(input)) {
-					sel_list.add(list.get(i));
-				
+					sel_list.add(list.get(i));				
 				}
 			}
 		}
