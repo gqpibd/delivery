@@ -40,7 +40,6 @@ public class MemberDao {
 
 	}
 
-<<<<<<< HEAD
 	private void select_delivererInfo(MemberDto dto, Socket sock) {
 		String id = dto.getId();
 		String sql = "SELECT LOCATIONS, DELIVERCOUNTS, SCORE " + " FROM MEMBERS " + " WHERE M.ID = ? ";
@@ -68,7 +67,6 @@ public class MemberDao {
 		}
 		SocketWriter.Write(sock, deliverer);
 	}
-=======
 	private void update(MemberDto dto) {
 		ConsumerDto con = null;
 		
@@ -105,7 +103,6 @@ public class MemberDao {
 		
 		
 	
->>>>>>> refs/remotes/origin/h2gon
 
 	private void select_existingId(MemberDto dto, Socket sock) {
 		String id = dto.getId();
@@ -185,19 +182,11 @@ public class MemberDao {
 	}
 
 	public void select_login(MemberDto dto, Socket sock) {
-<<<<<<< HEAD
-		MemberDto loginUser = null;
-		String id = dto.getId();
-		String pw = dto.getPw();
-		String sql = "SELECT name, phone, ADDRESS, LOCATION, auth " + " FROM MEMBERS " + " WHERE ID = '" + id
-				+ "' AND PW = '" + pw + "' ";
-=======
 	      MemberDto loginUser = null;
 	      String id = dto.getId();
 	      String pw = dto.getPw();
 	      String sql = "SELECT name, phone, ADDRESS, LOCATIONS, auth " + " FROM MEMBERS " + " WHERE ID = '" + id
 	            + "' AND PW = '" + pw + "' ";
->>>>>>> refs/remotes/origin/h2gon
 
 	      Connection conn = null;
 	      PreparedStatement psmt = null;
@@ -208,24 +197,6 @@ public class MemberDao {
 	         psmt = conn.prepareStatement(sql);
 	         rs = psmt.executeQuery();
 
-<<<<<<< HEAD
-			if (rs.next()) {
-				int auth = rs.getInt(5);
-				if (auth == MemberDto.CONSUMER) {
-					loginUser = new ConsumerDto(dto, rs.getString("address"));
-				} else if (auth == MemberDto.DELIVERER) {
-					loginUser = new DelivererDto(dto, rs.getString("location").split(","));
-				}
-				loginUser.setId(id);
-				loginUser.setPw(pw);
-				loginUser.setName(rs.getString(1));
-				loginUser.setPhone(rs.getString(2));
-				loginUser.setAuth(auth);
-				System.out.println(loginUser.getId() + "님이 로그인 했습니다");
-			} else {
-				System.out.println("아이디 또는 패스워드가 틀렸습니다");
-			}
-=======
 	         if (rs.next()) {
 	            int auth = rs.getInt(5);
 	            if (auth == MemberDto.CONSUMER) {
@@ -242,7 +213,6 @@ public class MemberDao {
 	         } else {
 	            System.out.println("아이디 또는 패스워드가 틀렸습니다");
 	         }
->>>>>>> refs/remotes/origin/h2gon
 
 	      } catch (SQLException e) {
 	         e.printStackTrace();

@@ -37,18 +37,14 @@ public class OrderDao {
 		case Dml.SELECT_POSTCONENT:
 			select_postcontent(sock, (OrderBBsDto)dto);
 			break;
-<<<<<<< HEAD
 		case Dml.SELECT_DELIVER_LIST:
 			select_deliverList(sock, dto);
 			break;
-=======
 		case Dml.SELECT_MYORDER:
 			select_MyOder(sock, dto);
->>>>>>> refs/remotes/origin/h2gon
 		}
 
 	}
-<<<<<<< HEAD
 	private void select_deliverList(Socket sock, OrderDto dto) {
 		OrderBBsDto post = (OrderBBsDto) dto;
 		String sql = " SELECT REQNUMBER, STATE, TITLE, LOCATION, Order_date " + " FROM ORDERS WHERE NVL(ISDEL,0) = 0 AND DELIVERER=? ORDER BY REQNUMBER DESC";
@@ -70,7 +66,6 @@ public class OrderDao {
 		}		
 	}
 	
-=======
 	
 	private void select_MyOder(Socket sock, OrderDto dto) {
 		String id = dto.getConsumerId();
@@ -108,7 +103,6 @@ public class OrderDao {
 		
 	}
 
->>>>>>> refs/remotes/origin/h2gon
 	private void delete_post(OrderDto dto) {
 		OrderBBsDto post = (OrderBBsDto) dto;
 		String sql = " update orders set isdel = 1 where reqnumber = ? ";
