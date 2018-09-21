@@ -4,52 +4,50 @@ import java.util.ArrayList;
 import java.util.List;
 
 import communicator.Communicator;
-import dto.MemberDto;
-import dto.OrderBBsDto;
 import dto.OrderDto;
 import singleton.Singleton;
 
 public class OrderService {
 
-	private List<OrderBBsDto> list;
+	private List<OrderDto> list;
 
-	public List<OrderBBsDto> getPostlist() {
+	public List<OrderDto> getPostlist() {
 		Singleton s = Singleton.getInstance();
 		s.getComm().SendMessage(Communicator.SELECT, new OrderDto());
-		list = (List<OrderBBsDto>) s.getComm().receiveObject();
+		list = (List<OrderDto>) s.getComm().receiveObject();
 		return list;
 	}
 
-	public OrderBBsDto getPost(int postNum) {
+	public OrderDto getPost(int postNum) {
 		Singleton s = Singleton.getInstance();
-		OrderBBsDto dto = new OrderBBsDto();
+		OrderDto dto = new OrderDto();
 		dto.setReqNum(postNum);
 		s.getComm().SendMessage(Communicator.SELECT_POST, dto);
-		OrderBBsDto o = (OrderBBsDto) s.getComm().receiveObject();
+		OrderDto o = (OrderDto) s.getComm().receiveObject();
 		System.out.println(o);
 		return o;
 	}
 	
-	public List<OrderBBsDto> getPostContains(String content) {
+	public List<OrderDto> getPostContains(String content) {
 		Singleton s = Singleton.getInstance();
-		OrderBBsDto dto = new OrderBBsDto();
+		OrderDto dto = new OrderDto();
 		dto.setContents(content);
 		s.getComm().SendMessage(Communicator.SELECT_POSTCONENT, dto);
-		List<OrderBBsDto> list = (List<OrderBBsDto>) s.getComm().receiveObject();
+		List<OrderDto> list = (List<OrderDto>) s.getComm().receiveObject();
 		System.out.println(list);
 		return list;
 	}
 
-	public void addPost(OrderBBsDto od) {
+	public void addPost(OrderDto od) {
 
 		Singleton s = Singleton.getInstance();
 		s.getComm().SendMessage(Communicator.INSERT, od);
 
 	}
 
-	public List<OrderBBsDto> selectList(String option, String input) {
+	public List<OrderDto> selectList(String option, String input) {
 		
-		List<OrderBBsDto> sel_list = new ArrayList<>();
+		List<OrderDto> sel_list = new ArrayList<>();
 		
 		if(option.equals("작성자")) {
 			for (int i = 0; i < list.size(); i++) {
@@ -72,21 +70,21 @@ public class OrderService {
 		return sel_list;
 	}
 
-	public void updatePost(OrderBBsDto dto) {
+	public void updatePost(OrderDto dto) {
 		Singleton.getInstance().getComm().SendMessage(Communicator.UPDATE, dto);		
 	}
 	
-	public List<OrderBBsDto> getOderList() {
-		OrderBBsDto dto = new OrderBBsDto();
+	public List<OrderDto> getOderList() {
+		OrderDto dto = new OrderDto();
 		dto.setConsumerId(Singleton.getInstance().getMemCtrl().getCurrentUser().getId());
 		Singleton.getInstance().getComm().SendMessage(Communicator.SELECT_MYODER, dto);
-		List<OrderBBsDto> list = (List<OrderBBsDto>)Singleton.getInstance().getComm().receiveObject();
+		List<OrderDto> list = (List<OrderDto>)Singleton.getInstance().getComm().receiveObject();
 		
 		return list;
 	}
 
-	public List<OrderBBsDto> getDeliverList(String id) {
-		OrderBBsDto dto = new OrderBBsDto();
+	public List<OrderDto> getDeliverList(String id) {
+		OrderDto dto = new OrderDto();
 		dto.setDelivererId(id);
 		Communicator comm = Singleton.getInstance().getComm();
 		comm.SendMessage(Communicator.SELECT_DELIVER_LIST, dto);

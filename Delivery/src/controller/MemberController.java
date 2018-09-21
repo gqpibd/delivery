@@ -5,13 +5,12 @@ import javax.swing.JOptionPane;
 
 import dto.DelivererDto;
 import dto.MemberDto;
-import dto.OrderBBsDto;
 import service.MemberService;
 import singleton.Singleton;
 import view.InitView;
 import view.JoinView;
 import view.LoginView;
-import view.MainView;
+import view.ProfileView;
 
 public class MemberController {
 
@@ -79,6 +78,12 @@ public class MemberController {
 
 	public DelivererDto getDeliverInfo(MemberDto dto) {
 		return mService.getDelivererInfor(dto);
+	}
+
+	public void showDelivererProfile(String id) {
+		MemberDto dto = new MemberDto();
+		dto.setId(id);
+		new ProfileView(dto);	
 	}
 
 }

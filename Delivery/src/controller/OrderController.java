@@ -4,10 +4,9 @@ import java.util.List;
 
 import javax.swing.JFrame;
 
-import dto.OrderBBsDto;
+import dto.OrderDto;
 import service.OrderService;
 import singleton.Singleton;
-import view.OrderBBsView;
 import view.OrderWriteView;
 import view.PostView;
 import view.selectDeliver;
@@ -18,12 +17,12 @@ public class OrderController {
 	
 	public OrderController() {}
 	
-	public List<OrderBBsDto> getPostlist() {		
+	public List<OrderDto> getPostlist() {		
 		return OS.getPostlist();
 	}
 	
 	public void postView(int postNum) {
-		OrderBBsDto dto = OS.getPost(postNum);
+		OrderDto dto = OS.getPost(postNum);
 		new PostView(dto);
 	}
 
@@ -33,7 +32,7 @@ public class OrderController {
 		
 	}
 
-	public void addPost(OrderBBsDto od) {
+	public void addPost(OrderDto od) {
 		OS.addPost(od);		
 	}
 	
@@ -42,35 +41,31 @@ public class OrderController {
 		Singleton.getInstance().showMainView();
 	}
 
-	public List<OrderBBsDto> selectList(String option, String input) {
+	public List<OrderDto> selectList(String option, String input) {
 		
 		return OS.selectList(option, input);
 		
 	}
 
-	public void updatePostView(OrderBBsDto dto) {
+	public void updatePostView(OrderDto dto) {
 		new OrderWriteView(dto);
 		
 	}
-	public void updatePost(OrderBBsDto dto) {
+	public void updatePost(OrderDto dto) {
 		OS.updatePost(dto);
 	}
 
-<<<<<<< HEAD
-	public List<OrderBBsDto> getDeliverList(String id) {		
+	public List<OrderDto> getDeliverList(String id) {		
 		return OS.getDeliverList(id);
 	}
 
-=======
 	public String getSelDeliverView(String applicants) {
 		selectDeliver sel = new selectDeliver(applicants);
 		return sel.selDeliver();
 	}
 	
-	public List<OrderBBsDto> getOderList(){ 		
+	public List<OrderDto> getOderList(){ 		
 		return OS.getOderList();
 	}
-	
->>>>>>> refs/remotes/origin/h2gon
 	
 }

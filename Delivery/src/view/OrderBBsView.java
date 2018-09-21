@@ -19,7 +19,7 @@ import javax.swing.table.DefaultTableModel;
 
 import controller.OrderController;
 import dto.MemberDto;
-import dto.OrderBBsDto;
+import dto.OrderDto;
 import net.coderazzi.filters.gui.AutoChoices;
 import net.coderazzi.filters.gui.TableFilterHeader;
 import net.coderazzi.filters.gui.TableFilterHeader.Position;
@@ -41,7 +41,7 @@ public class OrderBBsView extends JPanel implements ActionListener {
 	public OrderBBsView() {
 		// 하단 패널
 		Singleton s = Singleton.getInstance();
-		List<OrderBBsDto> list = s.getOrderCtrl().getPostlist();
+		List<OrderDto> list = s.getOrderCtrl().getPostlist();
 		setRowData(list);
 
 		setSize(480, 487);
@@ -130,7 +130,7 @@ public class OrderBBsView extends JPanel implements ActionListener {
 
 	}
 
-	public void setRowData(List<OrderBBsDto> list) {
+	public void setRowData(List<OrderDto> list) {
 
 		rowData = new Object[list.size()][6];
 		int count=list.size();
@@ -170,7 +170,7 @@ public class OrderBBsView extends JPanel implements ActionListener {
 		}		
 		else if(e.getSource() == search_btn) {
 			String inputF = search_textF.getText();
-			List<OrderBBsDto> list = Singleton.getInstance().getOrderCtrl()
+			List<OrderDto> list = Singleton.getInstance().getOrderCtrl()
 					.selectList((String) choice_comboBox.getSelectedItem(), inputF);
 
 			setRowData(list);

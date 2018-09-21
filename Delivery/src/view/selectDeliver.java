@@ -10,6 +10,9 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+
+import singleton.Singleton;
+
 import javax.swing.JList;
 import javax.swing.JScrollPane;
 import javax.swing.JButton;
@@ -26,9 +29,10 @@ public class selectDeliver extends JDialog {
 	public selectDeliver(String applicants) {
 		setModal(true);
 		getContentPane().setLayout(null);
-		
+		if(applicants==null) {
+			applicants="";
+		}
 		app = applicants.split(",");
-		
 		JLabel lblNewLabel = new JLabel("대신맨 선택");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setBounds(0, 22, 400, 16);
@@ -37,11 +41,10 @@ public class selectDeliver extends JDialog {
 		list = new JList<String>(app);
 		list.setBounds(23, 50, 356, 273);
 		getContentPane().add(list);
-		list.addListSelectionListener(new ListSelectionListener() {
-			
+		list.addListSelectionListener(new ListSelectionListener() {			
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
-				// TODO Auto-generated method stub
+				Singleton.getInstance().getMemCtrl().showDelivererProfile(list.getSelectedValue());
 				
 			}
 		});

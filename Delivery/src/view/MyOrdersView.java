@@ -2,24 +2,20 @@ package view;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-<<<<<<< HEAD
-=======
-import java.util.ArrayList;
 import java.util.List;
 
->>>>>>> refs/remotes/origin/h2gon
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
-import dto.OrderBBsDto;
+import dto.OrderDto;
 import singleton.Singleton;
-import javax.swing.JScrollPane;
-import javax.swing.JButton;
-import javax.swing.JTable;
-import javax.swing.ScrollPaneConstants;
 
 public class MyOrdersView extends JPanel implements ActionListener{
 	private JTable table;
@@ -33,12 +29,10 @@ public class MyOrdersView extends JPanel implements ActionListener{
 		
 		setLayout(null);
 		setSize(480, 487);
-<<<<<<< HEAD
 		JLabel lblNewLabel = new JLabel("내 주문 내역");
 		lblNewLabel.setBounds(12, 10, 57, 15);
 		add(lblNewLabel);
-=======
-		List<OrderBBsDto> list = Singleton.getInstance().getOrderCtrl().getOderList();
+		List<OrderDto> list = Singleton.getInstance().getOrderCtrl().getOderList();
 		setRowData(list);
 		System.out.println(list);
 		
@@ -48,14 +42,12 @@ public class MyOrdersView extends JPanel implements ActionListener{
 		add(title_label);
 		
 		
-		
 		model = new DefaultTableModel(rowData, columnNames) {
 			@Override
 			public boolean isCellEditable(int row, int column) {
 				return false;
 			}
 		};
->>>>>>> refs/remotes/origin/h2gon
 
 		
 		table = new JTable(model);
@@ -67,18 +59,9 @@ public class MyOrdersView extends JPanel implements ActionListener{
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		scrollPane.setBounds(19, 110, 443, 309);
 		add(scrollPane);
-		
-		
-		
-		
-		
 		JButton back_btn = new JButton("New button");
 		back_btn.setBounds(345, 431, 117, 29);
 		add(back_btn);
-
-		
-		
-
 	}
 
 	@Override
@@ -86,7 +69,7 @@ public class MyOrdersView extends JPanel implements ActionListener{
 	
 	}
 	
-	public void setRowData(List<OrderBBsDto> list) {
+	public void setRowData(List<OrderDto> list) {
 		
 		rowData = new Object[list.size()][4];
 		int count=list.size();

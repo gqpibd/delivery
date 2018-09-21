@@ -15,24 +15,19 @@ public class MainView extends JFrame {
 	public MainView() {
 		super("대신해드려요!!");
 		getContentPane().setLayout(null);
-
-		// 게시판 
-		bottom_panel = new JPanel();
-<<<<<<< HEAD
-		bottom_panel.setLayout(new GridLayout());
-		bottom_panel.add(new OrderBBsView());
-=======
-		bottom_panel.add(new OrderBBsView());
-		bottom_panel.setLayout(new GridLayout());
->>>>>>> refs/remotes/origin/h2gon
-		bottom_panel.setBounds(6, 125, 480, 487);
-		getContentPane().add(bottom_panel);
 		
-		// 상단 패널 
-		
+		// 상단 패널 		
 		JPanel panel = new JPanel();
 		panel.setBounds(6, 6, 480, 118);
 		getContentPane().add(panel);
+		panel.setLayout(new GridLayout(0, 3, 0, 0));		
+
+		// 하단패널
+		bottom_panel = new JPanel();
+		bottom_panel.add(new OrderBBsView());
+		bottom_panel.setLayout(new GridLayout());
+		bottom_panel.setBounds(6, 125, 480, 487);
+		getContentPane().add(bottom_panel);		
 		
 		JButton bbsbtn = new JButton("배달요청");
 		panel.add(bbsbtn);
@@ -42,13 +37,8 @@ public class MainView extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				bottom_panel.remove(0);
 				bottom_panel.add(new OrderBBsView());
-<<<<<<< HEAD
-				repaint();
-				
-=======
 				bottom_panel.setBounds(6, 125, 480, 487);
 				repaint();
->>>>>>> refs/remotes/origin/h2gon
 			}
 		});
 	
@@ -60,10 +50,7 @@ public class MainView extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				bottom_panel.removeAll();
 				bottom_panel.add(new MyOrdersView());
-<<<<<<< HEAD
-=======
 				bottom_panel.setBounds(6, 125, 480, 487);
->>>>>>> refs/remotes/origin/h2gon
 				repaint();
 			}
 		});
@@ -76,10 +63,7 @@ public class MainView extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				bottom_panel.removeAll();
 				bottom_panel.add(new MypageView());
-<<<<<<< HEAD
-=======
 				bottom_panel.setBounds(6, 125, 480, 487);
->>>>>>> refs/remotes/origin/h2gon
 				repaint();
 			}
 		});

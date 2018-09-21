@@ -17,7 +17,7 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 
 import communicator.Communicator;
-import dto.OrderBBsDto;
+import dto.OrderDto;
 import singleton.Singleton;
 
 public class OrderWriteView extends JFrame implements ActionListener{
@@ -37,10 +37,10 @@ public class OrderWriteView extends JFrame implements ActionListener{
 	JButton back_btn;
 	
 	JLabel writer_label;
-	OrderBBsDto dto;
+	OrderDto dto;
 	boolean isUpdate=false;
 	
-	public OrderWriteView(OrderBBsDto dto) {
+	public OrderWriteView(OrderDto dto) {
 		this();
 		this.dto = dto;
 		setfield();
@@ -158,7 +158,12 @@ public class OrderWriteView extends JFrame implements ActionListener{
 				return;
 			}
 			
-			OrderBBsDto od = new OrderBBsDto(title,"",(String)addr_combobox.getSelectedItem(), writer_label.getText(),content, money);
+			OrderDto od = new OrderDto();
+			od.setTitle(title);
+			od.setLocation((String)addr_combobox.getSelectedItem());
+			od.setConsumerId(writer_label.getText());
+			od.setPrice(money);
+			
 			
 			if(isUpdate) {
 				dto.setTitle(title);

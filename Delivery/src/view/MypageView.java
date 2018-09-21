@@ -2,26 +2,19 @@ package view;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.function.Consumer;
 
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-<<<<<<< HEAD
-=======
 import javax.swing.JPasswordField;
+import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import communicator.Communicator;
 import dto.ConsumerDto;
-import dto.MemberDto;
 import singleton.Singleton;
 
-import javax.swing.JTextField;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-
->>>>>>> refs/remotes/origin/h2gon
 public class MypageView extends JPanel implements ActionListener{
 	private JTextField id_textField;
 	private JTextField name_textField;
@@ -32,14 +25,11 @@ public class MypageView extends JPanel implements ActionListener{
 	
 	JButton change_btn;
 	JButton exit_btn;
-	private JTextField textField;
 	private JButton Search_btn;
 
 	ConsumerDto dto = (ConsumerDto)Singleton.getInstance().getMemCtrl().getCurrentUser();
 	
 	public MypageView() {
-		// 하단 패널
-		
 		setSize(480, 487);
 		setLayout(null);
 		
@@ -72,7 +62,7 @@ public class MypageView extends JPanel implements ActionListener{
 		addr_label.setBounds(41, 183, 106, 46);
 		add(addr_label);
 		
-		addr_textField = new JTextField(dto.getAddress());
+		addr_textField = new JTextField();
 		addr_textField.setColumns(10);
 		addr_textField.setEditable(false);
 		addr_textField.setBounds(170, 183, 213, 29);
@@ -83,6 +73,21 @@ public class MypageView extends JPanel implements ActionListener{
 		addr_ch_textField.setEditable(false);
 		addr_ch_textField.setBounds(170, 215, 213, 29);
 		add(addr_ch_textField);
+		String address = dto.getAddress();
+		int loc=0;
+		if (address.contains(")")) {
+			loc = address.indexOf(")");
+			addr_textField.setText(address.substring(0, loc + 1));
+
+		} else {
+			loc = address.indexOf(' ');
+			loc = address.indexOf(' ', loc + 1);
+			loc = address.indexOf(' ', loc + 1) - 1;
+		}
+
+		if (loc + 2 < address.length()) {
+			addr_ch_textField.setText(address.substring(loc + 2));
+		}
 		
 		JLabel PW1_label = new JLabel("비밀번호 : ");
 		PW1_label.setBounds(45, 261, 99, 43);
@@ -162,16 +167,11 @@ public class MypageView extends JPanel implements ActionListener{
 				Singleton.getInstance().getComm().SendMessage(Communicator.UPDATE, dto);
 				JOptionPane.showMessageDialog(null, "수정완료");
 			}
-				
 		}
 		if(e.getSource() == Search_btn) {
 			SelectAddressDialog SAD = new SelectAddressDialog();
 			addr_textField.setText(SAD.getAddress());
 			addr_ch_textField.setText(SAD.getDetailAddress());
 		}
-			
-			
-			
-		
 	}
 }

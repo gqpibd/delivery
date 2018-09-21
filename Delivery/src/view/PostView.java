@@ -1,25 +1,21 @@
 package view;
 
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JTextArea;
-
-import dto.MemberDto;
-import dto.OrderBBsDto;
-import dto.OrderDto;
-import singleton.Singleton;
-
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JPanel;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 
 import communicator.Communicator;
+import dto.MemberDto;
+import dto.OrderDto;
+import singleton.Singleton;
 
 public class PostView extends JFrame implements ActionListener {
 
@@ -37,9 +33,9 @@ public class PostView extends JFrame implements ActionListener {
 	JButton update_btn;
 	JButton del_btn;
 
-	OrderBBsDto dto = null;
+	OrderDto dto = null;
 
-	public PostView(OrderBBsDto dto) {
+	public PostView(OrderDto dto) {
 		this.dto = dto;
 		getContentPane().setLayout(null);
 
@@ -130,7 +126,7 @@ public class PostView extends JFrame implements ActionListener {
 		setVisible(true);
 	}
 
-	public void setPost(OrderBBsDto post) {
+	public void setPost(OrderDto post) {
 
 		title_label.setText(post.getTitle());
 		address_label.setText("지역: " + post.getLocation());

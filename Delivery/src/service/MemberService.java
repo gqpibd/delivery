@@ -46,8 +46,7 @@ public class MemberService {
 	}
 
 	public void logout() {
-		CurrentUser = null;
-		
+		CurrentUser = null;		
 	}
 
 	public DelivererDto getDelivererInfor(MemberDto dto) {

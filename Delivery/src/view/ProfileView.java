@@ -3,10 +3,11 @@ package view;
 import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JButton;
-import javax.swing.JFrame;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -18,24 +19,29 @@ import javax.swing.table.DefaultTableModel;
 import controller.MemberController;
 import dto.DelivererDto;
 import dto.MemberDto;
-import dto.OrderBBsDto;
+import dto.OrderDto;
 import singleton.Singleton;
 
-public class ProfileView extends JFrame {
+public class ProfileView extends JDialog {
 	private JTable table;
 	private String columnNames[] = { "번호", "상태", "제목", "지역", "작성자", "날짜" };
 	private Object rowData[][];
 	private DefaultTableModel model;
 	public ProfileView(MemberDto dto) {
+		setModal(true);
 		MemberController mCtrl = Singleton.getInstance().getMemCtrl();
 		JPanel contentPane = new JPanel();
 		setContentPane(contentPane);
-		contentPane.setSize(300,300);
+		//contentPane.setSize(300,300);
 		contentPane.setLayout(null);
+		setSize(487,500);
 		
-		DelivererDto deliverer =mCtrl.getDeliverInfo(dto);
+		DelivererDto deliverer = mCtrl.getDeliverInfo(dto);
 		
-		List<OrderBBsDto> list = Singleton.getInstance().getOrderCtrl().getDeliverList(dto.getId());
+		List<OrderDto> list = Singleton.getInstance().getOrderCtrl().getDeliverList(dto.getId());
+		if(list == null) {
+			list = new ArrayList<OrderDto>();
+		}
 		setRowData(list);
 		
 		model = new DefaultTableModel(rowData, columnNames) {
@@ -97,7 +103,7 @@ public class ProfileView extends JFrame {
 		setVisible(true);
 	}
 
-	public void setRowData(List<OrderBBsDto> list) {
+	public void setRowData(List<OrderDto> list) {
 
 		rowData = new Object[list.size()][6];
 		int count=list.size();
