@@ -12,7 +12,7 @@ import communicator.SocketWriter;
 import constants.Dml;
 import db.DBClose;
 import db.DBConnection;
-import dto.OrderBBsDto;
+import dto.OrderDto;
 import dto.OrderDto;
 
 public class OrderDao {
@@ -26,16 +26,16 @@ public class OrderDao {
 			delete_post(dto);
 			break;
 		case Dml.UPDATE:
-			update_post((OrderBBsDto)dto);
+			update_post(dto);
 			break;
 		case Dml.SELECT:
 			select_posts(sock);
 			break;
 		case Dml.SELECT_POST:
-			select_post(sock, (OrderBBsDto)dto);
+			select_post(sock,dto);
 			break;
 		case Dml.SELECT_POSTCONENT:
-			select_postcontent(sock, (OrderBBsDto)dto);
+			select_postcontent(sock, dto);
 			break;
 		case Dml.SELECT_DELIVER_LIST:
 			select_deliverList(sock, dto);
@@ -46,7 +46,6 @@ public class OrderDao {
 
 	}
 	private void select_deliverList(Socket sock, OrderDto dto) {
-		OrderBBsDto post = (OrderBBsDto) dto;
 		String sql = " SELECT REQNUMBER, STATE, TITLE, LOCATION, Order_date " + " FROM ORDERS WHERE NVL(ISDEL,0) = 0 AND DELIVERER=? ORDER BY REQNUMBER DESC";
 		Connection conn = null;
 		PreparedStatement psmt = null;
@@ -55,7 +54,7 @@ public class OrderDao {
 		try {
 			conn = DBConnection.getConnection();
 			psmt = conn.prepareStatement(sql);			
-			psmt.setString(1, post.getDelivererId());					
+			psmt.setString(1, dto.getDelivererId());					
 			
 			psmt.execute();
 
@@ -70,7 +69,7 @@ public class OrderDao {
 	private void select_MyOder(Socket sock, OrderDto dto) {
 		String id = dto.getConsumerId();
 		String sql = " SELECT REQNUMBER, STATE, TITLE, WRITER, Order_date " + " FROM ORDERS WHERE writer = ? and NVL(isdel,0) != 1 ";
-		List<OrderBBsDto> list = new ArrayList<>();
+		List<OrderDto> list = new ArrayList<>();
 		
 		Connection conn = null;
 		PreparedStatement psmt = null;
@@ -84,7 +83,7 @@ public class OrderDao {
 
 			while (rs.next()) {
 				
-				OrderBBsDto post = new OrderBBsDto();
+				OrderDto post = new OrderDto();
 				post.setReqNum(rs.getInt(1));
 				post.setStatus(rs.getString(2));
 				post.setTitle(rs.getString(3));
@@ -104,7 +103,7 @@ public class OrderDao {
 	}
 
 	private void delete_post(OrderDto dto) {
-		OrderBBsDto post = (OrderBBsDto) dto;
+		OrderDto post = (OrderDto) dto;
 		String sql = " update orders set isdel = 1 where reqnumber = ? ";
 
 		Connection conn = null;
@@ -126,8 +125,8 @@ public class OrderDao {
 		}
 		
 	}
-	private void update_post(OrderBBsDto dto) {
-		OrderBBsDto post = (OrderBBsDto) dto;
+	private void update_post(OrderDto dto) {
+		OrderDto post = (OrderDto) dto;
 		String sql = " update orders set title = ?, location = ?, price = ?, contents = ?, applicants = ? where reqnumber = ? ";
 
 		Connection conn = null;
@@ -160,7 +159,7 @@ public class OrderDao {
 	}
 	
 	private void insert_post(OrderDto dto) {
-		OrderBBsDto post = (OrderBBsDto) dto;
+		OrderDto post = (OrderDto) dto;
 		String sql = " insert into orders values( bbsSeq.nextval,?,null,?,?,?,null,'요청중',null,null,?,sysdate,0 )";
 
 		Connection conn = null;
@@ -206,7 +205,7 @@ public class OrderDao {
 	*/
 	
 	public void select_posts(Socket sock) {
-		List<OrderBBsDto> posts = new ArrayList<>();
+		List<OrderDto> posts = new ArrayList<>();
 		String sql = " SELECT REQNUMBER, STATE, TITLE, LOCATION, WRITER, Order_date " + " FROM ORDERS WHERE NVL(ISDEL,0) = 0 ORDER BY REQNUMBER DESC ";
 
 		Connection conn = null;
@@ -218,9 +217,8 @@ public class OrderDao {
 			psmt = conn.prepareStatement(sql);
 			rs = psmt.executeQuery();
 
-			while (rs.next()) {
-		
-				OrderBBsDto post = new OrderBBsDto();
+			while (rs.next()) {		
+				OrderDto post = new OrderDto();
 				post.setReqNum(rs.getInt(1));
 				post.setStatus(rs.getString(2));
 				post.setTitle(rs.getString(3));
@@ -239,7 +237,7 @@ public class OrderDao {
 		SocketWriter.Write(sock, posts);
 	}
 	
-	public void select_post(Socket sock, OrderBBsDto post) {
+	public void select_post(Socket sock, OrderDto post) {
 		
 		String sql = " SELECT STATE, TITLE, LOCATION, WRITER, Order_date, price, applicants, contents, REQNUMBER " + " FROM ORDERS WHERE REQNUMBER = ?";
 
@@ -279,7 +277,7 @@ public class OrderDao {
 	
 
 	
-	public void select_postcontent(Socket sock, OrderBBsDto dto) {
+	public void select_postcontent(Socket sock, OrderDto dto) {
 		
 		String sql = " SELECT STATE, TITLE, LOCATION, WRITER, Order_date, price, applicants, contents, reqnumber " + " FROM ORDERS WHERE CONTENTS LIKE '%" + 
 				 dto.getContents() + "%'";
@@ -288,7 +286,7 @@ public class OrderDao {
 		PreparedStatement psmt = null;
 		ResultSet rs = null;
 		
-		List<OrderBBsDto> list = new ArrayList<>();
+		List<OrderDto> list = new ArrayList<>();
 
 		try {
 			conn = DBConnection.getConnection();
@@ -296,7 +294,7 @@ public class OrderDao {
 			rs = psmt.executeQuery();			
 
 			while (rs.next()) {
-				OrderBBsDto post = new OrderBBsDto();
+				OrderDto post = new OrderDto();
 				post.setStatus(rs.getString(1));
 				post.setTitle(rs.getString(2));
 				post.setLocation(rs.getString(3));

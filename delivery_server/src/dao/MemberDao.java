@@ -42,7 +42,7 @@ public class MemberDao {
 
 	private void select_delivererInfo(MemberDto dto, Socket sock) {
 		String id = dto.getId();
-		String sql = "SELECT LOCATIONS, DELIVERCOUNTS, SCORE " + " FROM MEMBERS " + " WHERE M.ID = ? ";
+		String sql = "SELECT LOCATIONS, DELIVERCOUNTS, SCORE " + " FROM MEMBERS " + " WHERE ID = ? ";
 
 		Connection conn = null;
 		PreparedStatement psmt = null;
