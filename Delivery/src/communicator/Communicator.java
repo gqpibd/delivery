@@ -21,6 +21,8 @@ public class Communicator {
 	public static final int SELECT_IDCHEKCK = 6;
 	public static final int SELECT_GU = 7;
 	public static final int SELECT_POSTCONENT = 8;
+	public static final int SELECT_DELIVERER_INFO = 10;
+	public static final int SELECT_DELIVER_LIST = 11;
 
 	private Socket sock;
 

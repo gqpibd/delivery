@@ -18,11 +18,9 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 import controller.OrderController;
-import dto.DelivererDto;
 import dto.MemberDto;
 import dto.OrderBBsDto;
 import net.coderazzi.filters.gui.AutoChoices;
-import net.coderazzi.filters.gui.IFilterEditor;
 import net.coderazzi.filters.gui.TableFilterHeader;
 import net.coderazzi.filters.gui.TableFilterHeader.Position;
 import singleton.Singleton;
@@ -46,7 +44,7 @@ public class OrderBBsView extends JPanel implements ActionListener {
 		List<OrderBBsDto> list = s.getOrderCtrl().getPostlist();
 		setRowData(list);
 
-		setBounds(6, 125, 480, 487);
+		setSize(480, 487);
 		setLayout(null);
 
 		// 테이블의 폭을 설정하기 위한 Model good but
@@ -62,22 +60,13 @@ public class OrderBBsView extends JPanel implements ActionListener {
 		setTable();
 		TableFilterHeader filterHeader = new TableFilterHeader(table, AutoChoices.ENABLED);
 		filterHeader.setPosition(Position.TOP);
-<<<<<<< HEAD
 
-		for (int i = 0; i < columnNames.length; i++) {
-			filterHeader.getFilterEditor(i).setEditable(false);
-		}
-		if (s.getMemCtrl().getCurrentUser().getAuth() == MemberDto.DELIVERER) {
-			DelivererDto dto = (DelivererDto) s.getMemCtrl().getCurrentUser();
-			filterHeader.getFilterEditor(3).setContent(dto.getLocations()[0]);
-		}
-=======
 		
 		for (int i = 0; i < columnNames.length; i++) {
 			filterHeader.getFilterEditor(i).setEditable(false);
 		}
 		
->>>>>>> refs/remotes/origin/h2gon
+
 		table.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -101,21 +90,13 @@ public class OrderBBsView extends JPanel implements ActionListener {
 		exit_btn = new JButton("종료");
 		exit_btn.setBounds(345, 444, 117, 37);
 		add(exit_btn);
-<<<<<<< HEAD
-
-=======
 		exit_btn.addActionListener(this);
-		
->>>>>>> refs/remotes/origin/h2gon
+
 		logout_btn = new JButton("로그아웃");
 		logout_btn.setBounds(217, 444, 128, 37);
 		add(logout_btn);
-<<<<<<< HEAD
-
-=======
 		logout_btn.addActionListener(this);
-		
->>>>>>> refs/remotes/origin/h2gon
+
 		write_btn = new JButton("글쓰기");
 		write_btn.setBounds(7, 444, 128, 33);
 		add(write_btn);
@@ -186,15 +167,8 @@ public class OrderBBsView extends JPanel implements ActionListener {
 		if (e.getSource() == write_btn) {
 			OrderController oc = Singleton.getInstance().getOrderCtrl();
 			oc.orderWriteView();
-<<<<<<< HEAD
-
-		}
-		if (e.getSource() == search_btn) {
-=======
-						
 		}		
 		else if(e.getSource() == search_btn) {
->>>>>>> refs/remotes/origin/h2gon
 			String inputF = search_textF.getText();
 			List<OrderBBsDto> list = Singleton.getInstance().getOrderCtrl()
 					.selectList((String) choice_comboBox.getSelectedItem(), inputF);
@@ -202,7 +176,6 @@ public class OrderBBsView extends JPanel implements ActionListener {
 			setRowData(list);
 			model.setDataVector(rowData, columnNames);
 			setTable();
-
 		}
 		else if(e.getSource() == logout_btn) {
 			Singleton.getInstance().getMemCtrl().logout();
@@ -210,8 +183,6 @@ public class OrderBBsView extends JPanel implements ActionListener {
 		}
 		else if(e.getSource() == exit_btn) {
 			System.exit(0);
-		}
-		
+		}		
 	}
-
 }

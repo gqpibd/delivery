@@ -3,6 +3,7 @@ package controller;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+import dto.DelivererDto;
 import dto.MemberDto;
 import dto.OrderBBsDto;
 import service.MemberService;
@@ -74,6 +75,10 @@ public class MemberController {
 		mService.logout();
 		showInitView();
 		
+	}
+
+	public DelivererDto getDeliverInfo(MemberDto dto) {
+		return mService.getDelivererInfor(dto);
 	}
 
 }

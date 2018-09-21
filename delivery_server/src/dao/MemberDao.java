@@ -27,13 +27,44 @@ public class MemberDao {
 		case Dml.UPDATE:
 			break;
 		case Dml.SELECT:
-			select_login(dto, sock);			
+			select_login(dto, sock);
 			break;
 		case Dml.SELECT_IDCHEKCK:
-			select_existingId(dto,sock);
+			select_existingId(dto, sock);
+			break;
+		case Dml.SELECT_DELIVERER_INFO:
+			select_delivererInfo(dto, sock);
 			break;
 		}
 
+	}
+
+	private void select_delivererInfo(MemberDto dto, Socket sock) {
+		String id = dto.getId();
+		String sql = "SELECT LOCATIONS, DELIVERCOUNTS, SCORE " + " FROM MEMBERS " + " WHERE M.ID = ? ";
+
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+
+		DelivererDto deliverer = null;
+		try {
+			conn = DBConnection.getConnection();
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, id);
+			rs = psmt.executeQuery();
+			if (rs.next()) {
+				deliverer = new DelivererDto(dto, rs.getString(1).split(","));
+				deliverer.setDeliveryCounts(rs.getInt(2));
+				deliverer.setScore(rs.getDouble(3));
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBClose.close(psmt, conn, rs);
+		}
+		SocketWriter.Write(sock, deliverer);
 	}
 
 	private void select_existingId(MemberDto dto, Socket sock) {
@@ -41,9 +72,9 @@ public class MemberDao {
 		String sql = "SELECT * " + " FROM MEMBERS " + " WHERE ID = ?";
 
 		Connection conn = null;
-		PreparedStatement psmt = null;		
+		PreparedStatement psmt = null;
 		ResultSet rs = null;
-		
+
 		boolean existingId = false;
 		try {
 			conn = DBConnection.getConnection();
@@ -63,24 +94,18 @@ public class MemberDao {
 		} finally {
 			DBClose.close(psmt, conn, rs);
 		}
-		SocketWriter.Write(sock, existingId);		
+		SocketWriter.Write(sock, existingId);
 	}
-	
-	/*CREATE TABLE members(
-		    ID VARCHAR2(20) primary key,
-		    PW VARCHAR2(20) not null,
-		    NAME varchar2(20) not null,
-		    ADDRESS varchar2(150),
-		    LOCATIONS varchar2(200),
-		    DELIVERCOUNTS number(5),
-		    SCORE number(5,1),
-		    PHONE varchar2(20),
-		    AUTH number(2) not null,
-		);*/
+
+	/*
+	 * CREATE TABLE members( ID VARCHAR2(20) primary key, PW VARCHAR2(20) not null,
+	 * NAME varchar2(20) not null, ADDRESS varchar2(150), LOCATIONS varchar2(200),
+	 * DELIVERCOUNTS number(5), SCORE number(5,1), PHONE varchar2(20), AUTH
+	 * number(2) not null, );
+	 */
 
 	private void insert(MemberDto dto) {
 		String sql = null;
-		
 
 		Connection conn = null;
 		PreparedStatement psmt = null;
@@ -88,7 +113,7 @@ public class MemberDao {
 
 		try {
 			conn = DBConnection.getConnection();
-			if(dto instanceof ConsumerDto) {
+			if (dto instanceof ConsumerDto) {
 				ConsumerDto newMember = (ConsumerDto) dto;
 				sql = " INSERT INTO MEMBERS (id, pw, name, phone, address, auth) VALUES (?,?,?,?,?,1) ";
 				psmt = conn.prepareStatement(sql);
@@ -96,8 +121,8 @@ public class MemberDao {
 				psmt.setString(2, newMember.getPw());
 				psmt.setString(3, newMember.getName());
 				psmt.setString(4, newMember.getPhone());
-				psmt.setString(5, newMember.getAddress());	
-			}else {
+				psmt.setString(5, newMember.getAddress());
+			} else {
 				DelivererDto newMember = (DelivererDto) dto;
 				sql = " INSERT INTO MEMBERS (id, pw, name, phone, locations, auth) VALUES (?,?,?,?,?,2) ";
 				psmt = conn.prepareStatement(sql);
@@ -106,9 +131,9 @@ public class MemberDao {
 				psmt.setString(2, newMember.getPw());
 				psmt.setString(3, newMember.getName());
 				psmt.setString(4, newMember.getPhone());
-				psmt.setString(5, newMember.getLocations()[0]);	
+				psmt.setString(5, newMember.getLocations()[0]);
 			}
-			
+
 			rs = psmt.executeQuery();
 
 		} catch (SQLException e) {
@@ -118,12 +143,12 @@ public class MemberDao {
 		}
 
 	}
-	
+
 	public void select_login(MemberDto dto, Socket sock) {
 		MemberDto loginUser = null;
 		String id = dto.getId();
 		String pw = dto.getPw();
-		String sql = "SELECT name, phone, auth " + " FROM MEMBERS " + " WHERE ID = '" + id
+		String sql = "SELECT name, phone, ADDRESS, LOCATION, auth " + " FROM MEMBERS " + " WHERE ID = '" + id
 				+ "' AND PW = '" + pw + "' ";
 
 		Connection conn = null;
@@ -136,13 +161,17 @@ public class MemberDao {
 			rs = psmt.executeQuery();
 
 			if (rs.next()) {
-				loginUser = new MemberDto();
+				int auth = rs.getInt(5);
+				if (auth == MemberDto.CONSUMER) {
+					loginUser = new ConsumerDto(dto, rs.getString("address"));
+				} else if (auth == MemberDto.DELIVERER) {
+					loginUser = new DelivererDto(dto, rs.getString("location").split(","));
+				}
 				loginUser.setId(id);
 				loginUser.setPw(pw);
 				loginUser.setName(rs.getString(1));
 				loginUser.setPhone(rs.getString(2));
-				loginUser.setAuth(rs.getInt(3));
-				
+				loginUser.setAuth(auth);
 				System.out.println(loginUser.getId() + "님이 로그인 했습니다");
 			} else {
 				System.out.println("아이디 또는 패스워드가 틀렸습니다");

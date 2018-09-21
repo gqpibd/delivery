@@ -54,6 +54,10 @@ public class OrderController {
 	public void updatePost(OrderBBsDto dto) {
 		OS.updatePost(dto);
 	}
-	
+
+	public List<OrderBBsDto> getDeliverList(String id) {		
+		return OS.getDeliverList(id);
+	}
+
 	
 }

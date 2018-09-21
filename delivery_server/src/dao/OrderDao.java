@@ -37,9 +37,33 @@ public class OrderDao {
 		case Dml.SELECT_POSTCONENT:
 			select_postcontent(sock, (OrderBBsDto)dto);
 			break;
+		case Dml.SELECT_DELIVER_LIST:
+			select_deliverList(sock, dto);
+			break;
 		}
 
 	}
+	private void select_deliverList(Socket sock, OrderDto dto) {
+		OrderBBsDto post = (OrderBBsDto) dto;
+		String sql = " SELECT REQNUMBER, STATE, TITLE, LOCATION, Order_date " + " FROM ORDERS WHERE NVL(ISDEL,0) = 0 AND DELIVERER=? ORDER BY REQNUMBER DESC";
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		System.out.println("update : " + dto);
+		try {
+			conn = DBConnection.getConnection();
+			psmt = conn.prepareStatement(sql);			
+			psmt.setString(1, post.getDelivererId());					
+			
+			psmt.execute();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBClose.close(psmt, conn, rs);
+		}		
+	}
+	
 	private void delete_post(OrderDto dto) {
 		OrderBBsDto post = (OrderBBsDto) dto;
 		String sql = " update orders set isdel = 1 where reqnumber = ? ";

@@ -6,6 +6,7 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 import communicator.Communicator;
+import dto.DelivererDto;
 import dto.MemberDto;
 import singleton.Singleton;
 
@@ -47,5 +48,11 @@ public class MemberService {
 	public void logout() {
 		CurrentUser = null;
 		
+	}
+
+	public DelivererDto getDelivererInfor(MemberDto dto) {
+		Communicator comm = Singleton.getInstance().getComm();
+		comm.SendMessage(Communicator.SELECT_DELIVERER_INFO, dto);
+		return (DelivererDto) comm.receiveObject();
 	}
 }
