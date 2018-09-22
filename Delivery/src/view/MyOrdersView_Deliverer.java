@@ -19,7 +19,7 @@ import dto.OrderDto;
 import singleton.Singleton;
 
 public class MyOrdersView_Deliverer extends JPanel implements ActionListener {
-
+    
 	private JTable table;
 	private String columnNames[] = { "번호", "날짜", "제목", "상태" };
 	private Object rowData[][];

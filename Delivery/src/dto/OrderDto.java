@@ -2,7 +2,7 @@ package dto;
 
 import java.io.Serializable;
 
-public class OrderDto  implements Serializable {
+public class OrderDto implements Serializable {
 
 	/**
 	 * 
@@ -11,6 +11,7 @@ public class OrderDto  implements Serializable {
 
 	private int reqNum;
 	private String title;
+	private String type;
 	private String location;
 	private String consumerId;
 	private String delivererId;
