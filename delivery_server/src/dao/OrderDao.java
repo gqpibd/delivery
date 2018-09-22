@@ -46,7 +46,8 @@ public class OrderDao {
 
 	}
 	private void select_deliverList(Socket sock, OrderDto dto) {
-		String sql = " SELECT REQNUMBER, STATE, TITLE, LOCATION, Order_date " + " FROM ORDERS WHERE NVL(ISDEL,0) = 0 AND DELIVERER=? ORDER BY REQNUMBER DESC";
+		String sql = " SELECT REQNUMBER, STATE, TITLE, LOCATION, Order_date " + " FROM ORDERS WHERE (NVL(ISDEL,0) = 0 AND STATE = '요청중' AND APPLICANTS LIKE '%" + dto.getDelivererId() + "%') "
+				+ "OR DELIVERER=? ORDER BY REQNUMBER DESC";
 		Connection conn = null;
 		PreparedStatement psmt = null;
 		ResultSet rs = null;
