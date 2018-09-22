@@ -1,85 +1,109 @@
 package view;
 
-import java.awt.GridLayout;
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JButton;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 import dto.MemberDto;
 import singleton.Singleton;
-import javax.swing.JLabel;
-import javax.swing.SwingConstants;
+import utils.images.LabelEventListener;
 
 public class MainView extends JFrame implements ActionListener {
 
 	private JPanel bottom_panel = null;
-	private JButton myreqbtn;
-	private JButton mypagebtn;
-	private JButton bbsbtn;
+	private JLabel myreqbtn;
+	private JLabel mypagebtn;
+	private JLabel bbsbtn;
 	public static int BOTTOM_WIDTH = 480;
 	public static int BOTTOM_HEIGHT = 474;
 	private JPanel top_panel;
-	private JButton logout_btn;
-	private JButton exit_btn;
+	private JLabel logout_btn;
+	private JLabel exit_btn;
 	private JLabel userLabel;
+	private static final String PATH = "main/";
+	String myStr;
 
 	public MainView() {
 		super("대신해드려요!!");
 		JPanel contentPane = new JPanel();
+		contentPane.setBackground(Color.DARK_GRAY);
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+
+		Font fontStyle = new Font("다음_Regular", Font.PLAIN, 14);
+		setFont(fontStyle);
 
 		// 하단패널
 		bottom_panel = new JPanel();
 
 		top_panel = new JPanel();
+		top_panel.setBackground(Color.DARK_GRAY);
 		top_panel.setBounds(6, 2, 480, 48);
 		contentPane.add(top_panel);
 		top_panel.setLayout(null);
 
-		logout_btn = new JButton("로그아웃");
-		logout_btn.setBounds(368, 7, 112, 35);
+		logout_btn = new JLabel(new ImageIcon(getClass().getClassLoader().getResource(PATH + "logout.png")));
+		logout_btn.setName(PATH + "logout.png");
+		logout_btn.setBounds(355, 7, 125, 35);
 		top_panel.add(logout_btn);
 
-		exit_btn = new JButton("종료");
-		exit_btn.setBounds(0, 7, 124, 35);
+		exit_btn = new JLabel(new ImageIcon(getClass().getClassLoader().getResource(PATH + "exit.png")));
+		exit_btn.setName(PATH + "exit.png");
+		exit_btn.setBounds(0, 7, 125, 35);
 		top_panel.add(exit_btn);
-		
+
 		MemberDto dto = Singleton.getInstance().getMemCtrl().getCurrentUser();
 		String name = dto.getId();
-		String auth = (dto.getAuth()==MemberDto.DELIVERER)?"배달원":"주문고객";
+		String auth = (dto.getAuth() == MemberDto.DELIVERER) ? "배달원" : "주문고객";
 		userLabel = new JLabel(auth + " " + name + "님 로그인");
+		userLabel.setForeground(Color.WHITE);
 		userLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-		userLabel.setBounds(136, 17, 220, 15);
+		userLabel.setBounds(135, 17, 211, 15);
 		top_panel.add(userLabel);
 
 		// 상단 패널
 		JPanel tab_panel = new JPanel();
+		tab_panel.setBackground(Color.DARK_GRAY);
 		tab_panel.setBounds(6, 51, 480, 64);
 		contentPane.add(tab_panel);
-		tab_panel.setLayout(new GridLayout(0, 3, 0, 0));
+		tab_panel.setLayout(null);
 
-		bbsbtn = new JButton("배달요청");
+		bbsbtn = new JLabel(new ImageIcon(getClass().getClassLoader().getResource(PATH + "bbs_over.png")));
+		bbsbtn.setName(PATH + "bbs.png");
+		bbsbtn.setBounds(0, 0, 160, 64);
 		tab_panel.add(bbsbtn);
 
-		myreqbtn = new JButton("내 주문 내역");
+		if (dto.getAuth() == MemberDto.CONSUMER) {			
+			myStr = "my_orders";
+		} else {
+			myStr = "my_delivery";
+		}
+		myreqbtn = new JLabel(new ImageIcon(getClass().getClassLoader().getResource(PATH + myStr +".png")));
+		myreqbtn.setName(PATH + myStr +".png");
+		myreqbtn.setBounds(160, 0, 160, 64);
 		tab_panel.add(myreqbtn);
 
-		mypagebtn = new JButton("마이 페이지");
+		mypagebtn = new JLabel(new ImageIcon(getClass().getClassLoader().getResource(PATH + "my_page.png")));
+		mypagebtn.setName(PATH + "my_page.png");
+		mypagebtn.setBounds(320, 0, 160, 64);
 		tab_panel.add(mypagebtn);
+		
 		bottom_panel = new OrderBBsView();
-		// bottom_panel.add(new OrderBBsView());
 		bottom_panel.setBounds(6, 117, 480, 474);
 		contentPane.add(bottom_panel);
 
-		logout_btn.addActionListener(this);
-		exit_btn.addActionListener(this);
-		bbsbtn.addActionListener(this);
-		myreqbtn.addActionListener(this);
-		mypagebtn.addActionListener(this);
+		logout_btn.addMouseListener(new LabelEventListener(this, logout_btn));
+		exit_btn.addMouseListener(new LabelEventListener(this, exit_btn));
+		bbsbtn.addMouseListener(new LabelEventListener(this, bbsbtn, true));
+		myreqbtn.addMouseListener(new LabelEventListener(this, myreqbtn, true));
+		mypagebtn.addMouseListener(new LabelEventListener(this, mypagebtn, true));
 
 		setSize(506, 640);
 		setLocationRelativeTo(null);
@@ -88,25 +112,48 @@ public class MainView extends JFrame implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		JButton btn = (JButton) e.getSource();
+		Object btn = e.getSource();
 		if (btn == bbsbtn || btn == myreqbtn || btn == mypagebtn) {
 			bottom_panel.removeAll();
 			int auth = Singleton.getInstance().getMemCtrl().getCurrentUser().getAuth();
 
 			if (e.getSource() == bbsbtn) {
 				bottom_panel.add(new OrderBBsView());
-			} else if (e.getSource() == myreqbtn) {
+				
+				bbsbtn.setName(PATH + "bbs.png" + " focus");
+				myreqbtn.setName(PATH + myStr +".png" + " blur");
+				mypagebtn.setName(PATH + "my_page.png" + " blur");
+				
+				bbsbtn.setIcon(new ImageIcon(getClass().getClassLoader().getResource(PATH + "bbs_over.png")));
+				myreqbtn.setIcon(new ImageIcon(getClass().getClassLoader().getResource(PATH + myStr +".png")));
+				mypagebtn.setIcon(new ImageIcon(getClass().getClassLoader().getResource(PATH + "my_page.png")));
+			} else if (e.getSource() == myreqbtn) {				
 				if (auth == MemberDto.DELIVERER) {
-					bottom_panel.add(new MyOrdersView_Deliverer());
+					bottom_panel.add(new MyOrdersView_Deliverer());				
 				} else {
 					bottom_panel.add(new MyOrdersView());
 				}
+				
+				bbsbtn.setName(PATH + "bbs.png" + " blur");
+				myreqbtn.setName(PATH + myStr + ".png" + " focus");
+				mypagebtn.setName(PATH + "my_page.png" + " blur");
+				
+				bbsbtn.setIcon(new ImageIcon(getClass().getClassLoader().getResource(PATH + "bbs.png")));
+				myreqbtn.setIcon(new ImageIcon(getClass().getClassLoader().getResource(PATH + myStr + "_over.png")));
+				mypagebtn.setIcon(new ImageIcon(getClass().getClassLoader().getResource(PATH + "my_page.png")));
 			} else if (e.getSource() == mypagebtn) {
 				if (auth == MemberDto.DELIVERER) {
 					bottom_panel.add(new MyPageView_deliverer());
 				} else {
 					bottom_panel.add(new MypageView());
 				}
+				bbsbtn.setName(PATH + "bbs.png" + " blur");
+				myreqbtn.setName(PATH + myStr + ".png" + " blur");
+				mypagebtn.setName(PATH + "my_page.png" + " focus");
+				
+				bbsbtn.setIcon(new ImageIcon(getClass().getClassLoader().getResource(PATH + "bbs.png")));
+				myreqbtn.setIcon(new ImageIcon(getClass().getClassLoader().getResource(PATH + myStr+".png")));
+				mypagebtn.setIcon(new ImageIcon(getClass().getClassLoader().getResource(PATH + "my_page_over.png")));
 			}
 			bottom_panel.setSize(BOTTOM_WIDTH, BOTTOM_HEIGHT);
 			repaint();
@@ -117,5 +164,18 @@ public class MainView extends JFrame implements ActionListener {
 			System.exit(0);
 		}
 
+	}
+
+	public void setOrderView() {
+		bottom_panel.removeAll();
+		int auth = Singleton.getInstance().getMemCtrl().getCurrentUser().getAuth();
+
+		if (auth == MemberDto.DELIVERER) {
+			bottom_panel.add(new MyOrdersView_Deliverer());
+		} else {
+			bottom_panel.add(new MyOrdersView());
+		}
+		bottom_panel.setSize(BOTTOM_WIDTH, BOTTOM_HEIGHT);
+		repaint();
 	}
 }

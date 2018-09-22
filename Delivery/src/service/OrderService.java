@@ -87,7 +87,7 @@ public class OrderService {
 		dto.setDelivererId(id);
 		Communicator comm = Singleton.getInstance().getComm();
 		comm.SendMessage(Communicator.SELECT_DELIVER_LIST, dto);
-		return null;
+		return (List<OrderDto>) comm.receiveObject();
 	}
 
 }

@@ -47,5 +47,8 @@ public class Singleton {
 	public void hideMainView() {
 		mv.setVisible(false);
 	}
+	public MainView getMainView() {
+		return mv;
+	}
 	
 }

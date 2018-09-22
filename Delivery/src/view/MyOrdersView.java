@@ -27,13 +27,13 @@ public class MyOrdersView extends JPanel implements ActionListener{
 	private JLabel request_label;
 	private JLabel ongoing_label;
 	private JLabel complete_label;
-	private JLabel label;
-	private JButton button;
+	private JButton check_btn;
+	List<OrderDto> list;
 	
 	public MyOrdersView() {
 		setLayout(null);
 		setSize(MainView.BOTTOM_WIDTH, MainView.BOTTOM_HEIGHT);
-		List<OrderDto> list = Singleton.getInstance().getOrderCtrl().getOderList();
+		list = Singleton.getInstance().getOrderCtrl().getOderList();
 		setRowData(list);
 		System.out.println(list);
 		
@@ -62,33 +62,51 @@ public class MyOrdersView extends JPanel implements ActionListener{
 		scrollPane.setBounds(19, 129, 443, 299);
 		add(scrollPane);
 		
-		total_order = new JLabel("총 주문 건수 : 건");
+		total_order = new JLabel("총 주문 건수 :" + list.size() +"건");
 		total_order.setBounds(19, 76, 134, 15);
 		add(total_order);
 		
-		request_label = new JLabel("요청중 : 건");
+		int rq =0; int ing =0; int comp = 0; int wait = 0;
+		
+		for (int i = 0; i < list.size(); i++) {
+			String stat = list.get(i).getStatus();
+			if(stat.equals("요청중")) {
+				rq++;
+			}else if(stat.equals("진행중")) {
+				ing++;
+			}else if(stat.equals("완료됨")) {
+				comp++;
+			}
+				
+		}
+		
+		request_label = new JLabel("요청중 :" + rq + "건");
 		request_label.setBounds(61, 101, 78, 15);
 		add(request_label);
 		
-		ongoing_label = new JLabel("진행중 : 건");
+		ongoing_label = new JLabel("진행중 :" + ing + "건");
 		ongoing_label.setBounds(200, 101, 78, 15);
 		add(ongoing_label);
 		
-		complete_label = new JLabel("완료됨 : 건");
-		complete_label.setBounds(339, 101, 78, 15);
+		complete_label = new JLabel("완료됨 :" + comp +"건");
+		complete_label.setBounds(378, 101, 78, 15);
 		add(complete_label);
 		
-		label = new JLabel("완료 대기중 : 건");
-		label.setBounds(19, 445, 139, 15);
-		add(label);
-		
-		button = new JButton("확인");
-		button.setBounds(170, 441, 78, 23);
-		add(button);
+		check_btn = new JButton("확인");
+		check_btn.setBounds(277, 98, 78, 23);
+		add(check_btn);
+		check_btn.addActionListener(this);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		if(e.getSource() == check_btn) {
+		for (int i = 0; i < list.size(); i++) {
+			if(list.get(i).getStatus().equals("진행중")) {
+				Singleton.getInstance().getOrderCtrl().postView(list.get(i).getReqNum());
+			}
+			}
+		}
 	}
 	
 	public void setRowData(List<OrderDto> list) {

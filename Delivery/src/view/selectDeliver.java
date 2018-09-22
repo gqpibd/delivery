@@ -65,7 +65,8 @@ public class selectDeliver extends JDialog implements ActionListener{
 		getContentPane().add(sel_btn);	
 		sel_btn.addActionListener(this);
 						
-		setBounds(0, 0, 213, 316);
+		setSize(213, 316);
+		setLocationRelativeTo(null);
 		setVisible(true);
 	}
 	
