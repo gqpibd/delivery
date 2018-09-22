@@ -34,7 +34,7 @@ public class OrderDao {
 		case Dml.SELECT_POST:
 			select_post(sock,dto);
 			break;
-		case Dml.SELECT_POSTCONENT:
+		case Dml.SELECT_POSTCONENT: 
 			select_postcontent(sock, dto);
 			break;
 		case Dml.SELECT_DELIVER_LIST:
@@ -46,23 +46,39 @@ public class OrderDao {
 
 	}
 	private void select_deliverList(Socket sock, OrderDto dto) {
-		String sql = " SELECT REQNUMBER, STATE, TITLE, LOCATION, Order_date " + " FROM ORDERS WHERE NVL(ISDEL,0) = 0 AND DELIVERER=? ORDER BY REQNUMBER DESC";
+		//String sql = " SELECT REQNUMBER, STATE, TITLE, LOCATION, Order_date " + " FROM ORDERS WHERE NVL(ISDEL,0) = 0 AND DELIVERER=? ORDER BY REQNUMBER DESC";
+		List<OrderDto> list = new ArrayList<>();
+		String sql = " SELECT REQNUMBER, STATE, TITLE, LOCATION, Order_date, WRITER, DELIVERER " 
+				+ " FROM ORDERS WHERE (NVL(ISDEL,0) = 0 AND STATE = '요청중' AND APPLICANTS LIKE '%" + dto.getDelivererId() + "%') "
+				+ "OR DELIVERER=? ORDER BY REQNUMBER DESC";
 		Connection conn = null;
 		PreparedStatement psmt = null;
 		ResultSet rs = null;
-		System.out.println("update : " + dto);
+		System.out.println("select : " + dto);
 		try {
 			conn = DBConnection.getConnection();
 			psmt = conn.prepareStatement(sql);			
-			psmt.setString(1, dto.getDelivererId());					
+			psmt.setString(1, dto.getDelivererId());		
+			rs = psmt.executeQuery();
 			
-			psmt.execute();
+			while (rs.next()) {
+				OrderDto post = new OrderDto();
+				post.setReqNum(rs.getInt(1));
+				post.setStatus(rs.getString(2));
+				post.setTitle(rs.getString(3));
+				post.setConsumerId(rs.getString(4));
+				post.setDate(rs.getString(5));
+				post.setConsumerId(rs.getString(6));
+				post.setDelivererId(rs.getString(7));
+				list.add(post);
+			}
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			DBClose.close(psmt, conn, rs);
 		}		
+		SocketWriter.Write(sock, list);
 	}
 	
 	
@@ -127,7 +143,7 @@ public class OrderDao {
 	}
 	private void update_post(OrderDto dto) {
 		OrderDto post = (OrderDto) dto;
-		String sql = " update orders set title = ?, location = ?, price = ?, contents = ?, applicants = ?, address = ? where reqnumber = ? ";
+		String sql = " update orders set title = ?, location = ?, price = ?, contents = ?, applicants = ?, address = ?, state = ?, deliverer = ? where reqnumber = ? ";
 
 		Connection conn = null;
 		PreparedStatement psmt = null;
@@ -146,10 +162,12 @@ public class OrderDao {
 			}else {
 				psmt.setString(5, "");
 			}
-			psmt.setString(6, post.getAddress());			
-			psmt.setInt(7, post.getReqNum());			
+			psmt.setString(6, post.getAddress());		
+			psmt.setString(7, post.getStatus());
+			psmt.setString(8, post.getDelivererId());		
+			psmt.setInt(9, post.getReqNum());	
 			
-			psmt.execute();
+			psmt.executeQuery();
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -241,7 +259,7 @@ public class OrderDao {
 	
 	public void select_post(Socket sock, OrderDto post) {
 		
-		String sql = " SELECT STATE, TITLE, LOCATION, WRITER, Order_date, price, applicants, contents, address " + " FROM ORDERS WHERE REQNUMBER = ?";
+		String sql = " SELECT STATE, TITLE, LOCATION, WRITER, Order_date, price, applicants, contents, address, DELIVERER " + " FROM ORDERS WHERE REQNUMBER = ?";
 
 		Connection conn = null;
 		PreparedStatement psmt = null;
@@ -267,6 +285,7 @@ public class OrderDao {
 				post.setContents(rs.getString(8));
 				//post.setReqNum(post.getReqNum());
 				post.setAddress(rs.getString(9));
+				post.setDelivererId(rs.getString(10));
 				System.out.println(post.toString());
 			}
 

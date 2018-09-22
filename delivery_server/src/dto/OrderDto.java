@@ -26,6 +26,10 @@ public class OrderDto  implements Serializable {
 	
 
 	public OrderDto() {
+		delivererId = "";
+		applicants = "";
+		score = 0;
+		review = "";
 	}
 
 	public int getReqNum() {

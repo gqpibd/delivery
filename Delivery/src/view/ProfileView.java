@@ -91,11 +91,11 @@ public class ProfileView extends JDialog {
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
-		JLabel label = new JLabel("아이디 : <dynamic>");
+		JLabel label = new JLabel("아이디 : " + dto.getId());
 		label.setBounds(12, 15, 221, 29);
 		panel.add(label);
 		
-		JLabel label_1 = new JLabel("배달지역 : <dynamic>");
+		JLabel label_1 = new JLabel("배달지역 : " +deliverer.getLocations()[0]);
 		label_1.setBounds(12, 59, 221, 29);
 		panel.add(label_1);
 		
@@ -110,7 +110,6 @@ public class ProfileView extends JDialog {
 	}
 
 	public void setRowData(List<OrderDto> list) {
-
 		rowData = new Object[list.size()][6];
 		int count=list.size();
 		for (int i = 0; i < list.size(); i++) {
@@ -140,5 +139,4 @@ public class ProfileView extends JDialog {
 		table.getColumn("작성자").setCellRenderer(celAlignCenter);
 		table.getColumn("날짜").setCellRenderer(celAlignCenter);
 	}
-
 }
