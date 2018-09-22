@@ -89,12 +89,12 @@ public class MemberDao {
 		String sql = "";
 		try {
 			conn = DBConnection.getConnection();
-			psmt = conn.prepareStatement(sql);
 
 			int auth = dto.getAuth();
 			if (auth == MemberDto.CONSUMER) {
 				ConsumerDto con = (ConsumerDto) dto;
 				sql = " update members set address = ?, pw = ?, phone = ? where id = ? ";
+				psmt = conn.prepareStatement(sql);
 				psmt.setString(1, con.getAddress());
 				psmt.setString(2, con.getPw());
 				psmt.setString(3, con.getPhone());
@@ -102,12 +102,14 @@ public class MemberDao {
 			} else if (auth == MemberDto.DELIVERER) {
 				DelivererDto deli = (DelivererDto) dto;
 				sql = " update members set locations = ?, pw = ?, phone = ? where id = ? ";
+				psmt = conn.prepareStatement(sql);
 				psmt.setString(1, deli.getLocation());
 				psmt.setString(2, deli.getPw());
 				psmt.setString(3, deli.getPhone());
 				psmt.setString(4, deli.getId());
 			}
-			psmt.execute();
+			
+			psmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -206,7 +208,7 @@ public class MemberDao {
 				if (auth == MemberDto.CONSUMER) {
 					loginUser = new ConsumerDto(dto, rs.getString("address"));
 				} else if (auth == MemberDto.DELIVERER) {
-					loginUser = new DelivererDto(dto, rs.getString("location"));
+					loginUser = new DelivererDto(dto, rs.getString("locations"));
 				}
 				loginUser.setId(id);
 				loginUser.setPw(pw);

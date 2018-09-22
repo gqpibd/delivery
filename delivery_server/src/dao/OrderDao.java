@@ -63,10 +63,10 @@ public class OrderDao {
 			
 			while (rs.next()) {
 				OrderDto post = new OrderDto();
-				post.setReqNum(rs.getInt(1));
+				post.setReqNum(rs.getInt(1)); 
 				post.setStatus(rs.getString(2));
 				post.setTitle(rs.getString(3));
-				post.setConsumerId(rs.getString(4));
+				post.setLocation(rs.getString(4));
 				post.setDate(rs.getString(5));
 				post.setConsumerId(rs.getString(6));
 				post.setDelivererId(rs.getString(7));
