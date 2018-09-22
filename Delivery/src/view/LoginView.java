@@ -28,15 +28,14 @@ public class LoginView extends JFrame implements ActionListener {
 
 	public LoginView() {
 		super("로그인");
-		getContentPane().setBackground(Color.DARK_GRAY);
+		getContentPane().setBackground(Color.WHITE);
 		setSize(372, 239);
 		setLocationRelativeTo(null);
 		getContentPane().setLayout(null);
-		Font fontStyle = new Font("다음_Regular", Font.PLAIN, 14);
-		setFont(fontStyle);
 		setResizable(false);
 
 		JTextF_ID = new JTextField(10);
+		JTextF_ID.setFont(new Font("나눔스퀘어", Font.PLAIN, 14));
 		JTextF_ID.setBounds(155, 41, 125, 25);
 		getContentPane().add(JTextF_ID);
 
@@ -46,29 +45,29 @@ public class LoginView extends JFrame implements ActionListener {
 		getContentPane().add(JTextF_PW);
 
 		JLabel JLabel_ID = new JLabel("아 이 디");
-		JLabel_ID.setForeground(Color.WHITE);
+		JLabel_ID.setFont(new Font("나눔스퀘어", Font.BOLD, 14));
 		JLabel_ID.setHorizontalAlignment(SwingConstants.RIGHT);
 		JLabel_ID.setBounds(65, 40, 62, 27);
 		getContentPane().add(JLabel_ID);
 
 		JLabel JLabel_PW = new JLabel("비밀번호");
-		JLabel_PW.setForeground(Color.WHITE);
+		JLabel_PW.setFont(new Font("나눔스퀘어", Font.BOLD, 14));
 		JLabel_PW.setHorizontalAlignment(SwingConstants.RIGHT);
-		JLabel_PW.setBounds(65, 79, 62, 18);
+		JLabel_PW.setBounds(65, 77, 62, 22);
 		getContentPane().add(JLabel_PW);
 
 		// 로그인
 		Jbut_login = new JLabel(new ImageIcon(getClass().getClassLoader().getResource(PATH + "login.png")));
 		Jbut_login.setName(PATH + "login.png");
 		Jbut_login.addMouseListener(new LabelEventListener(this,Jbut_login));	
-		Jbut_login.setBounds(55, 145, 100, 43);
+		Jbut_login.setBounds(55, 145, 100, 45);
 		getContentPane().add(Jbut_login);
 		
 		// 취속
 		Jbut_Exit =  new JLabel(new ImageIcon(getClass().getClassLoader().getResource(PATH + "cancel.png")));
 		Jbut_Exit.setName(PATH + "cancel.png");
 		Jbut_Exit.addMouseListener(new LabelEventListener(this,Jbut_Exit));	
-		Jbut_Exit.setBounds(210, 145, 100, 43);
+		Jbut_Exit.setBounds(210, 145, 100, 45);
 		getContentPane().add(Jbut_Exit);
 
 		setBackground(Color.WHITE);

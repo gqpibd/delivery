@@ -12,28 +12,28 @@ public class DelivererDto extends MemberDto implements Serializable{
 	
 	private int deliveryCounts;
 	private double score;
-	private String[] locations;
+	private String location;
 	
-	public DelivererDto(String id, String pw, String name, String phone, int deliveryCounts, double score, String[] locations) {
+	public DelivererDto(String id, String pw, String name, String phone, int deliveryCounts, double score, String location) {
 		super(id, pw, name, phone, DELIVERER);
 		this.deliveryCounts = deliveryCounts;
 		this.score = score;
-		this.locations = locations;		
+		this.location = location;		
 	}
 	
-	public DelivererDto(MemberDto member, int deliveryCounts, double score, String[] locations) {
+	public DelivererDto(MemberDto member, int deliveryCounts, double score, String location) {
 		super(member);
 		this.deliveryCounts = deliveryCounts;
 		this.score = score;
-		this.locations = locations;
+		this.location = location;
 	}
 	
-	public DelivererDto(String id, String pw, String name, String phone, String[] locations) {
-		this(id, pw, name, phone, 0, 0, locations);		
+	public DelivererDto(String id, String pw, String name, String phone, String location) {
+		this(id, pw, name, phone, 0, 0, location);		
 	}
 	
-	public DelivererDto(MemberDto member, String[] locations) {
-		this(member, 0, 0, locations);
+	public DelivererDto(MemberDto member, String location) {
+		this(member, 0, 0, location);
 	}
 
 	public int getDeliveryCounts() {
@@ -52,18 +52,18 @@ public class DelivererDto extends MemberDto implements Serializable{
 		this.score = score;
 	}
 
-	public String[] getLocations() {
-		return locations;
+	public String getLocation() {
+		return location;
 	}
 
-	public void setLocations(String[] locations) {
-		this.locations = locations;
+	public void setLocation(String location) {
+		this.location = location;
 	}
 
 	@Override
 	public String toString() {
-		return "DelivererDto [deliveryCounts=" + deliveryCounts + ", score=" + score + ", locations="
-				+ Arrays.toString(locations) + "]";
+		return "DelivererDto [deliveryCounts=" + deliveryCounts + ", score=" + score + ", location="
+				+ location + "]";
 	}
 	
 	

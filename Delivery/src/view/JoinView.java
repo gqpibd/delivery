@@ -73,14 +73,10 @@ public class JoinView extends JFrame implements ActionListener {
 		setContentPane(contentPane);
 		setTitle("회원가입");
 		getContentPane().setLayout(null);
-		getContentPane().setBackground(Color.DARK_GRAY);
-		Font fontStyle = new Font("다음_Regular", Font.PLAIN, 14);
-		setFont(fontStyle);
-		
-		setForeground(Color.WHITE);
+		getContentPane().setBackground(Color.WHITE);
 
 		top_panel = new JPanel();
-		top_panel.setBackground(Color.DARK_GRAY);
+		top_panel.setBackground(Color.WHITE);
 		top_panel.setBounds(0, 0, width, 73);
 		contentPane.add(top_panel);
 
@@ -115,13 +111,13 @@ public class JoinView extends JFrame implements ActionListener {
 		back_btn.addMouseListener(new LabelEventListener(this, back_btn));
 
 		bottom_panel = new JPanel();
-		bottom_panel.setForeground(Color.WHITE);
 		bottom_panel.setBounds(0, 76, width, 322);
-		bottom_panel.setBackground(Color.DARK_GRAY);
+		bottom_panel.setBackground(Color.WHITE);
 		contentPane.add(bottom_panel);
 		bottom_panel.setLayout(null);
 
 		id_field = new JTextField(10);
+		id_field.setFont(new Font("나눔스퀘어", Font.PLAIN, 14));
 		id_field.setBounds(113, 15, 134, 21);
 		bottom_panel.add(id_field);
 
@@ -134,10 +130,12 @@ public class JoinView extends JFrame implements ActionListener {
 		bottom_panel.add(pwd_check_field);
 
 		name_field = new JTextField(10);
+		name_field.setFont(new Font("나눔스퀘어", Font.PLAIN, 14));
 		name_field.setBounds(112, 108, 135, 21);
 		bottom_panel.add(name_field);
 
 		phone_field = new JTextField(10);
+		phone_field.setFont(new Font("나눔스퀘어", Font.PLAIN, 14));
 		phone_field.setBounds(113, 139, 134, 21);
 		bottom_panel.add(phone_field);
 
@@ -149,100 +147,78 @@ public class JoinView extends JFrame implements ActionListener {
 		bottom_panel.add(check_btn);
 
 		JLabel id_label = new JLabel("아이디");
-		id_label.setForeground(Color.WHITE);
+		id_label.setFont(new Font("나눔스퀘어", Font.BOLD, 14));
 		id_label.setHorizontalAlignment(SwingConstants.RIGHT);
 		id_label.setBounds(12, 18, 89, 15);
 		bottom_panel.add(id_label);
 
 		JLabel pw_label = new JLabel("비밀번호");
-		pw_label.setForeground(Color.WHITE);
+		pw_label.setFont(new Font("나눔스퀘어", Font.BOLD, 14));
 		pw_label.setHorizontalAlignment(SwingConstants.RIGHT);
 		pw_label.setBounds(12, 49, 89, 15);
 		bottom_panel.add(pw_label);
 
 		JLabel pwCheck_label = new JLabel("비밀번호 확인");
-		pwCheck_label.setForeground(Color.WHITE);
+		pwCheck_label.setFont(new Font("나눔스퀘어", Font.BOLD, 14));
 		pwCheck_label.setHorizontalAlignment(SwingConstants.RIGHT);
 		pwCheck_label.setBounds(12, 80, 89, 15);
 		bottom_panel.add(pwCheck_label);
 
 		JLabel name_label = new JLabel("이름");
-		name_label.setForeground(Color.WHITE);
+		name_label.setFont(new Font("나눔스퀘어", Font.BOLD, 14));
 		name_label.setHorizontalAlignment(SwingConstants.RIGHT);
 		name_label.setBounds(12, 111, 89, 15);
 		bottom_panel.add(name_label);
 
 		JLabel phone_label = new JLabel("연락처");
-		phone_label.setForeground(Color.WHITE);
+		phone_label.setFont(new Font("나눔스퀘어", Font.BOLD, 14));
 		phone_label.setHorizontalAlignment(SwingConstants.RIGHT);
 		phone_label.setBounds(12, 142, 89, 15);
 		bottom_panel.add(phone_label);
 
 		consumer_panel = new JPanel();
+		consumer_panel.setBackground(Color.WHITE);
 		consumer_panel.setBounds(0, 159, 381, 118);
-		consumer_panel.setBackground(Color.DARK_GRAY);
 
 		consumer_panel.setLayout(null);
 		consumer_panel.setVisible(true);
 
-		JLabel add_label = new JLabel("주소");
-		add_label.setBounds(12, 13, 89, 15);
-		consumer_panel.add(add_label);
-		add_label.setForeground(Color.WHITE);
-		add_label.setLabelFor(add_label);
-		add_label.setHorizontalAlignment(SwingConstants.RIGHT);
-
-		address_field = new JTextField(10);
-		address_field.setEditable(false);
-		address_field.setBounds(113, 10, 236, 21);
-		consumer_panel.add(address_field);
-
-		address_detail_field = new JTextField(10);
-		address_detail_field.setBounds(113, 40, 158, 21);
-		consumer_panel.add(address_detail_field);
-
-		searchAdd_btn = new JLabel(new ImageIcon(getClass().getClassLoader().getResource(PATH + "search_add.png")));
-		searchAdd_btn.setName(PATH + "search_add.png");
-		searchAdd_btn.addMouseListener(new LabelEventListener(this, searchAdd_btn));
-		searchAdd_btn.setBounds(283, 38, 86, 25);
-		consumer_panel.add(searchAdd_btn);
-
-		bottom_panel.add(consumer_panel);
-
 		deliverer_panel = new JPanel();
 		deliverer_panel.setBounds(0, 159, 381, 163);
-		deliverer_panel.setBackground(Color.DARK_GRAY);
+		deliverer_panel.setBackground(Color.WHITE);
 		bottom_panel.add(deliverer_panel);
 		deliverer_panel.setLayout(null);
 
 		label = new JLabel("배달 지역");
-		label.setForeground(Color.WHITE);
+		label.setFont(new Font("나눔스퀘어", Font.BOLD, 14));
 		label.setHorizontalAlignment(SwingConstants.RIGHT);
 		label.setBounds(12, 14, 89, 15);
 		deliverer_panel.add(label);
 
 		location_field = new JTextField(10);
+		location_field.setFont(new Font("나눔스퀘어", Font.PLAIN, 14));
+		
 		location_field.setEditable(false);
 		location_field.setBounds(113, 11, 135, 21);
 		deliverer_panel.add(location_field);
 
 		profile_label = new JLabel("프로필 사진");
-		profile_label.setForeground(Color.WHITE);
+		profile_label.setFont(new Font("나눔스퀘어", Font.BOLD, 14));
 		profile_label.setHorizontalAlignment(SwingConstants.RIGHT);
 		profile_label.setBounds(12, 45, 89, 15);
 		deliverer_panel.add(profile_label);
 
 		img_label = new JLabel("이미지");
-		img_label.setBackground(Color.WHITE);
-		img_label.setForeground(Color.BLACK);
+		img_label.setFont(new Font("나눔스퀘어", Font.BOLD, 14));
 		img_label.setBorder(new LineBorder(Color.darkGray));
 		img_label.setHorizontalAlignment(SwingConstants.CENTER);
 		img_label.setBounds(113, 45, 100, 100);
 		deliverer_panel.add(img_label);
 
 		img_path_field = new JTextField(10);
+		img_path_field.setFont(new Font("나눔스퀘어", Font.PLAIN, 14));
 		img_path_field.setEditable(false);
-		img_path_field.setBounds(240, 42, 129, 21);
+		img_path_field.setBounds(240, 52, 129, 21);
 		deliverer_panel.add(img_path_field);
 		deliverer_panel.setVisible(false);
 
@@ -259,6 +235,32 @@ public class JoinView extends JFrame implements ActionListener {
 		search_gu_btn.setBounds(260, 9, 89, 25);
 		search_gu_btn.addMouseListener(new LabelEventListener(this, search_gu_btn));
 		deliverer_panel.add(search_gu_btn);
+
+		JLabel add_label = new JLabel("주소");
+		add_label.setFont(new Font("나눔스퀘어", Font.BOLD, 14));
+		add_label.setBounds(12, 13, 89, 15);
+		consumer_panel.add(add_label);
+		add_label.setLabelFor(add_label);
+		add_label.setHorizontalAlignment(SwingConstants.RIGHT);
+
+		address_field = new JTextField(10);
+		address_field.setFont(new Font("나눔스퀘어", Font.PLAIN, 14));
+		address_field.setEditable(false);
+		address_field.setBounds(113, 10, 236, 21);
+		consumer_panel.add(address_field);
+
+		address_detail_field = new JTextField(10);
+		address_detail_field.setFont(new Font("나눔스퀘어", Font.PLAIN, 14));
+		address_detail_field.setBounds(113, 40, 158, 21);
+		consumer_panel.add(address_detail_field);
+
+		searchAdd_btn = new JLabel(new ImageIcon(getClass().getClassLoader().getResource(PATH + "search_add.png")));
+		searchAdd_btn.setName(PATH + "search_add.png");
+		searchAdd_btn.addMouseListener(new LabelEventListener(this, searchAdd_btn));
+		searchAdd_btn.setBounds(283, 38, 89, 25);
+		consumer_panel.add(searchAdd_btn);
+
+		bottom_panel.add(consumer_panel);
 
 		setVisible(true);
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
@@ -277,7 +279,7 @@ public class JoinView extends JFrame implements ActionListener {
 		String address = address_field.getText().trim();
 		String address2 = address_detail_field.getText().trim();
 		String phone = phone_field.getText().trim();
-		String location[] = { location_field.getText() };
+		String location = location_field.getText();
 
 		if (obj == check_btn) { // 아이디 중복 확인
 			if (id.equals("")) { // 아이디를 입력하지 않은 경우

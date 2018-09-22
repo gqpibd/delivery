@@ -44,35 +44,36 @@ public class SelectGuDialog extends JDialog implements ActionListener {
 
 		JLabel titleLabel = new JLabel("배달 지역 등록");
 		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		titleLabel.setFont(fontStyle);
-		titleLabel.setBounds(12, 10, 278, 15);
+		titleLabel.setFont(new Font("나눔스퀘어", Font.BOLD, 17));
+		titleLabel.setBounds(12, 10, 278, 21);
 		contentPane.add(titleLabel);
 
 		JLabel seoulLabel = new JLabel("서울특별시");
-		seoulLabel.setFont(fontStyle);
-		seoulLabel.setBounds(111, 51, 101, 15);
+		seoulLabel.setFont(new Font("나눔스퀘어", Font.BOLD, 14));
+		seoulLabel.setBounds(111, 60, 101, 15);
 		contentPane.add(seoulLabel);
 
 		input_field = new JTextField();
-		input_field.setFont(fontStyle);
-		input_field.setBounds(111, 76, 116, 21);
+		input_field.setFont(new Font("나눔스퀘어", Font.PLAIN, 14));
+		input_field.setBounds(111, 85, 116, 21);
 		contentPane.add(input_field);
 		input_field.addActionListener(this);
 		input_field.setColumns(10);
 
 		JLabel sidoLabel = new JLabel("시/도");
-		sidoLabel.setFont(fontStyle);
+		sidoLabel.setFont(new Font("나눔스퀘어", Font.BOLD, 14));
 		sidoLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-		sidoLabel.setBounds(42, 51, 57, 15);
+		sidoLabel.setBounds(42, 60, 57, 15);
 		contentPane.add(sidoLabel);
 
 		JLabel gu_search_Label = new JLabel("구 검색");
-		gu_search_Label.setFont(fontStyle);
+		gu_search_Label.setFont(new Font("나눔스퀘어", Font.BOLD, 14));
 		gu_search_Label.setHorizontalAlignment(SwingConstants.RIGHT);
-		gu_search_Label.setBounds(42, 79, 57, 15);
+		gu_search_Label.setBounds(42, 88, 57, 15);
 		contentPane.add(gu_search_Label);
 
 		list = new JList<String>();
+		list.setFont(new Font("나눔스퀘어", Font.PLAIN, 14));
 		JScrollPane scrollPane = new JScrollPane(list);
 		scrollPane.setBackground(Color.WHITE);
 		scrollPane.setBounds(14, 192, 276, 100);
@@ -86,22 +87,22 @@ public class SelectGuDialog extends JDialog implements ActionListener {
 		});
 
 		JLabel lblNewLabel_1 = new JLabel("검색 결과");
-		lblNewLabel_1.setFont(fontStyle);
+		lblNewLabel_1.setFont(new Font("나눔스퀘어", Font.BOLD, 14));
 		lblNewLabel_1.setBounds(12, 167, 87, 15);
 		contentPane.add(lblNewLabel_1);
 
 		//searchBtn = new JLabel(new ImageIcon(PATH + "adrSearchBtn.jpg"));
 		searchBtn = new JLabel("검색");
 		searchBtn.setHorizontalAlignment(SwingConstants.CENTER);
-		searchBtn.setFont(fontStyle);
+		searchBtn.setFont(new Font("나눔스퀘어", Font.BOLD, 14));
 		//searchBtn.setBounds(239, 62, searchBtn.getIcon().getIconWidth(), searchBtn.getIcon().getIconHeight());
-		searchBtn.setBounds(239, 75, 54, 25);
+		searchBtn.setBounds(239, 84, 54, 25);
 		searchBtn.addMouseListener(new LabelEventListener(this,searchBtn));
 		contentPane.add(searchBtn);
 
 		confirmBtn = new JLabel("적용");
 		confirmBtn.setHorizontalAlignment(SwingConstants.CENTER);
-		confirmBtn.setFont(fontStyle);
+		confirmBtn.setFont(new Font("나눔스퀘어", Font.BOLD, 14));
 //		confirmBtn = new JLabel(new ImageIcon(PATH + "adrOkBtn.jpg"));
 //		confirmBtn.setBounds(283, 332, confirmBtn.getIcon().getIconWidth(), confirmBtn.getIcon().getIconHeight());
 		confirmBtn.setBounds(8, 302, 90, 25);
@@ -110,19 +111,19 @@ public class SelectGuDialog extends JDialog implements ActionListener {
 
 		JLabel selected_Label = new JLabel("선택 지역");
 		selected_Label.setHorizontalAlignment(SwingConstants.RIGHT);
-		selected_Label.setFont(fontStyle);
-		selected_Label.setBounds(29, 111, 70, 15);
+		selected_Label.setFont(new Font("나눔스퀘어", Font.BOLD, 14));
+		selected_Label.setBounds(29, 120, 70, 15);
 		contentPane.add(selected_Label);
 
 		selectedAddField = new JTextField();
 		selectedAddField.setEditable(false);
-		selectedAddField.setFont(fontStyle);
-		selectedAddField.setBounds(111, 107, 116, 21);
+		selectedAddField.setFont(new Font("나눔스퀘어", Font.PLAIN, 14));
+		selectedAddField.setBounds(111, 116, 116, 21);
 		contentPane.add(selectedAddField);
 		selectedAddField.setColumns(10);
 		
 		cancelBtn = new JLabel("취소");
-		cancelBtn.setFont(fontStyle);
+		cancelBtn.setFont(new Font("나눔스퀘어", Font.BOLD, 14));
 		cancelBtn.addMouseListener(new LabelEventListener(this,cancelBtn));
 		cancelBtn.setHorizontalAlignment(SwingConstants.CENTER);
 		cancelBtn.setBounds(204, 302, 90, 25);

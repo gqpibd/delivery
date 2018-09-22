@@ -20,6 +20,8 @@ import communicator.Communicator;
 import dto.ConsumerDto;
 import dto.OrderDto;
 import singleton.Singleton;
+import java.awt.Font;
+import java.awt.Color;
 
 public class OrderWriteView extends JFrame implements ActionListener{
 	private JTextField title_texF;
@@ -28,7 +30,6 @@ public class OrderWriteView extends JFrame implements ActionListener{
 	private JLabel title_label;
 	private JLabel loc_label;
 	private JLabel cata_label;
-	private JLabel content_label;
 	private JLabel money_label;
 	
 	private JTextArea content_textA;
@@ -82,6 +83,8 @@ public class OrderWriteView extends JFrame implements ActionListener{
 	}
 
 	public OrderWriteView() {
+		getContentPane().setBackground(Color.WHITE);
+		getContentPane().setFont(new Font("나눔스퀘어", Font.PLAIN, 14));
 		setTitle("게시글 작성");
 		getContentPane().setLayout(null);
 		setSize(386, 456);
@@ -90,40 +93,42 @@ public class OrderWriteView extends JFrame implements ActionListener{
 		Writer = (ConsumerDto) Singleton.getInstance().getMemCtrl().getCurrentUser();
 		
 		title_texF = new JTextField();
-		title_texF.setBounds(88, 35, 258, 26);
+		title_texF.setFont(new Font("나눔스퀘어", Font.PLAIN, 14));
+		title_texF.setBounds(73, 48, 260, 26);
 		getContentPane().add(title_texF);
 		title_texF.setColumns(10);
 		
-		title_label = new JLabel("제목 :");
+		title_label = new JLabel("제목");
+		title_label.setFont(new Font("나눔스퀘어", Font.BOLD, 14));
 		title_label.setHorizontalAlignment(SwingConstants.RIGHT);
-		title_label.setBounds(34, 40, 36, 16);
+		title_label.setBounds(15, 52, 46, 16);
 		getContentPane().add(title_label);
 		
-		loc_label = new JLabel("주소 :");
+		loc_label = new JLabel("주소");
+		loc_label.setFont(new Font("나눔스퀘어", Font.BOLD, 14));
 		loc_label.setHorizontalAlignment(SwingConstants.RIGHT);
-		loc_label.setBounds(34, 80, 36, 16);
+		loc_label.setBounds(15, 93, 46, 16);
 		getContentPane().add(loc_label);
 		//additem();
 		
 		address_field = new JTextField(10);
+		address_field.setFont(new Font("나눔스퀘어", Font.PLAIN, 14));
 		address_field.setEditable(false);
-		address_field.setBounds(88, 75, 258, 26);
+		address_field.setBounds(73, 88, 260, 26);
 		getContentPane().add(address_field);
 
 		address_detail_field = new JTextField(10);
-		address_detail_field.setBounds(88, 111, 158, 26);
+		address_detail_field.setFont(new Font("나눔스퀘어", Font.PLAIN, 14));
+		address_detail_field.setBounds(73, 124, 158, 26);
 		getContentPane().add(address_detail_field);
 		
 		
-		cata_label = new JLabel("작성자 :");
+		cata_label = new JLabel("작성자 : ");
+		cata_label.setFont(new Font("나눔스퀘어", Font.BOLD, 14));
 		cata_label.setHorizontalAlignment(SwingConstants.RIGHT);
-		cata_label.setBounds(12, 152, 58, 16);
+		cata_label.setBounds(15, 165, 58, 16);
 
 		getContentPane().add(cata_label);
-		
-		content_label = new JLabel("내용");
-		content_label.setBounds(34, 178, 61, 16);
-		getContentPane().add(content_label);
 				
 		content_textA = new JTextArea();
 		content_textA.setLineWrap(true);
@@ -135,36 +140,49 @@ public class OrderWriteView extends JFrame implements ActionListener{
 		scrollPane.setBounds(27, 204, 324, 162);
 		getContentPane().add(scrollPane); // 그 주소 선택하는거 어떻게하는거에요 ?
 		
-		money_label = new JLabel("금액 :");
+		money_label = new JLabel("금액");
+		money_label.setFont(new Font("나눔스퀘어", Font.BOLD, 14));
 		money_label.setBounds(15, 382, 61, 16);
 		getContentPane().add(money_label);
 		
 		money_textF = new JTextField();
-		money_textF.setBounds(50, 377, 91, 26);
+		money_textF.setFont(new Font("나눔스퀘어", Font.PLAIN, 14));
+		money_textF.setBounds(54, 376, 91, 26);
 		getContentPane().add(money_textF);
 		money_textF.setColumns(10);
 		
 		chk_btn = new JButton("확인");
-		chk_btn.setBounds(172, 376, 81, 29);
+		chk_btn.setFont(new Font("나눔스퀘어", Font.PLAIN, 14));
+		chk_btn.setBounds(184, 376, 81, 29);
 		getContentPane().add(chk_btn);
 		chk_btn.addActionListener(this);
 		
 		back_btn = new JButton("취소");
-		back_btn.setBounds(265, 376, 81, 29);
+		back_btn.setFont(new Font("나눔스퀘어", Font.PLAIN, 14));
+		back_btn.setBounds(277, 376, 81, 29);
 		getContentPane().add(back_btn);
 		back_btn.addActionListener(this);
 		
 		writer_label = new JLabel(Singleton.getInstance().getMemCtrl().getCurrentUser().getId());
-		writer_label.setBounds(88, 152, 258, 16);
+		writer_label.setFont(new Font("나눔스퀘어", Font.BOLD, 14));
+		writer_label.setBounds(91, 165, 258, 16);
 		getContentPane().add(writer_label);
 		
 		topLabel = new JLabel("주문서 작성");
-		topLabel.setBounds(15, 10, 104, 15);
+		topLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		topLabel.setFont(new Font("나눔스퀘어", Font.BOLD, 15));
+		topLabel.setBounds(0, 10, 370, 15);
 		getContentPane().add(topLabel);
 		
 		search_btn = new JButton("검색");
-		search_btn.setBounds(260, 111, 86, 26);
+		search_btn.setFont(new Font("나눔스퀘어", Font.PLAIN, 14));
+		search_btn.setBounds(247, 123, 86, 26);
 		getContentPane().add(search_btn);
+		
+		JLabel label = new JLabel("원");
+		label.setFont(new Font("나눔스퀘어", Font.BOLD, 14));
+		label.setBounds(151, 383, 36, 16);
+		getContentPane().add(label);
 		search_btn.addActionListener(this);
 		
 

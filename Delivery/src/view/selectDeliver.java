@@ -16,6 +16,7 @@ import javax.swing.event.ListSelectionListener;
 
 import singleton.Singleton;
 import java.awt.Font;
+import java.awt.Color;
 
 public class selectDeliver extends JDialog implements ActionListener{
 	JList list;
@@ -26,6 +27,7 @@ public class selectDeliver extends JDialog implements ActionListener{
 	JButton sel_btn;
 	
 	public selectDeliver(String applicants) {
+		getContentPane().setBackground(Color.WHITE);
 		setModal(true);
 		setTitle("지원자 목록");
 		getContentPane().setLayout(null);
@@ -34,12 +36,13 @@ public class selectDeliver extends JDialog implements ActionListener{
 		}
 		app = applicants.split(",");
 		JLabel lblNewLabel = new JLabel("대신맨 선택");
-		lblNewLabel.setFont(new Font("08서울남산체 B", Font.PLAIN, 14));
+		lblNewLabel.setFont(new Font("나눔스퀘어", Font.BOLD, 16));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setBounds(12, 10, 171, 29);
 		getContentPane().add(lblNewLabel);
 		
 		list = new JList(app);
+		list.setFont(new Font("나눔스퀘어", Font.PLAIN, 15));
 		list.setBounds(23, 50, 356, 273);
 		list.addListSelectionListener(new ListSelectionListener() {			
 			@Override
@@ -50,8 +53,6 @@ public class selectDeliver extends JDialog implements ActionListener{
 		});
 		
 		JScrollPane scrollPane = new JScrollPane(list);
-		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		scrollPane.setBounds(12, 50, 171, 173);
 		getContentPane().add(scrollPane);
 				

@@ -33,36 +33,35 @@ public class LabelEventListener extends MouseAdapter {
 	public void mouseClicked(MouseEvent e) {
 		super.mouseClicked(e);
 		listener.actionPerformed(new ActionEvent(e.getSource(), e.getID(), e.paramString()));
+		imgPath = label.getName().split(" ")[0];
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		super.mouseReleased(e);
+		imgPath = label.getName().split(" ")[0];
 		if (!isTab) {
 			URL url = getClass().getClassLoader().getResource(imgPath);
 			label.setIcon(new ImageIcon(url));
 		}
 	}
-
+/*
 	@Override
 	public void mousePressed(MouseEvent e) {
 		super.mousePressed(e);
-		// ((JLabel) e.getSource()).setBorder(null);
 		if (!isTab) {
 			int index = imgPath.lastIndexOf('.');
 			String clickImg = imgPath.substring(0, index) + "_click" + imgPath.substring(index);
 			URL url = getClass().getClassLoader().getResource(clickImg);
-			System.out.println(url);
-
 			if (url != null) {
 				label.setIcon(new ImageIcon(url));
 			}
 		}
-	}
+	}*/
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
-		System.out.println(imgPath);
+		imgPath = label.getName().split(" ")[0];
 		int index = imgPath.lastIndexOf('.');
 		String overImg = imgPath.substring(0, index) + "_over" + imgPath.substring(index);
 		URL url = getClass().getClassLoader().getResource(overImg);
@@ -73,6 +72,7 @@ public class LabelEventListener extends MouseAdapter {
 
 	@Override
 	public void mouseExited(MouseEvent e) {
+		imgPath = label.getName().split(" ")[0];
 		if (isFocused() && isTab) {
 			int index = imgPath.lastIndexOf('.');
 			String overImg = imgPath.substring(0, index) + "_over" + imgPath.substring(index);
@@ -94,4 +94,5 @@ public class LabelEventListener extends MouseAdapter {
 		}
 		return false;
 	}
+	
 }

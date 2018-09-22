@@ -11,11 +11,14 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
+import javax.swing.border.LineBorder;
 
 import communicator.Communicator;
 import dto.MemberDto;
 import dto.OrderDto;
 import singleton.Singleton;
+import java.awt.Color;
+import java.awt.Font;
 
 public class PostView extends JFrame implements ActionListener {
 
@@ -39,48 +42,59 @@ public class PostView extends JFrame implements ActionListener {
 	private JButton comp_btn;
 
 	public PostView(OrderDto dto) {
+		getContentPane().setBackground(Color.WHITE);
 		this.dto = dto;
 		getContentPane().setLayout(null);
 
 		title_label = new JLabel("제목");
+		title_label.setFont(new Font("나눔스퀘어", Font.BOLD, 16));
 		title_label.setHorizontalAlignment(SwingConstants.CENTER);
 		title_label.setBounds(6, 6, 468, 32);
 		getContentPane().add(title_label);
 
 		address_label = new JLabel("지역 :");
-		address_label.setBounds(30, 50, 127, 16);
+		address_label.setFont(new Font("나눔스퀘어", Font.PLAIN, 14));
+		address_label.setBounds(34, 50, 127, 16);
 		getContentPane().add(address_label);
 
 		user_label = new JLabel("작성자 :");
-		user_label.setBounds(30, 82, 127, 16);
+		user_label.setFont(new Font("나눔스퀘어", Font.PLAIN, 14));
+		user_label.setBounds(34, 82, 127, 16);
 		getContentPane().add(user_label);
 
 		status_label = new JLabel("상태 :");
-		status_label.setBounds(267, 82, 135, 16);
+		status_label.setFont(new Font("나눔스퀘어", Font.PLAIN, 14));
+		status_label.setBounds(251, 82, 117, 16);
 		getContentPane().add(status_label);
 
 		date_label = new JLabel("작성 :");
+		date_label.setFont(new Font("나눔스퀘어", Font.PLAIN, 14));
 		date_label.setHorizontalAlignment(SwingConstants.RIGHT);
 		date_label.setBounds(226, 50, 222, 16);
 		getContentPane().add(date_label);
 
 		price_label = new JLabel("금액 :");
-		price_label.setBounds(30, 112, 127, 16);
+		price_label.setFont(new Font("나눔스퀘어", Font.PLAIN, 14));
+		price_label.setBounds(34, 116, 127, 16);
 		getContentPane().add(price_label);
 
 		applicants_label = new JLabel("신청자 :");
-		applicants_label.setBounds(277, 112, 109, 16);
+		applicants_label.setFont(new Font("나눔스퀘어", Font.PLAIN, 14));
+		applicants_label.setBounds(251, 116, 117, 16);
 		getContentPane().add(applicants_label);
 
 		textArea = new JTextArea();
+		textArea.setFont(new Font("나눔스퀘어", Font.PLAIN, 14));
+		textArea.setBorder(new LineBorder(Color.black));
 		textArea.setLineWrap(true);
 		textArea.setEditable(false);
-		textArea.setBounds(34, 175, 414, 232);
+		textArea.setBounds(34, 175, 414, 226);
 		getContentPane().add(textArea);
 
 		setPost(dto);
 
 		JPanel panel = new JPanel();
+		panel.setBackground(Color.WHITE);
 		panel.setBounds(6, 420, 468, 52);
 		getContentPane().add(panel);
 		panel.setLayout(new GridLayout(1, 0, 0, 0));
@@ -117,16 +131,22 @@ public class PostView extends JFrame implements ActionListener {
 		}
 	
 		label = new JLabel("주소 : " + address);
-		label.setBounds(30, 142, 418, 16);
+		label.setFont(new Font("나눔스퀘어", Font.PLAIN, 14));
+		label.setBounds(34, 149, 414, 16);
 		getContentPane().add(label);
 		
 		acc_btn = new JButton("수락");
-		acc_btn.setBounds(390, 107, 84, 29);
+		acc_btn.setBounds(380, 110, 87, 29);
 		getContentPane().add(acc_btn);
 		
 		comp_btn= new JButton("배달완료");
-		comp_btn.setBounds(390, 77, 83, 29);
+		comp_btn.setBounds(380, 76, 87, 29);
 		getContentPane().add(comp_btn);
+		
+		JPanel hl = new JPanel();
+		hl.setBackground(Color.DARK_GRAY);
+		hl.setBounds(0, 43, 479, 2);
+		getContentPane().add(hl);
 		comp_btn.addActionListener(this);
 		comp_btn.setVisible(false);
 		if(dto.getConsumerId().equals(currentUser.getId()) && dto.getStatus().equals("진행중")) {

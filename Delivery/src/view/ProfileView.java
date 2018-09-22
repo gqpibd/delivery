@@ -21,6 +21,7 @@ import dto.DelivererDto;
 import dto.MemberDto;
 import dto.OrderDto;
 import singleton.Singleton;
+import java.awt.Font;
 
 public class ProfileView extends JDialog {
 	private JTable table;
@@ -32,6 +33,7 @@ public class ProfileView extends JDialog {
 		setModal(true);
 		MemberController mCtrl = Singleton.getInstance().getMemCtrl();
 		JPanel contentPane = new JPanel();
+		contentPane.setBackground(Color.WHITE);
 		setContentPane(contentPane);
 		//contentPane.setSize(300,300);
 		contentPane.setLayout(null);
@@ -54,6 +56,9 @@ public class ProfileView extends JDialog {
 		};
 
 		table = new JTable(model);
+		table.setRowMargin(2);
+		table.setRowHeight(20);
+		table.setFont(new Font("나눔스퀘어", Font.PLAIN, 14));
 
 		setTable();
 		table.addMouseListener(new MouseAdapter() {
@@ -69,16 +74,19 @@ public class ProfileView extends JDialog {
 		});
 		
 		JLabel imgLabel = new JLabel("이미지");
+		imgLabel.setFont(new Font("나눔스퀘어", Font.BOLD, 14));
 		imgLabel.setBackground(Color.WHITE);
 		imgLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		imgLabel.setBounds(22, 21, 170, 170);
 		contentPane.add(imgLabel);
 		
 		JLabel deliverListLabel = new JLabel("배달목록");
+		deliverListLabel.setFont(new Font("나눔스퀘어", Font.BOLD, 14));
 		deliverListLabel.setBounds(22, 196, 99, 29);
 		contentPane.add(deliverListLabel);
 		
 		JScrollPane scrollPane = new JScrollPane(table);
+		scrollPane.setFont(new Font("나눔스퀘어", Font.PLAIN, 14));
 		scrollPane.setBounds(22, 226, 435, 178);
 		contentPane.add(scrollPane);
 		
@@ -87,23 +95,28 @@ public class ProfileView extends JDialog {
 		contentPane.add(okBtn);
 		
 		JPanel panel = new JPanel();
-		panel.setBounds(206, 21, 251, 195);
+		panel.setBackground(Color.WHITE);
+		panel.setBounds(220, 21, 237, 195);
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
 		JLabel label = new JLabel("아이디 : " + dto.getId());
+		label.setFont(new Font("나눔스퀘어", Font.BOLD, 14));
 		label.setBounds(12, 15, 221, 29);
 		panel.add(label);
 		
-		JLabel label_1 = new JLabel("배달지역 : " +deliverer.getLocations()[0]);
+		JLabel label_1 = new JLabel("배달지역 : " +deliverer.getLocation());
+		label_1.setFont(new Font("나눔스퀘어", Font.BOLD, 14));
 		label_1.setBounds(12, 59, 221, 29);
 		panel.add(label_1);
 		
 		JLabel label_2 = new JLabel("배달건수 : 0");
+		label_2.setFont(new Font("나눔스퀘어", Font.BOLD, 14));
 		label_2.setBounds(12, 103, 221, 29);
 		panel.add(label_2);
 		
 		JLabel label_3 = new JLabel("만족도 : 0.0");
+		label_3.setFont(new Font("나눔스퀘어", Font.BOLD, 14));
 		label_3.setBounds(12, 147, 221, 29);
 		panel.add(label_3);
 		setVisible(true);

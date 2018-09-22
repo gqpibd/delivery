@@ -44,35 +44,36 @@ public class SelectAddressDialog extends JDialog implements ActionListener {
 		Font fontStyle = new Font("다음_Regular", Font.PLAIN, 14);
 
 		JLabel titleLabel = new JLabel("도로명 주소 검색");
-		titleLabel.setFont(fontStyle);
+		titleLabel.setFont(new Font("나눔스퀘어", Font.BOLD, 14));
 		titleLabel.setBounds(12, 10, 167, 15);
 		contentPane.add(titleLabel);
 
 		JLabel seoulLabel = new JLabel("서울특별시");
-		seoulLabel.setFont(fontStyle);
+		seoulLabel.setFont(new Font("나눔스퀘어", Font.BOLD, 14));
 		seoulLabel.setBounds(111, 38, 101, 15);
 		contentPane.add(seoulLabel);
 
 		loadNameField = new JTextField();
-		loadNameField.setFont(fontStyle);
+		loadNameField.setFont(new Font("나눔스퀘어", Font.PLAIN, 14));
 		loadNameField.setBounds(111, 63, 116, 21);
 		contentPane.add(loadNameField);
 		loadNameField.addActionListener(this);
 		loadNameField.setColumns(10);
 
 		JLabel sidoLabel = new JLabel("시/도");
-		sidoLabel.setFont(fontStyle);
+		sidoLabel.setFont(new Font("나눔스퀘어", Font.BOLD, 14));
 		sidoLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		sidoLabel.setBounds(42, 38, 57, 15);
 		contentPane.add(sidoLabel);
 
 		JLabel loadLabel = new JLabel("도로명");
-		loadLabel.setFont(fontStyle);
+		loadLabel.setFont(new Font("나눔스퀘어", Font.BOLD, 14));
 		loadLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		loadLabel.setBounds(42, 66, 57, 15);
 		contentPane.add(loadLabel);
 
 		list = new JList<>();
+		list.setFont(new Font("나눔스퀘어", Font.PLAIN, 14));
 		list.addListSelectionListener(new ListSelectionListener() {
 
 			@Override
@@ -87,13 +88,13 @@ public class SelectAddressDialog extends JDialog implements ActionListener {
 		contentPane.add(scrollPane);
 
 		JLabel lblNewLabel_1 = new JLabel("검색 결과");
-		lblNewLabel_1.setFont(fontStyle);
+		lblNewLabel_1.setFont(new Font("나눔스퀘어", Font.BOLD, 14));
 		lblNewLabel_1.setBounds(12, 167, 87, 15);
 		contentPane.add(lblNewLabel_1);
 
 		//searchBtn = new JLabel(new ImageIcon(PATH + "adrSearchBtn.jpg"));
 		searchBtn = new JLabel("검색");
-		searchBtn.setFont(fontStyle);
+		searchBtn.setFont(new Font("나눔스퀘어", Font.BOLD, 14));
 		//searchBtn.setBounds(239, 62, searchBtn.getIcon().getIconWidth(), searchBtn.getIcon().getIconHeight());
 		searchBtn.setBounds(239, 62, 100, 25);
 		searchBtn.addMouseListener(new LabelEventListener(this,searchBtn));
@@ -109,19 +110,19 @@ public class SelectAddressDialog extends JDialog implements ActionListener {
 		contentPane.add(confirmBtn);
 
 		selectedAddField = new JTextField();
-		selectedAddField.setFont(fontStyle);
+		selectedAddField.setFont(new Font("나눔스퀘어", Font.PLAIN, 14));
 		selectedAddField.setEditable(false);
 		selectedAddField.setBounds(111, 94, 215, 21);
 		contentPane.add(selectedAddField);
 		selectedAddField.setColumns(10);
 
 		JLabel detailAddLabel = new JLabel("상세 주소");
-		detailAddLabel.setFont(fontStyle);
+		detailAddLabel.setFont(new Font("나눔스퀘어", Font.BOLD, 14));
 		detailAddLabel.setBounds(29, 126, 70, 15);
 		contentPane.add(detailAddLabel);
 
 		detailAddField = new JTextField();
-		detailAddField.setFont(fontStyle);
+		detailAddField.setFont(new Font("나눔스퀘어", Font.PLAIN, 14));
 		detailAddField.setBounds(111, 123, 215, 21);
 		contentPane.add(detailAddField);
 		detailAddField.setColumns(10);

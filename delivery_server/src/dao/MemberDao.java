@@ -68,7 +68,7 @@ public class MemberDao {
 			psmt.setString(1, id);
 			rs = psmt.executeQuery();
 			if (rs.next()) {
-				deliverer = new DelivererDto(dto, rs.getString(1).split(","));
+				deliverer = new DelivererDto(dto, rs.getString(1));
 				deliverer.setDeliveryCounts(rs.getInt(2));
 				deliverer.setScore(rs.getDouble(3));
 			}
@@ -102,7 +102,7 @@ public class MemberDao {
 			} else if (auth == MemberDto.DELIVERER) {
 				DelivererDto deli = (DelivererDto) dto;
 				sql = " update members set locations = ?, pw = ?, phone = ? where id = ? ";
-				psmt.setString(1, deli.getLocations()[0]);
+				psmt.setString(1, deli.getLocation());
 				psmt.setString(2, deli.getPw());
 				psmt.setString(3, deli.getPhone());
 				psmt.setString(4, deli.getId());
@@ -172,7 +172,7 @@ public class MemberDao {
 				psmt.setString(2, newMember.getPw());
 				psmt.setString(3, newMember.getName());
 				psmt.setString(4, newMember.getPhone());
-				psmt.setString(5, newMember.getLocations()[0]);
+				psmt.setString(5, newMember.getLocation());
 			}
 
 			rs = psmt.executeQuery();
@@ -206,7 +206,7 @@ public class MemberDao {
 				if (auth == MemberDto.CONSUMER) {
 					loginUser = new ConsumerDto(dto, rs.getString("address"));
 				} else if (auth == MemberDto.DELIVERER) {
-					loginUser = new DelivererDto(dto, rs.getString("locations").split(","));
+					loginUser = new DelivererDto(dto, rs.getString("location"));
 				}
 				loginUser.setId(id);
 				loginUser.setPw(pw);

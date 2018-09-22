@@ -50,7 +50,6 @@ public class OrderDao {
 		List<OrderDto> list = new ArrayList<>();
 		String sql = " SELECT REQNUMBER, STATE, TITLE, LOCATION, Order_date, WRITER, DELIVERER " 
 				+ " FROM ORDERS WHERE (NVL(ISDEL,0) = 0 AND STATE = '요청중' AND APPLICANTS LIKE '%" + dto.getDelivererId() + "%') "
-
 				+ "OR DELIVERER=? ORDER BY REQNUMBER DESC";
 		Connection conn = null;
 		PreparedStatement psmt = null;

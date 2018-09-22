@@ -1,7 +1,6 @@
 package view;
 
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -18,15 +17,13 @@ import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 
 import communicator.Communicator;
-import dto.ConsumerDto;
 import dto.DelivererDto;
 import singleton.Singleton;
 import utils.images.ImageUtils;
 import utils.images.LabelEventListener;
+import java.awt.Font;
 
 public class MyPageView_deliverer extends JPanel implements ActionListener {
-
-	private JButton change_btn;
 
 	private JTextField idField;
 	private JTextField name_field;
@@ -34,142 +31,164 @@ public class MyPageView_deliverer extends JPanel implements ActionListener {
 	private JPasswordField pwFiled1;
 	private JTextField phone_field;
 	private JTextField locField;
-	private JButton search_btn;
-	private DelivererDto dto = (DelivererDto) Singleton.getInstance().getMemCtrl().getCurrentUser();
+	private JLabel search_btn;
 	private JLabel image;
 	private JLabel imgLabel;
 	private JTextField img_path_field;
+	
 	private JLabel search_img_btn;
-	private JButton cancel_btn;
+	private JLabel cancel_btn;
+	private JLabel change_btn;
+	
+	private DelivererDto dto = (DelivererDto) Singleton.getInstance().getMemCtrl().getCurrentUser();
+	public static final String PATH = "mypage/";
 
 	public MyPageView_deliverer() {
+		setBackground(Color.DARK_GRAY);
 		setSize(MainView.BOTTOM_WIDTH, MainView.BOTTOM_HEIGHT);
 		setLayout(null);
-
-		JLabel title_label = new JLabel("회원정보관리");
-		title_label.setFont(new Font("나눔고딕 Light", Font.BOLD, 19));
-		title_label.setHorizontalAlignment(SwingConstants.CENTER);
-		title_label.setBounds(0, 6, 480, 68);
-		add(title_label);
-
-		change_btn = new JButton("정보수정");
+		
+		// 정보수정, 완료 버튼
+		change_btn = new JLabel(new ImageIcon(getClass().getClassLoader().getResource(PATH + "modify.png")));
+		change_btn.setName(PATH + "modify.png" + " change");
+		change_btn.addMouseListener(new LabelEventListener(this, change_btn));
 		change_btn.setBounds(82, 431, 117, 36);
 		add(change_btn);
-		change_btn.setName("change");
-		change_btn.addActionListener(this);
 
 		JPanel panel = new JPanel();
-		panel.setBounds(10, 78, 456, 343);
+		panel.setBackground(Color.DARK_GRAY);
+		panel.setBounds(10, 10, 456, 411);
 		add(panel);
 		panel.setLayout(null);
 
 		idField = new JTextField(dto.getId());
+		idField.setFont(new Font("나눔스퀘어", Font.PLAIN, 14));
 		idField.setEditable(false);
 		idField.setColumns(10);
-		idField.setBounds(141, 7, 213, 29);
+		idField.setBounds(141, 16, 213, 29);
 		panel.add(idField);
 
-		JLabel label = new JLabel("아이디 :");
+		JLabel label = new JLabel("아이디");
+		label.setFont(new Font("나눔스퀘어", Font.BOLD, 14));
+		label.setForeground(Color.WHITE);
 		label.setHorizontalAlignment(SwingConstants.RIGHT);
 		label.setBounds(new Rectangle(0, 0, 200, 0));
-		label.setBounds(12, 7, 106, 29);
+		label.setBounds(12, 16, 106, 29);
 		panel.add(label);
 
-		JLabel label_1 = new JLabel("이름 :");
+		JLabel label_1 = new JLabel("이름");
+		label_1.setFont(new Font("나눔스퀘어", Font.BOLD, 14));
+		label_1.setForeground(Color.WHITE);
 		label_1.setHorizontalAlignment(SwingConstants.RIGHT);
 		label_1.setBounds(new Rectangle(0, 0, 200, 0));
-		label_1.setBounds(12, 46, 106, 25);
+		label_1.setBounds(12, 63, 106, 25);
 		panel.add(label_1);
 
 		name_field = new JTextField(dto.getName());
+		name_field.setFont(new Font("나눔스퀘어", Font.PLAIN, 14));
 		name_field.setEditable(false);
 		name_field.setColumns(10);
-		name_field.setBounds(141, 43, 213, 29);
+		name_field.setBounds(141, 61, 213, 29);
 		panel.add(name_field);
 
 		pwField = new JPasswordField(dto.getPw());
 		pwField.setEditable(false);
 		pwField.setColumns(10);
-		pwField.setBounds(141, 79, 213, 29);
+		pwField.setBounds(141, 106, 213, 29);
 		panel.add(pwField);
 
 		pwFiled1 = new JPasswordField(dto.getPw());
 		pwFiled1.setEditable(false);
 		pwFiled1.setColumns(10);
-		pwFiled1.setBounds(141, 115, 213, 26);
+		pwFiled1.setBounds(141, 151, 213, 26);
 		panel.add(pwFiled1);
 
-		JLabel label_2 = new JLabel("비밀번호 :");
+		JLabel label_2 = new JLabel("비밀번호");
+		label_2.setFont(new Font("나눔스퀘어", Font.BOLD, 14));
+		label_2.setForeground(Color.WHITE);
 		label_2.setHorizontalAlignment(SwingConstants.RIGHT);
 		label_2.setBounds(new Rectangle(0, 0, 200, 0));
-		label_2.setBounds(19, 81, 99, 25);
+		label_2.setBounds(19, 108, 99, 25);
 		panel.add(label_2);
 
-		JLabel label_3 = new JLabel("비밀번호 확인 :");
+		JLabel label_3 = new JLabel("비밀번호 확인");
+		label_3.setFont(new Font("나눔스퀘어", Font.BOLD, 14));
+		label_3.setForeground(Color.WHITE);
 		label_3.setHorizontalAlignment(SwingConstants.RIGHT);
 		label_3.setBounds(new Rectangle(0, 0, 200, 0));
-		label_3.setBounds(16, 115, 102, 25);
+		label_3.setBounds(16, 152, 102, 25);
 		panel.add(label_3);
 
-		JLabel phone_label = new JLabel("전화번호 :");
+		JLabel phone_label = new JLabel("전화번호");
+		phone_label.setFont(new Font("나눔스퀘어", Font.BOLD, 14));
+		phone_label.setForeground(Color.WHITE);
 		phone_label.setHorizontalAlignment(SwingConstants.RIGHT);
 		phone_label.setBounds(new Rectangle(0, 0, 200, 0));
-		phone_label.setBounds(16, 150, 102, 25);
+		phone_label.setBounds(16, 195, 102, 25);
 		panel.add(phone_label);
 
 		phone_field = new JTextField(dto.getPhone());
+		phone_field.setFont(new Font("나눔스퀘어", Font.PLAIN, 14));
 		phone_field.setEditable(false);
 		phone_field.setColumns(10);
-		phone_field.setBounds(141, 148, 213, 29);
+		phone_field.setBounds(141, 193, 213, 29);
 		panel.add(phone_field);
 
-		JLabel label_5 = new JLabel("배달지역 :");
+		JLabel label_5 = new JLabel("배달지역");
+		label_5.setFont(new Font("나눔스퀘어", Font.BOLD, 14));
+		label_5.setForeground(Color.WHITE);
 		label_5.setHorizontalAlignment(SwingConstants.RIGHT);
 		label_5.setBounds(new Rectangle(0, 0, 200, 0));
-		label_5.setBounds(12, 185, 106, 29);
+		label_5.setBounds(12, 238, 106, 29);
 		panel.add(label_5);
 
-		locField = new JTextField(dto.getLocations()[0]);
+		locField = new JTextField(dto.getLocation());
+		locField.setFont(new Font("나눔스퀘어", Font.PLAIN, 14));
 		locField.setEditable(false);
 		locField.setColumns(10);
-		locField.setBounds(141, 183, 213, 29);
+		locField.setBounds(141, 238, 213, 29);
 		panel.add(locField);
 
-		search_btn = new JButton("검색");
+		search_btn = new JLabel( new ImageIcon(getClass().getClassLoader().getResource(PATH + "search.png")));
+		search_btn.setName(PATH + "search.png");
+		search_btn.addMouseListener(new LabelEventListener(this, search_btn));
 		search_btn.setVisible(false);
-		search_btn.setBounds(366, 185, 68, 29);
-		search_btn.addActionListener(this);
+		search_btn.setBounds(366, 238, 68, 29);
 		panel.add(search_btn);
 
-		image = new JLabel("프로필사진 :");
+		image = new JLabel("프로필사진");
+		image.setFont(new Font("나눔스퀘어", Font.BOLD, 14));
+		image.setForeground(Color.WHITE);
 		image.setHorizontalAlignment(SwingConstants.RIGHT);
 		image.setBounds(new Rectangle(0, 0, 200, 0));
-		image.setBounds(12, 224, 106, 25);
+		image.setBounds(12, 289, 106, 25);
 		panel.add(image);
 
 		imgLabel = new JLabel("image");
+		imgLabel.setForeground(Color.WHITE);
 		imgLabel.setBorder(new LineBorder(Color.black));
 		imgLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		imgLabel.setBounds(141, 222, 113, 111);
+		imgLabel.setBounds(141, 283, 113, 111);
 		panel.add(imgLabel);
 
 		img_path_field = new JTextField(10);
+		img_path_field.setFont(new Font("나눔스퀘어", Font.PLAIN, 14));
 		img_path_field.setEditable(false);
 		img_path_field.setVisible(false);
-		img_path_field.setBounds(266, 224, 168, 29);
+		img_path_field.setBounds(266, 287, 168, 29);
 		panel.add(img_path_field);
 
-		search_img_btn = new JLabel("이미지 검색");
+		search_img_btn = new JLabel(new ImageIcon(getClass().getClassLoader().getResource(PATH + "search_img.png")));
+		search_img_btn.setName(PATH + "search_img.png");
 		search_img_btn.addMouseListener(new LabelEventListener(this, search_img_btn));
-		search_img_btn.setHorizontalAlignment(SwingConstants.CENTER);
-		search_img_btn.setBounds(340, 265, 94, 25);
+		search_img_btn.setBounds(340, 326, 94, 25);
 		search_img_btn.setVisible(false);
 		panel.add(search_img_btn);
 
-		cancel_btn = new JButton("취소");
-		cancel_btn.setName("change");
+		cancel_btn = new JLabel(new ImageIcon(getClass().getClassLoader().getResource(PATH + "cancel.png")));
+		cancel_btn.setName(PATH + "cancel.png" + " change");
+		cancel_btn.addMouseListener(new LabelEventListener(this, cancel_btn));
 		cancel_btn.setBounds(281, 431, 117, 36);
-		cancel_btn.addActionListener(this);
 		cancel_btn.setVisible(false);
 		add(cancel_btn);
 
@@ -179,14 +198,14 @@ public class MyPageView_deliverer extends JPanel implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 
 		if (e.getSource() == change_btn) {
-			if (change_btn.getName().equals("change")) {
-				change_btn.setName("complete");
-				change_btn.setText("완료");
+			String btnType = change_btn.getName().split(" ")[1];
+			if (btnType.equals("change")) {
+				change_btn.setIcon(new ImageIcon(getClass().getClassLoader().getResource(PATH + "complete.png")));
+				change_btn.setName(PATH + "complete.png" + " complete");
 				setComponent(true);
-
 			} else {
-				change_btn.setName("change");
-				change_btn.setText("정보수정");
+				change_btn.setIcon(new ImageIcon(getClass().getClassLoader().getResource(PATH + "modify.png")));
+				change_btn.setName(PATH + "modify.png" + " change");
 
 				String pw1 = new String(pwField.getPassword());
 				String pw2 = new String(pwFiled1.getPassword());
@@ -203,7 +222,7 @@ public class MyPageView_deliverer extends JPanel implements ActionListener {
 
 				setComponent(false);
 
-				dto.setLocations(locField.getText().split(","));
+				dto.setLocation(locField.getText());
 				dto.setPw(new String(pwField.getPassword()));
 
 				Singleton.getInstance().getComm().SendMessage(Communicator.UPDATE, dto);
@@ -216,9 +235,10 @@ public class MyPageView_deliverer extends JPanel implements ActionListener {
 				ImageUtils.setResizedImage(imgLabel, new ImageIcon(path));
 			}
 		} else if (e.getSource() == cancel_btn) {
-			change_btn.setName("change");
-			change_btn.setText("정보수정");
-
+			change_btn.setIcon(new ImageIcon(getClass().getClassLoader().getResource(PATH + "modify.png")));
+			change_btn.setName(PATH + "modify.png" + " change");
+			
+			cancel_btn.setVisible(false);
 			setComponent(false);
 
 		} else if (e.getSource() == search_btn) { // 배달지역 선택

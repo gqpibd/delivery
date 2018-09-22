@@ -17,7 +17,7 @@ import utils.images.LabelEventListener;
 
 public class MainView extends JFrame implements ActionListener {
 
-	private JPanel bottom_panel = null;
+	private JPanel bottom_panel;
 	private JLabel myreqbtn;
 	private JLabel mypagebtn;
 	private JLabel bbsbtn;
@@ -33,18 +33,15 @@ public class MainView extends JFrame implements ActionListener {
 	public MainView() {
 		super("대신해드려요!!");
 		JPanel contentPane = new JPanel();
-		contentPane.setBackground(Color.DARK_GRAY);
+		contentPane.setBackground(Color.WHITE);
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
 		Font fontStyle = new Font("다음_Regular", Font.PLAIN, 14);
 		setFont(fontStyle);
 
-		// 하단패널
-		bottom_panel = new JPanel();
-
 		top_panel = new JPanel();
-		top_panel.setBackground(Color.DARK_GRAY);
+		top_panel.setBackground(Color.WHITE);
 		top_panel.setBounds(6, 2, 480, 48);
 		contentPane.add(top_panel);
 		top_panel.setLayout(null);
@@ -63,15 +60,15 @@ public class MainView extends JFrame implements ActionListener {
 		String name = dto.getId();
 		String auth = (dto.getAuth() == MemberDto.DELIVERER) ? "배달원" : "주문고객";
 		userLabel = new JLabel(auth + " " + name + "님 로그인");
-		userLabel.setForeground(Color.WHITE);
+		userLabel.setFont(new Font("나눔스퀘어", Font.BOLD, 14));
 		userLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		userLabel.setBounds(135, 17, 211, 15);
 		top_panel.add(userLabel);
 
-		// 상단 패널
+		
 		JPanel tab_panel = new JPanel();
-		tab_panel.setBackground(Color.DARK_GRAY);
-		tab_panel.setBounds(6, 51, 480, 64);
+		tab_panel.setBackground(Color.WHITE);
+		tab_panel.setBounds(6, 53, 480, 64);
 		contentPane.add(tab_panel);
 		tab_panel.setLayout(null);
 
@@ -95,6 +92,7 @@ public class MainView extends JFrame implements ActionListener {
 		mypagebtn.setBounds(320, 0, 160, 64);
 		tab_panel.add(mypagebtn);
 		
+		// 하단패널
 		bottom_panel = new OrderBBsView();
 		bottom_panel.setBounds(6, 117, 480, 474);
 		contentPane.add(bottom_panel);
