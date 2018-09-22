@@ -4,10 +4,12 @@ import java.awt.Color;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -30,8 +32,7 @@ public class MyPageView_deliverer extends JPanel implements ActionListener {
 	private JPasswordField pwField;
 	private JPasswordField pwFiled1;
 	private JTextField phone_field;
-	private JTextField locField;
-	private JLabel search_btn;
+	private JComboBox<String> locBox;
 	private JLabel image;
 	private JLabel imgLabel;
 	private JTextField img_path_field;
@@ -142,19 +143,24 @@ public class MyPageView_deliverer extends JPanel implements ActionListener {
 		label_5.setBounds(12, 238, 106, 29);
 		panel.add(label_5);
 
-		locField = new JTextField(dto.getLocation());
-		locField.setFont(new Font("나눔스퀘어", Font.PLAIN, 14));
-		locField.setEditable(false);
-		locField.setColumns(10);
-		locField.setBounds(141, 238, 213, 29);
-		panel.add(locField);
+		locBox = new JComboBox<String>();
+		locBox.setBounds(141, 238, 213, 29);
+		locBox = new JComboBox<String>();
+		locBox.setFont(new Font("나눔스퀘어", Font.PLAIN, 14));		
+		locBox.setEditable(false);
+		locBox.setBounds(141, 238, 213, 29);
+		locBox.setBackground(Color.white);
+		locBox.setEnabled(false);
+		panel.add(locBox);
+		
+		Communicator comm = Singleton.getInstance().getComm();
+		comm.SendMessage(Communicator.SELECT_GU, "");
+		ArrayList<String> results = (ArrayList<String>) comm.receiveObject();
+		for (int i = 0; i < results.size(); i++) {
+			locBox.addItem(results.get(i).toString());
+		}
 
-		search_btn = new JLabel( new ImageIcon(getClass().getClassLoader().getResource(PATH + "search.png")));
-		search_btn.setName(PATH + "search.png");
-		search_btn.addMouseListener(new LabelEventListener(this, search_btn));
-		search_btn.setVisible(false);
-		search_btn.setBounds(366, 238, 68, 29);
-		panel.add(search_btn);
+		locBox.setSelectedItem(dto.getLocation());
 
 		image = new JLabel("프로필사진");
 		image.setFont(new Font("나눔스퀘어", Font.BOLD, 14));
@@ -222,7 +228,7 @@ public class MyPageView_deliverer extends JPanel implements ActionListener {
 
 				setComponent(false);
 
-				dto.setLocation(locField.getText());
+				dto.setLocation((String)locBox.getSelectedItem());
 				dto.setPw(new String(pwField.getPassword()));
 
 				Singleton.getInstance().getComm().SendMessage(Communicator.UPDATE, dto);
@@ -241,21 +247,16 @@ public class MyPageView_deliverer extends JPanel implements ActionListener {
 			cancel_btn.setVisible(false);
 			setComponent(false);
 
-		} else if (e.getSource() == search_btn) { // 배달지역 선택
-			SelectGuDialog add = new SelectGuDialog();
-			if (add.getGuName() != null) {
-				locField.setText(add.getGuName());
-			}
 		}
 	}
 	
 	public void setComponent(boolean bool) {
 		pwField.setEditable(bool);
 		pwFiled1.setEditable(bool);
-		search_btn.setVisible(bool);
 		phone_field.setEditable(bool);
 		search_img_btn.setVisible(bool);
 		cancel_btn.setVisible(bool);
 		img_path_field.setVisible(bool);
+		locBox.setEnabled(bool);
 	}
 }

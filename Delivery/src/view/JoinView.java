@@ -8,10 +8,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
+import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -22,6 +25,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 
+import communicator.Communicator;
 import dto.ConsumerDto;
 import dto.DelivererDto;
 import dto.MemberDto;
@@ -56,13 +60,12 @@ public class JoinView extends JFrame implements ActionListener {
 
 	private int memberType = MemberDto.CONSUMER;
 	private JLabel label;
-	private JTextField location_field;
+	private JComboBox<String> location_box;
 	private JLabel profile_label;
 	private JLabel img_label;
 	private JTextField img_path_field;
 
 	private static final String PATH = "join/";
-	private JLabel search_gu_btn;
 
 	public JoinView() {
 		JPanel contentPane;
@@ -195,12 +198,19 @@ public class JoinView extends JFrame implements ActionListener {
 		label.setBounds(12, 14, 89, 15);
 		deliverer_panel.add(label);
 
-		location_field = new JTextField(10);
-		location_field.setFont(new Font("나눔스퀘어", Font.PLAIN, 14));
 		
-		location_field.setEditable(false);
-		location_field.setBounds(113, 11, 135, 21);
-		deliverer_panel.add(location_field);
+		location_box = new JComboBox<String>();
+		location_box.setBackground(Color.WHITE);
+		location_box.setFont(new Font("나눔스퀘어", Font.PLAIN, 14));		
+		location_box.setBounds(113, 11, 135, 21);
+		deliverer_panel.add(location_box);
+		
+		Communicator comm = Singleton.getInstance().getComm();
+		comm.SendMessage(Communicator.SELECT_GU, "");
+		ArrayList<String> results = (ArrayList<String>) comm.receiveObject();
+		for (int i = 0; i < results.size(); i++) {
+			location_box.addItem(results.get(i).toString());
+		}
 
 		profile_label = new JLabel("프로필 사진");
 		profile_label.setFont(new Font("나눔스퀘어", Font.BOLD, 14));
@@ -228,13 +238,6 @@ public class JoinView extends JFrame implements ActionListener {
 		search_img_btn.addMouseListener(new LabelEventListener(this, search_img_btn));
 		search_img_btn.setBounds(240, 83, 129, 25);
 		deliverer_panel.add(search_img_btn);
-
-		// 지역(구) 검색 버튼
-		search_gu_btn = new JLabel(new ImageIcon(getClass().getClassLoader().getResource(PATH + "search.png")));
-		search_gu_btn.setName(PATH + "search.png");
-		search_gu_btn.setBounds(260, 9, 89, 25);
-		search_gu_btn.addMouseListener(new LabelEventListener(this, search_gu_btn));
-		deliverer_panel.add(search_gu_btn);
 
 		JLabel add_label = new JLabel("주소");
 		add_label.setFont(new Font("나눔스퀘어", Font.BOLD, 14));
@@ -279,7 +282,7 @@ public class JoinView extends JFrame implements ActionListener {
 		String address = address_field.getText().trim();
 		String address2 = address_detail_field.getText().trim();
 		String phone = phone_field.getText().trim();
-		String location = location_field.getText();
+		String location = (String) location_box.getSelectedItem();
 
 		if (obj == check_btn) { // 아이디 중복 확인
 			if (id.equals("")) { // 아이디를 입력하지 않은 경우
@@ -330,10 +333,7 @@ public class JoinView extends JFrame implements ActionListener {
 			SelectAddressDialog add = new SelectAddressDialog();
 			address_field.setText(add.getAddress());
 			address_detail_field.setText(add.getDetailAddress());
-		} else if (obj == search_gu_btn) {
-			SelectGuDialog add = new SelectGuDialog();
-			location_field.setText(add.getGuName());
-		} else if (e.getSource() == search_img_btn) { // 이미지 검색 수행
+		}  else if (e.getSource() == search_img_btn) { // 이미지 검색 수행
 			String path = ImageUtils.jFileChooserUtil();
 			if (path.length() != 0) {
 				img_path_field.setText(path.substring(path.lastIndexOf("\\") + 1)); // 전체 경로에서 파일 이름과 확장자명만 가져온다.

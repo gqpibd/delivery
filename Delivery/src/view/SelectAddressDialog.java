@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -30,7 +31,7 @@ public class SelectAddressDialog extends JDialog implements ActionListener {
 	private JLabel cancelBtn;
 	private JTextField selectedAddField;
 	private JTextField detailAddField;
-	// private static final String PATH = "images/accountView/";
+	private static final String PATH = "address/";
 	
 	public SelectAddressDialog() {
 		setModal(true);
@@ -92,21 +93,16 @@ public class SelectAddressDialog extends JDialog implements ActionListener {
 		lblNewLabel_1.setBounds(12, 167, 87, 15);
 		contentPane.add(lblNewLabel_1);
 
-		//searchBtn = new JLabel(new ImageIcon(PATH + "adrSearchBtn.jpg"));
-		searchBtn = new JLabel("검색");
-		searchBtn.setFont(new Font("나눔스퀘어", Font.BOLD, 14));
-		//searchBtn.setBounds(239, 62, searchBtn.getIcon().getIconWidth(), searchBtn.getIcon().getIconHeight());
-		searchBtn.setBounds(239, 62, 100, 25);
-		searchBtn.addMouseListener(new LabelEventListener(this,searchBtn));
+		searchBtn = new JLabel(new ImageIcon(getClass().getClassLoader().getResource(PATH + "search.png")));
+		searchBtn.setName(PATH + "search.png");
+		searchBtn.setBounds(239, 61, 89, 25);
+		searchBtn.addMouseListener(new LabelEventListener(this, searchBtn));
 		contentPane.add(searchBtn);
 
-		confirmBtn = new JLabel("적용");
-		confirmBtn.setHorizontalAlignment(SwingConstants.CENTER);
-		confirmBtn.setFont(fontStyle);
-//		confirmBtn = new JLabel(new ImageIcon(PATH + "adrOkBtn.jpg"));
-//		confirmBtn.setBounds(283, 332, confirmBtn.getIcon().getIconWidth(), confirmBtn.getIcon().getIconHeight());
+		confirmBtn = new JLabel( new ImageIcon(getClass().getClassLoader().getResource(PATH + "apply.png")));
+		confirmBtn.setName(PATH + "apply.png");
+		confirmBtn.addMouseListener(new LabelEventListener(this, confirmBtn));
 		confirmBtn.setBounds(79, 332, 100, 25);
-		confirmBtn.addMouseListener(new LabelEventListener(this,searchBtn));
 		contentPane.add(confirmBtn);
 
 		selectedAddField = new JTextField();
@@ -127,11 +123,11 @@ public class SelectAddressDialog extends JDialog implements ActionListener {
 		contentPane.add(detailAddField);
 		detailAddField.setColumns(10);
 		
-		cancelBtn = new JLabel("취소");
-		cancelBtn.setFont(fontStyle);
-		cancelBtn.setHorizontalAlignment(SwingConstants.CENTER);
-		cancelBtn.setBounds(206, 332, 100, 25);
+		cancelBtn = new JLabel( new ImageIcon(getClass().getClassLoader().getResource(PATH + "cancel.png")));
+		cancelBtn.setName(PATH + "cancel.png");
+		cancelBtn.addMouseListener(new LabelEventListener(this, cancelBtn));
 		cancelBtn.addMouseListener(new LabelEventListener(this,cancelBtn));
+		cancelBtn.setBounds(206, 332, 100, 25);
 		contentPane.add(cancelBtn);
 
 		setLocationRelativeTo(null);

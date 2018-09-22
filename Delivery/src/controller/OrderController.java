@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.swing.JFrame;
 
+import dto.DelivererDto;
 import dto.OrderDto;
 import service.OrderService;
 import singleton.Singleton;
@@ -59,11 +60,6 @@ public class OrderController {
 		return OS.getDeliverList(id);
 	}
 
-	public String getSelDeliverView(String applicants) {
-		selectDeliver sel = new selectDeliver(applicants);
-		return sel.selDeliver();
-	}
-	
 	public List<OrderDto> getOderList(){ 		
 		return OS.getOderList();
 	}

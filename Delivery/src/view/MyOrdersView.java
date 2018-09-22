@@ -3,6 +3,8 @@ package view;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.List;
 
 import javax.swing.ImageIcon;
@@ -58,7 +60,18 @@ public class MyOrdersView extends JPanel implements ActionListener {
 		table.setFont(new Font("나눔스퀘어", Font.PLAIN, 14));
 
 		setTable();
-
+		
+		table.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (e.getClickCount() == 2) {
+					int rowNum = table.getSelectedRow();
+					int index = list.size() - (int) table.getValueAt(rowNum, 0); // 내 주문 목록에서의 번호
+					Singleton.getInstance().getOrderCtrl().postView(list.get(index).getReqNum());
+				}
+			}
+		});
+		
 		JScrollPane scrollPane = new JScrollPane(table);
 		scrollPane.setFont(new Font("나눔스퀘어", Font.PLAIN, 14));
 		scrollPane.setBackground(Color.DARK_GRAY);
@@ -76,7 +89,6 @@ public class MyOrdersView extends JPanel implements ActionListener {
 		int rq = 0;
 		int ing = 0;
 		int comp = 0;
-		int wait = 0;
 
 		for (int i = 0; i < list.size(); i++) {
 			String stat = list.get(i).getStatus();
@@ -129,9 +141,9 @@ public class MyOrdersView extends JPanel implements ActionListener {
 
 	public void setRowData(List<OrderDto> list) {
 		rowData = new Object[list.size()][4];
-		String date;
+		int count = list.size();
 		for (int i = 0; i < list.size(); i++) {
-			rowData[i][0] = i + 1;
+			rowData[i][0] = count--;
 			rowData[i][1] = list.get(i).getDate().split(" ")[0];
 			rowData[i][2] = list.get(i).getTitle();
 			rowData[i][3] = list.get(i).getStatus();

@@ -3,6 +3,8 @@ package view;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.List;
 
 import javax.swing.ImageIcon;
@@ -67,7 +69,6 @@ public class MyOrdersView_Deliverer extends JPanel implements ActionListener {
 		}
 
 		setRowData(list);
-		System.out.println(list);
 
 		model = new DefaultTableModel(rowData, columnNames) {
 			@Override
@@ -81,6 +82,17 @@ public class MyOrdersView_Deliverer extends JPanel implements ActionListener {
 		table.setRowHeight(20);
 		table.setFont(new Font("나눔스퀘어", Font.PLAIN, 14));
 		setTable();
+		
+		table.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (e.getClickCount() == 2) {
+					int rowNum = table.getSelectedRow();
+					int index = list.size() - (int) table.getValueAt(rowNum, 0); // 내 주문 목록에서의 번호
+					Singleton.getInstance().getOrderCtrl().postView(list.get(index).getReqNum());
+				}
+			}
+		});
 
 		JScrollPane scrollPane = new JScrollPane(table);
 		scrollPane.setFont(new Font("나눔스퀘어", Font.PLAIN, 14));
@@ -90,7 +102,7 @@ public class MyOrdersView_Deliverer extends JPanel implements ActionListener {
 		scrollPane.setBounds(18, 91, 443, 337);
 		add(scrollPane);
 
-		total_order = new JLabel("총 배달 건수 : " + list.size() + " 건");
+		total_order = new JLabel("총 배달 건수 : " + (ing + comp) + " 건");
 		total_order.setFont(new Font("나눔스퀘어", Font.BOLD, 14));
 		total_order.setForeground(Color.WHITE);
 		total_order.setBounds(19, 22, 134, 15);
@@ -143,9 +155,9 @@ public class MyOrdersView_Deliverer extends JPanel implements ActionListener {
 
 	public void setRowData(List<OrderDto> list) {
 		rowData = new Object[list.size()][4];
-		String date;
+		int count = list.size();
 		for (int i = 0; i < list.size(); i++) {
-			rowData[i][0] = i + 1;
+			rowData[i][0] = count--;
 			rowData[i][1] = list.get(i).getDate().split(" ")[0];
 			rowData[i][2] = list.get(i).getTitle();
 			rowData[i][3] = list.get(i).getStatus();

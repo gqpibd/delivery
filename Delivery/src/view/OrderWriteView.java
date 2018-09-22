@@ -1,11 +1,12 @@
 package view;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -13,39 +14,37 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
-
 import javax.swing.SwingConstants;
 
-import communicator.Communicator;
 import dto.ConsumerDto;
 import dto.OrderDto;
 import singleton.Singleton;
-import java.awt.Font;
-import java.awt.Color;
+import utils.images.LabelEventListener;
 
 public class OrderWriteView extends JFrame implements ActionListener{
-	private JTextField title_texF;
-	private JTextField money_textF;
-	
+
+	private JLabel topLabel;
 	private JLabel title_label;
 	private JLabel loc_label;
 	private JLabel cata_label;
 	private JLabel money_label;
-	
+	private JLabel writer_label;
+
+	private JTextField title_texF;
+	private JTextField money_textF;
+	private JTextField address_field;
+	private JTextField address_detail_field;
 	private JTextArea content_textA;
 	
-	JButton chk_btn;
-	JButton back_btn;
+	private JLabel chk_btn;
+	private JLabel back_btn;
+	private JLabel search_btn;
 	
-	JTextField address_field;
-	JTextField address_detail_field;
+	private OrderDto dto;
+	private ConsumerDto Writer;
+	private boolean isUpdate=false;	
 	
-	JLabel writer_label;
-	OrderDto dto;
-	boolean isUpdate=false;
-	private JLabel topLabel;
-	private JButton search_btn;
-	ConsumerDto Writer;
+	public static final String PATH = "orderWrite/";
 	
 	public OrderWriteView(OrderDto dto) {
 		this();
@@ -147,21 +146,21 @@ public class OrderWriteView extends JFrame implements ActionListener{
 		
 		money_textF = new JTextField();
 		money_textF.setFont(new Font("나눔스퀘어", Font.PLAIN, 14));
-		money_textF.setBounds(54, 376, 91, 26);
+		money_textF.setBounds(54, 377, 91, 26);
 		getContentPane().add(money_textF);
 		money_textF.setColumns(10);
 		
-		chk_btn = new JButton("확인");
-		chk_btn.setFont(new Font("나눔스퀘어", Font.PLAIN, 14));
-		chk_btn.setBounds(184, 376, 81, 29);
+		chk_btn = new JLabel( new ImageIcon(getClass().getClassLoader().getResource(PATH + "confirm.png")));
+		chk_btn.setName(PATH + "confirm.png");
+		chk_btn.addMouseListener(new LabelEventListener(this, chk_btn));
+		chk_btn.setBounds(177, 375, 88, 30);
 		getContentPane().add(chk_btn);
-		chk_btn.addActionListener(this);
 		
-		back_btn = new JButton("취소");
-		back_btn.setFont(new Font("나눔스퀘어", Font.PLAIN, 14));
-		back_btn.setBounds(277, 376, 81, 29);
+		back_btn = new JLabel(new ImageIcon(getClass().getClassLoader().getResource(PATH + "cancel.png")));
+		back_btn.setName(PATH + "cancel.png");
+		back_btn.addMouseListener(new LabelEventListener(this, back_btn));
+		back_btn.setBounds(270, 375, 88, 30);
 		getContentPane().add(back_btn);
-		back_btn.addActionListener(this);
 		
 		writer_label = new JLabel(Singleton.getInstance().getMemCtrl().getCurrentUser().getId());
 		writer_label.setFont(new Font("나눔스퀘어", Font.BOLD, 14));
@@ -174,16 +173,16 @@ public class OrderWriteView extends JFrame implements ActionListener{
 		topLabel.setBounds(0, 10, 370, 15);
 		getContentPane().add(topLabel);
 		
-		search_btn = new JButton("검색");
-		search_btn.setFont(new Font("나눔스퀘어", Font.PLAIN, 14));
-		search_btn.setBounds(247, 123, 86, 26);
+		search_btn = new JLabel(new ImageIcon(getClass().getClassLoader().getResource(PATH + "search.png")));
+		search_btn.setName(PATH + "search.png");
+		search_btn.addMouseListener(new LabelEventListener(this, search_btn));
+		search_btn.setBounds(252, 122, 88, 30);
 		getContentPane().add(search_btn);
 		
 		JLabel label = new JLabel("원");
 		label.setFont(new Font("나눔스퀘어", Font.BOLD, 14));
-		label.setBounds(151, 383, 36, 16);
+		label.setBounds(151, 382, 36, 16);
 		getContentPane().add(label);
-		search_btn.addActionListener(this);
 		
 
 		setVisible(true);

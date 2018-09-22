@@ -10,7 +10,7 @@ import singleton.Singleton;
 import view.InitView;
 import view.JoinView;
 import view.LoginView;
-import view.ProfileView;
+import view.ProfilePanel;
 
 public class MemberController {
 
@@ -72,18 +72,11 @@ public class MemberController {
 
 	public void logout() {
 		mService.logout();
-		showInitView();
-		
+		showInitView();		
 	}
 
 	public DelivererDto getDeliverInfo(MemberDto dto) {
 		return mService.getDelivererInfor(dto);
-	}
-
-	public void showDelivererProfile(String id) {
-		MemberDto dto = new MemberDto();
-		dto.setId(id);
-		new ProfileView(dto);	
 	}
 
 }
