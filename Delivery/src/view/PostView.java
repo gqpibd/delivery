@@ -32,9 +32,11 @@ public class PostView extends JFrame implements ActionListener {
 	JButton userchk_btn;
 	JButton update_btn;
 	JButton del_btn;
+	JButton acc_btn;
 
 	OrderDto dto = null;
 	private JLabel label;
+	private JButton comp_btn;
 
 	public PostView(OrderDto dto) {
 		this.dto = dto;
@@ -54,7 +56,7 @@ public class PostView extends JFrame implements ActionListener {
 		getContentPane().add(user_label);
 
 		status_label = new JLabel("상태 :");
-		status_label.setBounds(313, 82, 135, 16);
+		status_label.setBounds(267, 82, 135, 16);
 		getContentPane().add(status_label);
 
 		date_label = new JLabel("작성 :");
@@ -67,7 +69,7 @@ public class PostView extends JFrame implements ActionListener {
 		getContentPane().add(price_label);
 
 		applicants_label = new JLabel("신청자 :");
-		applicants_label.setBounds(313, 112, 109, 16);
+		applicants_label.setBounds(277, 112, 109, 16);
 		getContentPane().add(applicants_label);
 
 		textArea = new JTextArea();
@@ -98,6 +100,7 @@ public class PostView extends JFrame implements ActionListener {
 		del_btn = new JButton("삭제");
 		del_btn.setName("del");
 		panel.add(del_btn);
+		del_btn.addActionListener(this);
 		
 		MemberDto currentUser = Singleton.getInstance().getMemCtrl().getCurrentUser();
 		
@@ -116,9 +119,27 @@ public class PostView extends JFrame implements ActionListener {
 		label = new JLabel("주소 : " + address);
 		label.setBounds(30, 142, 418, 16);
 		getContentPane().add(label);
-		del_btn.addActionListener(this);
 		
-		if (!currentUser.getId().equals(dto.getConsumerId())) {
+		acc_btn = new JButton("수락");
+		acc_btn.setBounds(390, 107, 84, 29);
+		getContentPane().add(acc_btn);
+		
+		comp_btn= new JButton("배달완료");
+		comp_btn.setBounds(390, 77, 83, 29);
+		getContentPane().add(comp_btn);
+		comp_btn.addActionListener(this);
+		comp_btn.setVisible(false);
+		if(dto.getConsumerId().equals(currentUser.getId()) && dto.getStatus().equals("진행중")) {
+			comp_btn.setVisible(true);
+		}
+		
+		acc_btn.setVisible(false);
+		acc_btn.addActionListener(this);
+		if(currentUser.getAuth()==MemberDto.DELIVERER && dto.getDelivererId().equals(currentUser.getId()) && dto.getStatus().equals("요청중")){
+			acc_btn.setVisible(true);
+		}
+		
+	 	if (!currentUser.getId().equals(dto.getConsumerId()) && dto.getStatus().equals("요청중")){ // 작성자만 보일때
 			update_btn.setVisible(false);
 			userchk_btn.setVisible(false);
 			del_btn.setVisible(false);
@@ -133,7 +154,7 @@ public class PostView extends JFrame implements ActionListener {
 				for (int i = 0; i < appArr.length; i++) {
 					if(appArr[i].equals(myId)) {
 						del_btn.setVisible(false);
-						JOptionPane.showMessageDialog(null, "이미 신청완료되었습니다");
+						//JOptionPane.showMessageDialog(null, "이미 신청완료되었습니다");
 						break;
 					}
 				}
@@ -193,6 +214,20 @@ public class PostView extends JFrame implements ActionListener {
 			}else {
 				applicants_label.setText(sel + "님 "+ "수락대기중");
 			}
+		}
+		if(e.getSource() == acc_btn) {
+			dto.setStatus("진행중");
+			Singleton.getInstance().getOrderCtrl().updatePost(dto);
+			acc_btn.setVisible(false);
+			status_label.setText("진행중(" + dto.getDelivererId() +")");	
+			Singleton.getInstance().getMainView().setOrderView();
+		}
+		if(e.getSource() == comp_btn) {
+			dto.setStatus("완료됨");
+			Singleton.getInstance().getOrderCtrl().updatePost(dto);
+			comp_btn.setVisible(false);
+			status_label.setText("완료됨");
+			Singleton.getInstance().getMainView().setOrderView();
 		}
 		
 

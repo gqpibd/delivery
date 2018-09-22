@@ -11,7 +11,6 @@ public class OrderDto implements Serializable {
 
 	private int reqNum;
 	private String title;
-	private String type;
 	private String location;
 	private String consumerId;
 	private String delivererId;
@@ -27,6 +26,11 @@ public class OrderDto implements Serializable {
 	
 
 	public OrderDto() {
+		delivererId = "";
+		applicants = "";	
+		score = 0;
+		review = "";
+
 	}
 
 	public int getReqNum() {

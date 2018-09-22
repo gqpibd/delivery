@@ -15,6 +15,7 @@ import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
+import dto.DelivererDto;
 import dto.OrderDto;
 import singleton.Singleton;
 
@@ -30,17 +31,38 @@ public class MyOrdersView_Deliverer extends JPanel implements ActionListener {
 	private JLabel complete_label;
 	private JLabel waiting_label;
 	private JButton check_waiting;
-	private JButton check_ongoing;
+	private List<OrderDto> list; 
 
 	public MyOrdersView_Deliverer() {
 		setLayout(null);
+		DelivererDto user = (DelivererDto) Singleton.getInstance().getMemCtrl().getCurrentUser();
 		setSize(MainView.BOTTOM_WIDTH, MainView.BOTTOM_HEIGHT);
-		List<OrderDto> list = Singleton.getInstance().getOrderCtrl().getOderList();
+		list = Singleton.getInstance().getOrderCtrl().getDeliverList(user.getId());
+		
+		int rq =0; int ing =0; int comp = 0; int wait = 0;
+		
+		for (int i = 0; i < list.size(); i++) {
+			String stat = list.get(i).getStatus();
+			if(stat.equals("요청중")) {
+				rq++;
+				String sel = list.get(i).getDelivererId();
+				if(sel!=null && sel.equals(user.getId())) {
+					wait++;
+					list.get(i).setStatus("수락대기중");
+				}
+			}else if(stat.equals("진행중")) {
+				ing++;
+			}else if(stat.equals("완료됨")) {
+				comp++;
+			}
+			
+		}
+		
 		setRowData(list);
 		System.out.println(list);
 		
 		
-		JLabel title_label = new JLabel(Singleton.getInstance().getMemCtrl().getCurrentUser().getId() + " 님의 배달 내역");
+		JLabel title_label = new JLabel(user.getId() + " 님의 배달 내역");
 		title_label.setFont(new Font("나눔고딕 Light", Font.BOLD, 19));
 		title_label.setHorizontalAlignment(SwingConstants.CENTER);
 		title_label.setBounds(0, 6, 480, 60);
@@ -64,37 +86,43 @@ public class MyOrdersView_Deliverer extends JPanel implements ActionListener {
 		scrollPane.setBounds(19, 129, 443, 299);
 		add(scrollPane);
 		
-		total_order = new JLabel("총 배달 건수 : 건");
+		
+		total_order = new JLabel("총 배달 건수 :" + list.size() +"건");
 		total_order.setBounds(19, 76, 134, 15);
 		add(total_order);
 		
-		request_label = new JLabel("지원중 : 건");
+		request_label = new JLabel("지원중 :"+ rq +"건");
 		request_label.setBounds(19, 101, 78, 15);
 		add(request_label);
 		
-		ongoing_label = new JLabel("진행중 : 건");
+		ongoing_label = new JLabel("진행중 :"+ing+"건");
 		ongoing_label.setBounds(170, 101, 78, 15);
 		add(ongoing_label);
 		
-		complete_label = new JLabel("완료됨 : 건");
+		complete_label = new JLabel("완료됨 :"+comp+"건");
 		complete_label.setBounds(384, 101, 78, 15);
 		add(complete_label);
 		
-		waiting_label = new JLabel("수락 대기중 : 건");
+		waiting_label = new JLabel("수락 대기중 :"+wait+"건");
 		waiting_label.setBounds(19, 442, 139, 15);
 		add(waiting_label);
 		
 		check_waiting = new JButton("확인");
-		check_waiting.setBounds(170, 438, 78, 23);
+		check_waiting.setBounds(118, 440, 78, 23);
 		add(check_waiting);
+		check_waiting.addActionListener(this);
 		
-		check_ongoing = new JButton("확인");
-		check_ongoing.setBounds(260, 97, 78, 23);
-		add(check_ongoing);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		if(e.getSource() == check_waiting) {
+			for (int i = 0; i < list.size(); i++) {
+				if(list.get(i).getStatus().equals("수락대기중")) {
+					Singleton.getInstance().getOrderCtrl().postView(list.get(i).getReqNum());
+				}
+			}
+		}
 	}
 
 	public void setRowData(List<OrderDto> list) {
@@ -110,9 +138,9 @@ public class MyOrdersView_Deliverer extends JPanel implements ActionListener {
 	}
 
 	public void setTable() {
-		table.getColumnModel().getColumn(0).setPreferredWidth(30); // 글번호 폭
-		table.getColumnModel().getColumn(1).setPreferredWidth(50); // 날짜 폭
-		table.getColumnModel().getColumn(2).setPreferredWidth(190); // 제목 폭
+		table.getColumnModel().getColumn(0).setPreferredWidth(20); // 글번호 폭
+		table.getColumnModel().getColumn(1).setPreferredWidth(60); // 날짜 폭
+		table.getColumnModel().getColumn(2).setPreferredWidth(180); // 제목 폭
 		table.getColumnModel().getColumn(3).setPreferredWidth(50); // 상태 폭
 
 		DefaultTableCellRenderer celAlignCenter = new DefaultTableCellRenderer();

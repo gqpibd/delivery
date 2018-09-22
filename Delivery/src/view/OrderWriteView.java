@@ -195,6 +195,8 @@ public class OrderWriteView extends JFrame implements ActionListener{
 			od.setConsumerId(writer_label.getText());
 			od.setPrice(money);
 			od.setContents(content);
+			od.setAddress(address_field.getText() + " " + address_detail_field.getText());
+			
 			
 			if(isUpdate) {
 				dto.setTitle(title);

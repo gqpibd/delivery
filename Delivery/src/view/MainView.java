@@ -118,4 +118,17 @@ public class MainView extends JFrame implements ActionListener {
 		}
 
 	}
+	
+	public void setOrderView() {
+		bottom_panel.removeAll();
+		int auth = Singleton.getInstance().getMemCtrl().getCurrentUser().getAuth();
+		
+		if (auth == MemberDto.DELIVERER) {
+			bottom_panel.add(new MyOrdersView_Deliverer());
+		} else {
+			bottom_panel.add(new MyOrdersView());
+		}
+		bottom_panel.setSize(BOTTOM_WIDTH, BOTTOM_HEIGHT);
+		repaint();
+	}
 }
