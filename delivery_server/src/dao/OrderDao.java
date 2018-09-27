@@ -1,6 +1,11 @@
 package dao;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.net.Socket;
+import java.net.SocketException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -8,11 +13,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.imageio.ImageIO;
+
 import communicator.SocketWriter;
 import constants.Dml;
 import db.DBClose;
 import db.DBConnection;
-import dto.OrderDto;
 import dto.OrderDto;
 
 public class OrderDao {
@@ -21,6 +27,7 @@ public class OrderDao {
 		switch (number) {
 		case Dml.INSERT:
 			insert_post(dto);
+			//receiveAndSaveImage(name, sock);
 			break;
 		case Dml.DELETE:
 			delete_post(dto);
@@ -143,30 +150,31 @@ public class OrderDao {
 	}
 	private void update_post(OrderDto dto) {
 		OrderDto post = (OrderDto) dto;
-		String sql = " update orders set title = ?, location = ?, price = ?, contents = ?, applicants = ?, address = ?, state = ?, deliverer = ? where reqnumber = ? ";
+		String sql = " update orders set title = ?, location = ?, price = ?, contents = ?, applicants = ?, address = ?, state = ?, deliverer = ?, "
+				+ " score = ? where reqnumber = ? ";
 
 		Connection conn = null;
 		PreparedStatement psmt = null;
 		ResultSet rs = null;
-		System.out.println("update : " + dto);
 		try {
 			conn = DBConnection.getConnection();
 			psmt = conn.prepareStatement(sql);
-			
+
 			psmt.setString(1, post.getTitle());
 			psmt.setString(2, post.getLocation());
 			psmt.setInt(3, post.getPrice());
 			psmt.setString(4, post.getContents());
-			if(post.getApplicants() != null) {
+			if (post.getApplicants() != null) {
 				psmt.setString(5, post.getApplicants());
-			}else {
+			} else {
 				psmt.setString(5, "");
 			}
-			psmt.setString(6, post.getAddress());		
+			psmt.setString(6, post.getAddress());
 			psmt.setString(7, post.getStatus());
-			psmt.setString(8, post.getDelivererId());		
-			psmt.setInt(9, post.getReqNum());	
-			
+			psmt.setString(8, post.getDelivererId());
+			psmt.setInt(9, post.getScore());			
+			psmt.setInt(10, post.getReqNum());
+
 			psmt.executeQuery();
 
 		} catch (SQLException e) {
@@ -174,7 +182,7 @@ public class OrderDao {
 		} finally {
 			DBClose.close(psmt, conn, rs);
 		}
-		
+
 	}
 	/*
 	CREATE TABLE ORDERS(
@@ -340,4 +348,29 @@ public class OrderDao {
 		}
 		SocketWriter.Write(sock, list);
 	}
+	
+	// 이미지 파일 받아서 저장
+	public void receiveAndSaveImage(String name, Socket sock) {
+		ObjectInputStream ois;
+		try {
+			ois = new ObjectInputStream(sock.getInputStream());
+			BufferedImage im = ImageIO.read(ois);
+
+			if (im == null) {
+				System.out.println("이미지 파일을 받지 못했습니다");
+				return;
+			} else {
+				ImageIO.write(im, "png", new File("d:/images" + name.replace(" ", "_") + ".png"));
+				System.out.println("이미지 파일을 저장했습니다");
+			}
+		} catch (SocketException e) {
+			System.out.println("커넥션 리셋됨");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	
+	
 }

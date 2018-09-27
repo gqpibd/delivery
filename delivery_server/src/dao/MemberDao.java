@@ -5,6 +5,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import communicator.SocketWriter;
 import constants.Dml;
@@ -13,6 +15,7 @@ import db.DBConnection;
 import dto.ConsumerDto;
 import dto.DelivererDto;
 import dto.MemberDto;
+import dto.OrderDto;
 
 //CREATE TABLE members( 
 //	ID VARCHAR2(20) primary key, 
@@ -48,6 +51,9 @@ public class MemberDao {
 			break;
 		case Dml.SELECT_DELIVERER_INFO:
 			select_delivererInfo(dto, sock);
+			break;
+		case Dml.UPDATE_SCORE:
+			updateScore(dto);
 			break;
 		}
 
@@ -115,6 +121,33 @@ public class MemberDao {
 		} finally {
 			DBClose.close(psmt, conn, rs);
 		}
+	}
+	
+public void updateScore(MemberDto dto) {
+		
+		String sql = " Update members set score = (select Avg(score) from orders where deliverer = ?) where id = ? ";
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+
+		try {
+			conn = DBConnection.getConnection();
+			psmt = conn.prepareStatement(sql);			
+			
+			psmt.setString(1, dto.getId());
+			psmt.setString(2, dto.getId());
+			
+			rs = psmt.executeQuery();
+			
+			
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBClose.close(psmt, conn, rs);
+		}
+	
 	}
 
 	private void select_existingId(MemberDto dto, Socket sock) {
