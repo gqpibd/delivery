@@ -78,7 +78,6 @@ public class MemberDao {
 				deliverer.setDeliveryCounts(rs.getInt(2));
 				deliverer.setScore(rs.getDouble(3));
 			}
-
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
