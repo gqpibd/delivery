@@ -43,6 +43,7 @@ public class selectDeliver extends JFrame implements ActionListener{
 		if(applicants==null) {
 			applicants="";
 		}
+		System.out.println(applicants);
 		app = applicants.split(",");
 		JLabel lblNewLabel = new JLabel("대신맨 선택");
 		lblNewLabel.setFont(new Font("나눔스퀘어", Font.BOLD, 16));
@@ -76,7 +77,6 @@ public class selectDeliver extends JFrame implements ActionListener{
 		JScrollPane scrollPane = new JScrollPane(list);
 		scrollPane.setBounds(12, 50, 171, 337);
 		getContentPane().add(scrollPane);
-				
 		cancel_btn = new JLabel( new ImageIcon(getClass().getClassLoader().getResource(PATH + "cancel.png")));
 		cancel_btn.setName(PATH + "cancel.png");
 		cancel_btn.addMouseListener(new LabelEventListener(this,cancel_btn));
@@ -100,10 +100,6 @@ public class selectDeliver extends JFrame implements ActionListener{
 		setVisible(true);
 	}
 	
-	/*public String selDeliver() {		
-		return Deliver;
-	}*/
-
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == cancel_btn) {
