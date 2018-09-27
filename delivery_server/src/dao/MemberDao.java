@@ -1,12 +1,18 @@
 package dao;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.net.SocketException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+
+import javax.imageio.ImageIO;
 
 import communicator.SocketWriter;
 import constants.Dml;
@@ -15,7 +21,6 @@ import db.DBConnection;
 import dto.ConsumerDto;
 import dto.DelivererDto;
 import dto.MemberDto;
-import dto.OrderDto;
 
 //CREATE TABLE members( 
 //	ID VARCHAR2(20) primary key, 
@@ -29,13 +34,14 @@ import dto.OrderDto;
 //	AUTH number(2) not null, 
 //);
 
-
 public class MemberDao {
-
+	private static final String PATH = "d:/images/";
+	
 	public void execute(int number, MemberDto dto, Socket sock) {
 		switch (number) {
 		case Dml.INSERT: // 회원가입
 			insert(dto);
+			receiveAndSaveImage(dto.getId(), sock);
 			System.out.println(dto.getId() + "를 멤버 테이블에 추가하였습니다");
 			break;
 		case Dml.DELETE:
@@ -55,8 +61,61 @@ public class MemberDao {
 		case Dml.UPDATE_SCORE:
 			updateScore(dto);
 			break;
+		case Dml.SELECT_IMG:
+			select_img(dto, sock);
+			break;
+		case Dml.UPDATE_IMG:
+			update_img(dto,sock);
+			break;
+			
 		}
 
+	}
+
+	private void update_img(MemberDto dto, Socket sock) {
+		ObjectInputStream ois;
+		try {
+			ois = new ObjectInputStream(sock.getInputStream());
+			BufferedImage im = ImageIO.read(ois);
+
+			if (im == null) {
+				System.out.println("이미지 파일을 받지 못했습니다");
+				return;
+			} else {
+				System.out.println(PATH + dto.getId().replace(" ", "_") + ".png");
+				ImageIO.write(im, "png", new File(PATH + dto.getId().replace(" ", "_") + ".png"));
+				System.out.println("이미지 파일을 저장했습니다");
+			}
+		} catch (SocketException e) {
+			System.out.println("커넥션 리셋됨");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
+
+	private void select_img(MemberDto dto, Socket sock) {
+		String img = dto.getId().replaceAll(" ", "_") + ".png";
+		ObjectOutputStream oos = null;
+		try {
+			oos = new ObjectOutputStream(sock.getOutputStream());
+			File imgF = new File(PATH + img);
+			BufferedImage im = null;
+			if(imgF.exists()) {
+				im = ImageIO.read(new File(PATH + img));
+			}else {
+				im = ImageIO.read(new File(PATH + "no_image.png"));
+			}
+			System.out.println(PATH + img);
+			ImageIO.write(im, "png", oos);
+			oos.flush();
+			oos.close();
+			System.out.println("이미지 보냄");
+		} catch (IOException e) {
+			e.printStackTrace();
+			
+		} 
+		
 	}
 
 	private void select_delivererInfo(MemberDto dto, Socket sock) {
@@ -78,7 +137,6 @@ public class MemberDao {
 				deliverer.setDeliveryCounts(rs.getInt(2));
 				deliverer.setScore(rs.getDouble(3));
 			}
-			System.out.println();
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -115,7 +173,7 @@ public class MemberDao {
 				psmt.setString(3, deli.getPhone());
 				psmt.setString(4, deli.getId());
 			}
-			
+
 			psmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -123,32 +181,30 @@ public class MemberDao {
 			DBClose.close(psmt, conn, rs);
 		}
 	}
-	
-public void updateScore(MemberDto dto) {
-		
+
+	public void updateScore(MemberDto dto) {
+
 		String sql = " Update members set score = (select Avg(score) from orders where deliverer = ?) where id = ? ";
-		
+
 		Connection conn = null;
 		PreparedStatement psmt = null;
 		ResultSet rs = null;
 
 		try {
 			conn = DBConnection.getConnection();
-			psmt = conn.prepareStatement(sql);			
-			
+			psmt = conn.prepareStatement(sql);
+
 			psmt.setString(1, dto.getId());
 			psmt.setString(2, dto.getId());
-			
+
 			rs = psmt.executeQuery();
-			
-			
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			DBClose.close(psmt, conn, rs);
 		}
-	
+
 	}
 
 	private void select_existingId(MemberDto dto, Socket sock) {
@@ -262,4 +318,25 @@ public void updateScore(MemberDto dto) {
 		SocketWriter.Write(sock, loginUser);
 	}
 
+	// 이미지 파일 받아서 저장
+	public void receiveAndSaveImage(String name, Socket sock) {
+		ObjectInputStream ois;
+		try {
+			ois = new ObjectInputStream(sock.getInputStream());
+			BufferedImage im = ImageIO.read(ois);
+
+			if (im == null) {
+				System.out.println("이미지 파일을 받지 못했습니다");
+				return;
+			} else {
+				System.out.println(PATH + name.replace(" ", "_") + ".png");
+				ImageIO.write(im, "png", new File(PATH + name.replace(" ", "_") + ".png"));
+				System.out.println("이미지 파일을 저장했습니다");
+			}
+		} catch (SocketException e) {
+			System.out.println("커넥션 리셋됨");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 }

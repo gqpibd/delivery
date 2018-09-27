@@ -15,4 +15,6 @@ public class Dml {
 	public static final int SELECT_DELIVERER_INFO = 10;
 	public static final int SELECT_DELIVER_LIST = 11;
 	public static final int UPDATE_SCORE = 12;
+	public static final int SELECT_IMG = 13;
+	public static final int UPDATE_IMG = 14;
 }

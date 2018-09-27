@@ -41,7 +41,6 @@ public class ProfilePanel extends JPanel {
 		count_label.setFont(new Font("나눔스퀘어", Font.BOLD, 14));
 		count_label.setBounds(12, 79, 183, 29);
 		
-		
 		MemberDto dto = new MemberDto();
 		dto.setId(id);
 		DelivererDto deliverer = mCtrl.getDeliverInfo(dto);
@@ -118,9 +117,6 @@ public class ProfilePanel extends JPanel {
 		score_label.setFont(new Font("나눔스퀘어", Font.BOLD, 14));
 		score_label.setBounds(12, 115, 183, 29);
 		panel.add(score_label);
-		
-
-		
 		
 		setVisible(true);
 	}

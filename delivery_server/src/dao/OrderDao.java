@@ -27,7 +27,6 @@ public class OrderDao {
 		switch (number) {
 		case Dml.INSERT:
 			insert_post(dto);
-			//receiveAndSaveImage(name, sock);
 			break;
 		case Dml.DELETE:
 			delete_post(dto);
@@ -350,29 +349,4 @@ public class OrderDao {
 		}
 		SocketWriter.Write(sock, list);
 	}
-	
-	// 이미지 파일 받아서 저장
-	public void receiveAndSaveImage(String name, Socket sock) {
-		ObjectInputStream ois;
-		try {
-			ois = new ObjectInputStream(sock.getInputStream());
-			BufferedImage im = ImageIO.read(ois);
-
-			if (im == null) {
-				System.out.println("이미지 파일을 받지 못했습니다");
-				return;
-			} else {
-				ImageIO.write(im, "png", new File("d:/images" + name.replace(" ", "_") + ".png"));
-				System.out.println("이미지 파일을 저장했습니다");
-			}
-		} catch (SocketException e) {
-			System.out.println("커넥션 리셋됨");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	
-	
-	
 }
