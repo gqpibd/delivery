@@ -4,9 +4,11 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -21,6 +23,7 @@ import dto.DelivererDto;
 import dto.MemberDto;
 import dto.OrderDto;
 import singleton.Singleton;
+import utils.images.ImageUtils;
 
 public class ProfilePanel extends JPanel {
 	private JTable table;
@@ -28,7 +31,7 @@ public class ProfilePanel extends JPanel {
 	private Object rowData[][];
 	private DefaultTableModel model;
 	private JLabel count_label;
-	
+	private JLabel imgLabel;
 
 	public ProfilePanel(String id) {
 		MemberController mCtrl = Singleton.getInstance().getMemCtrl();
@@ -76,13 +79,10 @@ public class ProfilePanel extends JPanel {
 			}
 		});
 		
-		JLabel imgLabel = new JLabel("이미지");
-		imgLabel.setForeground(Color.WHITE);
-		imgLabel.setFont(new Font("나눔스퀘어", Font.BOLD, 14));
-		imgLabel.setBackground(Color.WHITE);
-		imgLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		imgLabel.setBounds(12, 10, 151, 142);
+		imgLabel = new JLabel();
+		imgLabel.setBounds(18, 10, 150, 150);
 		add(imgLabel);
+		setImage(id);
 
 		JLabel deliverListLabel = new JLabel("배달목록");
 		deliverListLabel.setForeground(Color.WHITE);
@@ -155,5 +155,13 @@ public class ProfilePanel extends JPanel {
 		table.getColumn("상태").setCellRenderer(celAlignCenter);
 		table.getColumn("지역").setCellRenderer(celAlignCenter);
 		table.getColumn("날짜").setCellRenderer(celAlignCenter);
+	}
+	
+	private void setImage(String id) {
+		BufferedImage img = Singleton.getInstance().getComm().getImage(id);		
+		if(img != null) {
+			ImageIcon icon = new ImageIcon(img);
+			ImageUtils.setResizedImage(imgLabel, icon);
+		}
 	}
 }

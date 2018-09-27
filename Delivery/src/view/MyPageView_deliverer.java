@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 
@@ -40,6 +41,7 @@ public class MyPageView_deliverer extends JPanel implements ActionListener {
 	private JLabel search_img_btn;
 	private JLabel cancel_btn;
 	private JLabel change_btn;
+	private String imgPath;
 	
 	private DelivererDto dto = (DelivererDto) Singleton.getInstance().getMemCtrl().getCurrentUser();
 	public static final String PATH = "mypage/";
@@ -170,12 +172,11 @@ public class MyPageView_deliverer extends JPanel implements ActionListener {
 		image.setBounds(12, 289, 106, 25);
 		panel.add(image);
 
-		imgLabel = new JLabel("image");
-		imgLabel.setForeground(Color.WHITE);
+		imgLabel = new JLabel();
 		imgLabel.setBorder(new LineBorder(Color.black));
-		imgLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		imgLabel.setBounds(141, 283, 113, 111);
+		imgLabel.setBounds(141, 283, 113, 113);
 		panel.add(imgLabel);
+		setImage();
 
 		img_path_field = new JTextField(10);
 		img_path_field.setFont(new Font("나눔스퀘어", Font.PLAIN, 14));
@@ -198,6 +199,14 @@ public class MyPageView_deliverer extends JPanel implements ActionListener {
 		cancel_btn.setVisible(false);
 		add(cancel_btn);
 
+	}
+
+	private void setImage() {
+		BufferedImage img = Singleton.getInstance().getComm().getImage(dto.getId());		
+		if(img != null) {
+			ImageIcon icon = new ImageIcon(img);
+			ImageUtils.setResizedImage(imgLabel, icon);
+		}
 	}
 
 	@Override
@@ -232,13 +241,17 @@ public class MyPageView_deliverer extends JPanel implements ActionListener {
 				dto.setPw(new String(pwField.getPassword()));
 
 				Singleton.getInstance().getComm().SendMessage(Communicator.UPDATE, dto);
+				if(imgPath.length()>0) {
+					Singleton.getInstance().getMemCtrl().updateImg(dto,imgPath);
+				}
+				
 				JOptionPane.showMessageDialog(null, "수정완료");
 			}
 		} else if (e.getSource() == search_img_btn) { // 이미지 검색 수행
-			String path = ImageUtils.jFileChooserUtil();
-			if (path.length() != 0) {
-				img_path_field.setText(path.substring(path.lastIndexOf("\\") + 1)); // 전체 경로에서 파일 이름과 확장자명만 가져온다.
-				ImageUtils.setResizedImage(imgLabel, new ImageIcon(path));
+			imgPath = ImageUtils.jFileChooserUtil();
+			if (imgPath.length() != 0) {
+				img_path_field.setText(imgPath.substring(imgPath.lastIndexOf("\\") + 1)); // 전체 경로에서 파일 이름과 확장자명만 가져온다.
+				ImageUtils.setResizedImage(imgLabel, new ImageIcon(imgPath));
 			}
 		} else if (e.getSource() == cancel_btn) {
 			change_btn.setIcon(new ImageIcon(getClass().getClassLoader().getResource(PATH + "modify.png")));

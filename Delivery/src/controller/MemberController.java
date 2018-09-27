@@ -79,4 +79,7 @@ public class MemberController {
 		return mService.getDelivererInfor(dto);
 	}
 
+	public void updateImg(DelivererDto dto, String imgPath) {
+		mService.updateImg(dto,imgPath);		
+	}
 }

@@ -7,9 +7,12 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.net.SocketException;
 
 import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
+
+import dto.MemberDto;
 
 public class Communicator {
 	public static final int INSERT = 0;
@@ -25,6 +28,9 @@ public class Communicator {
 	public static final int SELECT_DELIVERER_INFO = 10;
 	public static final int SELECT_DELIVER_LIST = 11;
 	public static final int UPDATE_SCORE = 12;
+	public static final int SELECT_IMG = 13;
+	public static final int UPDATE_IMG = 14;
+	
 	private Socket sock;
 
 	public void makeConnection() {
@@ -89,7 +95,27 @@ public class Communicator {
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
-
 		return obj;
+	}
+	
+	public BufferedImage getImage(String id) {
+		MemberDto dto = new MemberDto();
+		dto.setId(id);
+		SendMessage(SELECT_IMG, dto);
+		ObjectInputStream ois;
+		BufferedImage im = null;
+		try {
+			ois = new ObjectInputStream(sock.getInputStream());
+			im = ImageIO.read(ois);
+			if (im == null) {
+				System.out.println("이미지 파일을 받지 못했습니다");				
+			} 
+
+			makeConnection();
+		} catch (Exception e) {
+			makeConnection();
+		} 
+		
+		return im;
 	}
 }

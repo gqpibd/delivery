@@ -218,10 +218,8 @@ public class JoinView extends JFrame implements ActionListener {
 		profile_label.setBounds(12, 45, 89, 15);
 		deliverer_panel.add(profile_label);
 
-		img_label = new JLabel("이미지");
-		img_label.setFont(new Font("나눔스퀘어", Font.BOLD, 14));
+		img_label = new JLabel();
 		img_label.setBorder(new LineBorder(Color.darkGray));
-		img_label.setHorizontalAlignment(SwingConstants.CENTER);
 		img_label.setBounds(113, 45, 100, 100);
 		deliverer_panel.add(img_label);
 
@@ -322,10 +320,8 @@ public class JoinView extends JFrame implements ActionListener {
 					dto = new ConsumerDto(id, pw, name, phone, address + " " + address2);
 				}
 				single.getMemCtrl().insert(dto,img_path_field.getText());
-				// single.backToMain(this);
 				JOptionPane.showMessageDialog(null, "회원가입이 완료되었습니다.");
-				single.showMainView();
-				dispose();
+				Singleton.getInstance().getMemCtrl().backToInitView(this);
 			}
 		} else if (obj == back_btn) { // 뒤로가기
 			Singleton.getInstance().getMemCtrl().backToInitView(this);

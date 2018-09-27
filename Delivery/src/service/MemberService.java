@@ -55,4 +55,11 @@ public class MemberService {
 		comm.SendMessage(Communicator.SELECT_DELIVERER_INFO, dto);
 		return (DelivererDto) comm.receiveObject();
 	}
+
+	public void updateImg(DelivererDto dto, String imgPath) {
+		Communicator comm = Singleton.getInstance().getComm();
+		comm.SendMessage(Communicator.UPDATE_IMG, dto);
+		comm.sendImage(imgPath);
+		
+	}
 }

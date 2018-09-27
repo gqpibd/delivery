@@ -23,7 +23,7 @@ public class ImageUtils {
 		chooser.setDialogTitle("이미지 파일 선택");
 		chooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
 
-		FileNameExtensionFilter filter = new FileNameExtensionFilter("이미지파일(.png)", "png");
+		FileNameExtensionFilter filter = new FileNameExtensionFilter("이미지파일(.png,.jpg)", "png", "jpg");
 		chooser.setFileFilter(filter); 
 
 		int returnVal = chooser.showOpenDialog(null); 
