@@ -31,7 +31,7 @@ public class MainView extends JFrame implements ActionListener {
 	String myStr;
 
 	public MainView() {
-		super("대신해드려요!!");
+		
 		JPanel contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		setContentPane(contentPane);

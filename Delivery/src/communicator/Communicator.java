@@ -64,7 +64,7 @@ public class Communicator {
 
 			BufferedImage im = ImageIO.read(new File(path));
 			System.out.println(im.toString());
-			ImageIO.write(im, "jpg", oos);
+			ImageIO.write(im, "png", oos);
 			oos.flush();
 			oos.close();
 			makeConnection();

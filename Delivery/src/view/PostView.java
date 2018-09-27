@@ -261,13 +261,17 @@ public class PostView extends JFrame implements ActionListener {
 			applicants_label.setText(orderDetail.getDelivererId() + "님이 배달중");	
 			Singleton.getInstance().getMainView().setOrderView();
 		}else if (e.getSource() == comp_btn) {
-			orderDetail.setStatus("완료됨");
-			Singleton.getInstance().getOrderCtrl().updatePost(orderDetail);
-			comp_btn.setVisible(false);
-			status_label.setText("완료됨");
-			applicants_label.setText(orderDetail.getDelivererId() + " 님이 배달 완료");
-			Singleton.getInstance().getMainView().setOrderView();
+			new ReviewWriteDialog(orderDetail, this);		
 		}
+	}
+	
+	public void setComlete() {
+		orderDetail.setStatus("완료됨");
+		Singleton.getInstance().getOrderCtrl().updatePost(orderDetail);
+		comp_btn.setVisible(false);			
+		status_label.setText("완료됨");
+		applicants_label.setText(orderDetail.getDelivererId() + " 님이 배달 완료");
+		Singleton.getInstance().getMainView().setOrderView(); // 메인화면 업데이트
 	}
 	
 	public void setDeliverer(String deliverer) {
