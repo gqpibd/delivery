@@ -24,6 +24,7 @@ public class Communicator {
 	public static final int SELECT_MYODER = 9;
 	public static final int SELECT_DELIVERER_INFO = 10;
 	public static final int SELECT_DELIVER_LIST = 11;
+	public static final int UPDATE_SCORE = 12;
 	private Socket sock;
 
 	public void makeConnection() {
@@ -64,7 +65,7 @@ public class Communicator {
 
 			BufferedImage im = ImageIO.read(new File(path));
 			System.out.println(im.toString());
-			ImageIO.write(im, "jpg", oos);
+			ImageIO.write(im, "png", oos);
 			oos.flush();
 			oos.close();
 			makeConnection();

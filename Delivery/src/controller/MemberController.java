@@ -62,8 +62,8 @@ public class MemberController {
 	}
 
 
-	public void insert(MemberDto dto) {
-		mService.insert(dto);		
+	public void insert(MemberDto dto,String path) {
+		mService.insert(dto, path);		
 	}
 
 	public MemberDto getCurrentUser() {

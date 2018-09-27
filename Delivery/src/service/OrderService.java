@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import communicator.Communicator;
+import dto.MemberDto;
 import dto.OrderDto;
 import singleton.Singleton;
 
@@ -70,7 +71,10 @@ public class OrderService {
 	}
 
 	public void updatePost(OrderDto dto) {
-		Singleton.getInstance().getComm().SendMessage(Communicator.UPDATE, dto);		
+		Singleton.getInstance().getComm().SendMessage(Communicator.UPDATE, dto);
+		MemberDto mdto = new MemberDto();
+		mdto.setId(dto.getDelivererId());
+		Singleton.getInstance().getComm().SendMessage(Communicator.UPDATE_SCORE, mdto);
 	}
 	
 	public List<OrderDto> getOderList() {

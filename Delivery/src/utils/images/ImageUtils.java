@@ -23,7 +23,7 @@ public class ImageUtils {
 		chooser.setDialogTitle("이미지 파일 선택");
 		chooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
 
-		FileNameExtensionFilter filter = new FileNameExtensionFilter("jpg", "jpg");
+		FileNameExtensionFilter filter = new FileNameExtensionFilter("이미지파일(.png)", "png");
 		chooser.setFileFilter(filter); 
 
 		int returnVal = chooser.showOpenDialog(null); 
@@ -43,8 +43,6 @@ public class ImageUtils {
 		Image originImg = icon.getImage();
 
 		Image changedImg = originImg.getScaledInstance(imgLabel.getWidth(), imgLabel.getHeight(), Image.SCALE_SMOOTH);
-
-
 		ImageIcon resizedIcon = new ImageIcon(changedImg);
 
 		imgLabel.setIcon(resizedIcon);

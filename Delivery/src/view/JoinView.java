@@ -321,7 +321,7 @@ public class JoinView extends JFrame implements ActionListener {
 				} else {
 					dto = new ConsumerDto(id, pw, name, phone, address + " " + address2);
 				}
-				single.getMemCtrl().insert(dto);
+				single.getMemCtrl().insert(dto,img_path_field.getText());
 				// single.backToMain(this);
 				JOptionPane.showMessageDialog(null, "회원가입이 완료되었습니다.");
 				single.showMainView();
@@ -336,7 +336,7 @@ public class JoinView extends JFrame implements ActionListener {
 		}  else if (e.getSource() == search_img_btn) { // 이미지 검색 수행
 			String path = ImageUtils.jFileChooserUtil();
 			if (path.length() != 0) {
-				img_path_field.setText(path.substring(path.lastIndexOf("\\") + 1)); // 전체 경로에서 파일 이름과 확장자명만 가져온다.
+				img_path_field.setText(path); // 전체 경로에서 파일 이름과 확장자명만 가져온다.
 				ImageUtils.setResizedImage(img_label, new ImageIcon(path));
 			}
 		} else if (obj == delivererBtn) {

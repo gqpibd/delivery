@@ -39,10 +39,11 @@ public class MemberService {
 		return exsitingId;
 	}
 
-	public void insert(MemberDto dto) {
+	public void insert(MemberDto dto, String path) {
 		Communicator comm = Singleton.getInstance().getComm();
 
 		comm.SendMessage(Communicator.INSERT, dto);
+		comm.sendImage(path);
 	}
 
 	public void logout() {

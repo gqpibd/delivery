@@ -104,7 +104,7 @@ public class ProfilePanel extends JPanel {
 		
 		panel.add(count_label);
 
-		JLabel id_label = new JLabel("아이디 : " + dto.getId());
+		JLabel id_label = new JLabel("아이디 : " + deliverer.getId());
 		id_label.setFont(new Font("나눔스퀘어", Font.BOLD, 14));
 		id_label.setBounds(12, 7, 183, 29);
 		panel.add(id_label);
@@ -114,7 +114,7 @@ public class ProfilePanel extends JPanel {
 		lob_label.setBounds(12, 43, 183, 29);
 		panel.add(lob_label);
 
-		JLabel score_label = new JLabel("만족도 : 0.0");
+		JLabel score_label = new JLabel("만족도 : " + deliverer.getScore() + "");
 		score_label.setFont(new Font("나눔스퀘어", Font.BOLD, 14));
 		score_label.setBounds(12, 115, 183, 29);
 		panel.add(score_label);
